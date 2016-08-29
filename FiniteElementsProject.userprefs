@@ -1,0 +1,23 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="FiniteElementsProject/IterativeSolver.cs">
+    <Files>
+      <File FileName="FiniteElementsProject/Discretization2DFrame.cs" Line="1" Column="1" />
+      <File FileName="FiniteElementsProject/Program.cs" Line="20" Column="4" />
+      <File FileName="FiniteElementsProject/Solver.cs" Line="15" Column="60" />
+      <File FileName="FiniteElementsProject/IterativeSolver.cs" Line="14" Column="11" />
+      <File FileName="FiniteElementsProject/MatrixOperations.cs" Line="1" Column="1" />
+      <File FileName="FiniteElementsProject/EulerBernoulli1DElement.cs" Line="1" Column="1" />
+      <File FileName="FiniteElementsProject/BoundaryConditionsImposition.cs" Line="1" Column="1" />
+      <File FileName="FiniteElementsProject/Element1D.cs" Line="1" Column="1" />
+      <File FileName="FiniteElementsProject/Bar1DElement.cs" Line="1" Column="1" />
+      <File FileName="FiniteElementsProject/VectorOperations.cs" Line="1" Column="1" />
+      <File FileName="FiniteElementsProject/IElements1D.cs" Line="1" Column="1" />
+      <File FileName="FiniteElementsProject/InputData.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

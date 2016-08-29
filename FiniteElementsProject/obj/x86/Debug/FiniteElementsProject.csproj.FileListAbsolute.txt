@@ -1,0 +1,15 @@
+C:\Users\Laptop\Downloads\New folder\laptop\Projects\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.exe
+C:\Users\Laptop\Downloads\New folder\laptop\Projects\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.pdb
+C:\Users\Laptop\Downloads\New folder\laptop\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.csprojResolveAssemblyReference.cache
+C:\Users\Laptop\Downloads\New folder\laptop\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.exe
+C:\Users\Laptop\Downloads\New folder\laptop\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.pdb
+C:\Users\Laptop\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.exe
+C:\Users\Laptop\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.pdb
+C:\Users\Laptop\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.exe
+C:\Users\Laptop\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.pdb
+C:\Users\Laptop\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.csprojResolveAssemblyReference.cache
+C:\Users\vasil\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.exe
+C:\Users\vasil\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.pdb
+C:\Users\vasil\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.exe
+C:\Users\vasil\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.pdb
+C:\Users\vasil\OneDrive\Documents\Visual Studio 2015\Projects\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.csprojResolveAssemblyReference.cache
