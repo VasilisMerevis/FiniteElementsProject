@@ -29,11 +29,9 @@ namespace FiniteElementsProject
         public void NewtonRaphson()
         {
             internalForcesTotalVector = discretization.CreateTotalInternalForcesVector();
-            //residual = VectorOperations.VectorVectorSubtraction(internalForcesTotalVector, forceVector);
-            //reducedResidual = BoundaryConditionsImposition.ReducedVector(residual, boundaryDof);
-            //new
+           
             reducedResidual = VectorOperations.VectorVectorSubtraction(BoundaryConditionsImposition.ReducedVector(internalForcesTotalVector, boundaryDof), forceVector);
-            //
+            
             residualNorm = VectorOperations.VectorNorm2(reducedResidual);
             int iteration = 0;
             while (residualNorm > tolerance && iteration < maxIterations)
@@ -41,10 +39,7 @@ namespace FiniteElementsProject
                 Array.Clear(discretization.TotalStiffnessMatrix, 0, discretization.TotalStiffnessMatrix.Length);
                 discretization.CreateTotalStiffnessMatrix();
                 double[,] reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
-                //double[] residualReducedForLoop = BoundaryConditionsImposition.ReducedVector(residual, boundaryDof);
-                //new
-                //double[] residualReducedForLoop = reducedResidual;
-                //
+                
                 DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, reducedResidual );
                 linearSolution.SolveWithMethod("PCG");
                 deltaU = linearSolution.GetSolutionVector;
@@ -57,12 +52,8 @@ namespace FiniteElementsProject
                 Array.Clear(discretization.internalForcesTotalVector, 0, discretization.internalForcesTotalVector.Length);
                 internalForcesTotalVector = discretization.CreateTotalInternalForcesVector();
 
-                //residual = VectorOperations.VectorVectorSubtraction(internalForcesTotalVector, forceVector);
-
-                //residualReducedForLoop = BoundaryConditionsImposition.ReducedVector(residual, boundaryDof);
-                //new
                 reducedResidual = VectorOperations.VectorVectorSubtraction(BoundaryConditionsImposition.ReducedVector(internalForcesTotalVector, boundaryDof), forceVector);
-                //
+                
                 residualNorm = VectorOperations.VectorNorm2(reducedResidual);
 
                 iteration = iteration + 1;
