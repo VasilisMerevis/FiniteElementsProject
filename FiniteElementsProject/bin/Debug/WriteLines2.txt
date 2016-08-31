@@ -1,10 +1,10 @@
-Xcoord: 0 0 0,75 1,5 1,5
-Ycoord: 0 1 1,75 1 0
-Loc.Node1: 1 2 3 4
-Loc.Node2: 2 3 4 5
-Type: Beam Beam Beam Beam
-YoungMod: 1 1 1 1
-Area: 1 1 1 1
-Inertia: 1 1 1 1
-BoundedDOF: 1 2 3 13 14 15
-ExtForces: 1 0 0 2 0 0 0 0 0
+Xcoord: 0 0,3 0,6 0,9 1,2 1,5 1,8 2,1 2,4 2,7 3
+Ycoord: 0 0 0 0 0 0 0 0 0 0 0
+Loc.Node1: 1 2 3 4 5 6 7 8 9 10
+Loc.Node2: 2 3 4 5 6 7 8 9 10 11
+Type: NLBeam NLBeam NLBeam NLBeam NLBeam NLBeam NLBeam NLBeam NLBeam NLBeam
+Area: 0,01 0,01 0,01 0,01 0,01 0,01 0,01 0,01 0,01 0,01
+YoungMod: 200e9 200e9 200e9 200e9 200e9 200e9 200e9 200e9 200e9 200e9
+Inertia: 8,333e-6 8,333e-6 8,333e-6 8,333e-6 8,333e-6 8,333e-6 8,333e-6 8,333e-6 8,333e-6 8,333e-6
+BoundedDOF: 1 2 3
+ExtForces: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2000000 0

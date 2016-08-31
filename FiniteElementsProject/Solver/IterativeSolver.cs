@@ -2,7 +2,7 @@ using System;
 
 namespace FiniteElementsProject
 {
-	public class IterativeSolver : Solver
+	public class IterativeSolver : LinearSolver
 	{
         private int maxIterations;
         private double tolerance = 1e-12;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FiniteElementsProject
 {
-    public class DirectSolver : Solver
+    public class DirectSolver : LinearSolver
     {
 		public DirectSolver(double[,] stiffnessMatrix, double[] forceVector)
 		{

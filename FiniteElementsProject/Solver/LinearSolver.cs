@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    public abstract class Solver
+    public abstract class LinearSolver
     {
         protected double[] solutionVector;
         protected double[,] stiffnessMatrix;

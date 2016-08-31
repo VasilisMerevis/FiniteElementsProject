@@ -34,22 +34,23 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NLEulerBernoulli1DElement.cs" />
-    <Compile Include="NLSolver.cs" />
+    <Compile Include="Elements\NLEulerBernoulli1DElement.cs" />
+    <Compile Include="Solver\NLSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DirectSolver.cs" />
-    <Compile Include="Solver.cs" />
-    <Compile Include="VectorOperations.cs" />
-    <Compile Include="BoundaryConditionsImposition.cs" />
-    <Compile Include="MatrixOperations.cs" />
-    <Compile Include="Discretization2DFrame.cs" />
-    <Compile Include="EulerBernoulli1DElement.cs" />
-    <Compile Include="Element1D.cs" />
-    <Compile Include="Bar1DElement.cs" />
-    <Compile Include="IElements1D.cs" />
-    <Compile Include="InputData.cs" />
-    <Compile Include="IterativeSolver.cs" />
+    <Compile Include="Solver\DirectSolver.cs" />
+    <Compile Include="Solver\LinearSolver.cs" />
+    <Compile Include="LinearAlgebra\VectorOperations.cs" />
+    <Compile Include="Assemble\BoundaryConditionsImposition.cs" />
+    <Compile Include="LinearAlgebra\MatrixOperations.cs" />
+    <Compile Include="Assemble\Discretization2DFrame.cs" />
+    <Compile Include="Elements\EulerBernoulli1DElement.cs" />
+    <Compile Include="Elements\Element1D.cs" />
+    <Compile Include="Elements\Bar1DElement.cs" />
+    <Compile Include="Elements\IElements1D.cs" />
+    <Compile Include="Data\InputData.cs" />
+    <Compile Include="Solver\IterativeSolver.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
