@@ -21,7 +21,7 @@ namespace FiniteElementsProject
             for (int i = 0; i < rows; i++)
             {
 
-                if (boundaryDof.Contains(i + 1))   //i+1 because C# is zero based
+                if (boundaryDof.Contains(i + 1))   //i+1 because C# is zero based//
                     continue;
                 else
                     n = 0;
