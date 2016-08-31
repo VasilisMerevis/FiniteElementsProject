@@ -14,17 +14,19 @@ namespace FiniteElementsProject
             InputData data = new InputData();
             data.ReadAllData();
 
-            if (data.elementType.Contains("NLBeam") | data.elementType.Contains("NLTruss"))
+            if (data.elementType.Contains("NLBeam"))// | data.elementType.Contains("NLTruss"))
             {
                 //Creation of local, global and total stiffness matrices
                 Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
                 Exercise1Frame.GetStiffnessMatrices();
                 //Exercise1Frame.CreateTotalStiffnessMatrix();
-
                 NLSolver solution = new NLSolver(Exercise1Frame, 1000, data);
-
                 solution.SolveWithMethod("Newton-Raphson");
                 VectorOperations.PrintVector(solution.solutionVector);
+            }
+            else if (data.elementType.Contains("NLTruss"))
+            {
+
             }
             else
             {
