@@ -35,7 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elements\NLEulerBernoulli1DElement.cs" />
-    <Compile Include="NLTruss.cs" />
+    <Compile Include="Elements\NLTruss.cs" />
     <Compile Include="Solver\NLSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,73 +7,24 @@ namespace FiniteElementsProject
 {
     class NLEulerBernoulli1DElement : Element1D
     {
-        //int node1ID, node2ID;
-        double[] node1XYInitial, node2XYInitial;
-        double[] node1XYCurrent, node2XYCurrent;
-        //private double[] node1GlobalDisplacementVector, node2GlobalDisplacementVector;
         double[] localDisplacementVector;
         public double[] internalLocalForcesVector, internalGlobalForcesVector;
         private double I;
         private double[,] Dmatrix;
         private double[,] Bmatrix;
-        private double cosInitial, sinInitial, lengthInitial, betaAngleInitial;
-        private double cosCurrent, sinCurrent, lengthCurrent, betaAngleCurrent;
+        private double betaAngleInitial;
+        private double betaAngleCurrent;
 
         public NLEulerBernoulli1DElement(double E, double A, double I, double[] nodesX, double[] nodesY)
             : base(E, A, nodesX, nodesY)
         {
             this.I = I;
-            //this.node1ID = localNode1;
-            //this.node2ID = localNode2;
-            node1XYInitial = new[] { nodesX[0], nodesY[0] };
-            node2XYInitial = new[] { nodesX[1], nodesY[1] };
-            node1XYCurrent = new double[2];
-            node2XYCurrent = new double[2];
             this.node1GlobalDisplacementVector = new double[3];
             this.node2GlobalDisplacementVector = new double[3];
             lambdaMatrix = new double[6, 6];
             localStiffnessMatrix = new double[6, 6];
             globalStiffnessMatrix = new double[6, 6];
             this.internalGlobalForcesVector = new double[6];
-        }
-
-        //public void SetGlobalDisplacementVector(double[] node1GlobalDisplacementVector, double[] node2GlobalDisplacementVector)
-        //{
-        //    this.node1GlobalDisplacementVector = node1GlobalDisplacementVector;
-        //    this.node2GlobalDisplacementVector = node2GlobalDisplacementVector;
-        //}
-
-        private void CalculateCurrentNodalCoordinates()
-        {
-            node1XYCurrent = new[]
-            {
-                node1XYInitial[0] + node1GlobalDisplacementVector[0],
-                node1XYInitial[1] + node1GlobalDisplacementVector[1]
-            };
-
-            node2XYCurrent = new[]
-            {
-                node2XYInitial[0] + node2GlobalDisplacementVector[0],
-                node2XYInitial[1] + node2GlobalDisplacementVector[1]
-            };
-        }
-
-        private double CalculateElementLength(double[] node1XY, double[] node2XY)
-        {
-            double length = Math.Sqrt(Math.Pow(node2XY[0] - node1XY[0], 2) + Math.Pow(node2XY[1] - node1XY[1], 2));
-            return length;
-        }
-
-        private double CalculateElementCosinus(double[] node1XY, double[] node2XY, double length)
-        {
-            double cosinus = (node2XY[0] - node1XY[0]) / length;
-            return cosinus;
-        }
-
-        private double CalculateElementSinus(double[] node1XY, double[] node2XY, double length)
-        {
-            double sinus = (node2XY[1] - node1XY[1]) / length;
-            return sinus;
         }
 
         private double CalculateElementBetaAngle(double[] node1XY, double[] node2XY)
