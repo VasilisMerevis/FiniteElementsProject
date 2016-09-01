@@ -8,7 +8,9 @@ namespace FiniteElementsProject
     class NLTruss : Element1D
     {
         double[] localDisplacementVector;
+        private double[] initialLocalCoordinatesVector, currentLocalCoordinatesVector;
         public double[] internalLocalForcesVector, internalGlobalForcesVector;
+        private double deformationGradient;
 
         public NLTruss(double E, double A, double[] nodesX, double[] nodesY)
             : base(E, A, nodesX, nodesY)
@@ -20,6 +22,8 @@ namespace FiniteElementsProject
             localStiffnessMatrix = new double[6, 6];
             globalStiffnessMatrix = new double[6, 6];
             this.internalGlobalForcesVector = new double[6];
+            initialLocalCoordinatesVector = new double[2];
+            currentLocalCoordinatesVector = new double[2];
         }
 
         private double[] TransformToLocalCoordinates(double[] node1XY, double[] node2XY, double cosinus, double sinus)
@@ -30,22 +34,22 @@ namespace FiniteElementsProject
             return localCoordinatesVector;
         }
 
-        public static double Length(double[] vec2d)
+        private double CalculateDeformationGradient()
         {
-            double length = Math.Sqrt(Math.Pow((vec2d[2] - vec2d[0]), 2) + Math.Pow((vec2d[3] - vec2d[1]), 2));
-            return length;
+            double deformationGradient = (currentLocalCoordinatesVector[1] - currentLocalCoordinatesVector[0]) / (initialLocalCoordinatesVector[1] - initialLocalCoordinatesVector[0]);
+            return deformationGradient;
         }
 
-        public static double Cosinus(double[] vec2d, double length)
+        private double CalculateStVenantElasticityTensor(double lamda, double mi)
         {
-            double cx = (vec2d[2] - vec2d[0]) / length;
-            return cx;
+            double elasticityTensor = lamda + 2 * mi;
+            return elasticityTensor;
         }
 
-        public static double Sinus(double[] vec2d, double length)
+        private double CalculateNeoHookeElasticityTensor(double lamda, double mi, double deformationGradient)
         {
-            double sx = (vec2d[3] - vec2d[1]) / length;
-            return sx;
+            double elasticityTensor = (lamda / deformationGradient) + 2 * (mi - lamda * Math.Log(deformationGradient)) / deformationGradient;
+            return elasticityTensor;
         }
 
         public static double N1(double ksi)
@@ -78,41 +82,32 @@ namespace FiniteElementsProject
             return n2globalDer;
         }
 
-        public static double F11(double[] vec1dUp, double[] vec1dRef)
+        
+
+        
+
+        public override void CalculateInitialValues()
         {
-            double f11 = (vec1dUp[1] - vec1dUp[0]) / (vec1dRef[1] - vec1dRef[0]);
-            return f11;
+            lengthInitial = CalculateElementLength(node1XYInitial, node2XYInitial);
+            sinInitial = CalculateElementSinus(node1XYInitial, node2XYInitial, lengthInitial);
+            cosInitial = CalculateElementCosinus(node1XYInitial, node2XYInitial, lengthInitial);
+
+            lengthCurrent = lengthInitial;
+            sinCurrent = sinInitial;
+            cosCurrent = cosInitial;
+
+            initialLocalCoordinatesVector = TransformToLocalCoordinates(node1XYInitial, node2XYInitial, cosInitial, sinInitial);
+            currentLocalCoordinatesVector = initialLocalCoordinatesVector;
+
+            deformationGradient = CalculateDeformationGradient();
+
+            //localDisplacementVector = CalculateLocalDisplacementVector();
+            //internalLocalForcesVector = CalculateInternalLocalForcesVector();
+            //internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
+            //localStiffnessMatrix = CreateLocalStiffnessMatrix();
+            //globalStiffnessMatrix = localStiffnessMatrix;
+
         }
-
-        public static double StVenant(double lamda, double mi)
-        {
-            double c = lamda + 2 * mi;
-            return c;
-        }
-
-        public static double NeoHooke(double lamda, double mi, double f11)
-        {
-            double c = (lamda / f11) + 2 * (mi - lamda * Math.Log(f11)) / f11;
-            return c;
-        }
-
-        //public override void CalculateInitialValues()
-        //{
-        //    lengthInitial = CalculateElementLength(node1XYInitial, node2XYInitial);
-        //    sinInitial = CalculateElementSinus(node1XYInitial, node2XYInitial, lengthInitial);
-        //    cosInitial = CalculateElementCosinus(node1XYInitial, node2XYInitial, lengthInitial);
-
-        //    lengthCurrent = lengthInitial;
-        //    sinCurrent = sinInitial;
-        //    cosCurrent = cosInitial;
-
-        //    localDisplacementVector = CalculateLocalDisplacementVector();
-        //    internalLocalForcesVector = CalculateInternalLocalForcesVector();
-        //    internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
-        //    localStiffnessMatrix = CreateLocalStiffnessMatrix();
-        //    globalStiffnessMatrix = localStiffnessMatrix;
-
-        //}
 
         //public override void CalculateCurrentValues()
         //{
