@@ -10,7 +10,7 @@ namespace FiniteElementsProject
         double[] localDisplacementVector;
         private double[] initialLocalCoordinatesVector, currentLocalCoordinatesVector;
         public double[] internalLocalForcesVector, internalGlobalForcesVector;
-        private double deformationGradient;
+        private double deformationGradient,elasticityTensor, lambda, mi, cauchyStress;
 
         public NLTruss(double E, double A, double[] nodesX, double[] nodesY)
             : base(E, A, nodesX, nodesY)
@@ -24,6 +24,12 @@ namespace FiniteElementsProject
             this.internalGlobalForcesVector = new double[6];
             initialLocalCoordinatesVector = new double[2];
             currentLocalCoordinatesVector = new double[2];
+        }
+
+        public override double[,] CreateLambdaMatrix()
+        {
+            double[,] transformationMatrix = new double[,] { { cosCurrent, sinCurrent, 0, 0 }, { 0, 0, cosCurrent, sinCurrent } };
+            return transformationMatrix;
         }
 
         private double[] TransformToLocalCoordinates(double[] node1XY, double[] node2XY, double cosinus, double sinus)
@@ -40,17 +46,56 @@ namespace FiniteElementsProject
             return deformationGradient;
         }
 
-        private double CalculateStVenantElasticityTensor(double lamda, double mi)
+        private double CalculateStVenantElasticityTensor()
         {
-            double elasticityTensor = lamda + 2 * mi;
+            double elasticityTensor = lambda + 2 * mi;
             return elasticityTensor;
         }
 
-        private double CalculateNeoHookeElasticityTensor(double lamda, double mi, double deformationGradient)
+        private double CalculateNeoHookeElasticityTensor()
         {
-            double elasticityTensor = (lamda / deformationGradient) + 2 * (mi - lamda * Math.Log(deformationGradient)) / deformationGradient;
+            double elasticityTensor = (lambda / deformationGradient) + 2 * (mi - lambda * Math.Log(deformationGradient)) / deformationGradient;
             return elasticityTensor;
         }
+
+        private double CalculateCauchyStressForStVenant()
+        {
+            double cauchyStress = deformationGradient * ((lambda / 2) * (deformationGradient * deformationGradient - 1) + mi * (deformationGradient * deformationGradient - 1));
+            return cauchyStress;
+        }
+
+        private double CalculateCauchyStressForNeoHooke()
+        {
+            double cauchyStress = mi / deformationGradient * ((deformationGradient * deformationGradient - 1) + lambda / deformationGradient * (deformationGradient * deformationGradient - 1));
+            return cauchyStress;
+        }
+
+        public override double[,] CreateLocalStiffnessMatrix()
+        {
+            double[,] constitutiveComponentMatrix = new double[,]
+            { {-elasticityTensor/Math.Pow(lengthCurrent,2), 0 }, {0, -elasticityTensor/Math.Pow(lengthCurrent,2) } };
+
+            double[,] initialStressComponentmatrix = new double[,]
+                {{cauchyStress/Math.Pow(lengthCurrent,2), 0 }, {0, cauchyStress/Math.Pow(lengthCurrent,2) } };
+
+            double[,] fullTangentMatrix = MatrixOperations.ScalarMatrixProduct(A / lengthCurrent, MatrixOperations.MatrixAddition(constitutiveComponentMatrix, initialStressComponentmatrix));
+            return fullTangentMatrix;
+        }
+
+        private double[] CalculateInternalLocalForcesVector()
+        {
+            double[] internalLocalForcesVector = new double[] {-cauchyStress*A, cauchyStress*A};
+            return internalLocalForcesVector;
+        }
+
+        private double[] CalculateInternalGlobalForcesVector()
+        {
+            double[,] transformationMatrix = new double[,] { { cosCurrent, sinCurrent, 0, 0 }, { 0, 0, cosCurrent, sinCurrent } };
+            double[] internalGlobalForcesVector = VectorOperations.MatrixVectorProduct(MatrixOperations.Transpose(transformationMatrix), internalLocalForcesVector);
+            return internalGlobalForcesVector;
+        }
+
+
 
         public static double N1(double ksi)
         {
@@ -100,12 +145,14 @@ namespace FiniteElementsProject
             currentLocalCoordinatesVector = initialLocalCoordinatesVector;
 
             deformationGradient = CalculateDeformationGradient();
-
+            elasticityTensor = CalculateNeoHookeElasticityTensor();
+            cauchyStress = CalculateCauchyStressForNeoHooke();
             //localDisplacementVector = CalculateLocalDisplacementVector();
-            //internalLocalForcesVector = CalculateInternalLocalForcesVector();
-            //internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
-            //localStiffnessMatrix = CreateLocalStiffnessMatrix();
-            //globalStiffnessMatrix = localStiffnessMatrix;
+            internalLocalForcesVector = CalculateInternalLocalForcesVector();
+            internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
+            localStiffnessMatrix = CreateLocalStiffnessMatrix();
+            lambdaMatrix = CreateLambdaMatrix();
+            globalStiffnessMatrix = CreateGlobalStiffnessMatrix();
 
         }
 
