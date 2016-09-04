@@ -71,7 +71,7 @@ namespace FiniteElementsProject
 			return null;
 		}
 
-		public double[,] CreateGlobalStiffnessMatrix()
+		public virtual double[,] CreateGlobalStiffnessMatrix()
 		{
 			double[,] lambdaTransposeMatrix = MatrixOperations.Transpose(lambdaMatrix);
 			double[,] localStiffByLambda = MatrixOperations.MatrixProduct(localStiffnessMatrix, lambdaMatrix);

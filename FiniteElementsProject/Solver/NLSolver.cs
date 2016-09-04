@@ -7,7 +7,7 @@ namespace FiniteElementsProject
 {
     class NLSolver
     {
-        public double[] residual;
+        private double[] residual;
         double residualNorm;
         private double[] deltaU;
         public double[] internalForcesTotalVector;
@@ -25,13 +25,14 @@ namespace FiniteElementsProject
             solutionVector = new double[inputData.nodesX.Length*3];
             this.maxIterations = maxIterations;
             boundaryDof = inputData.boundaryDof;
+            this.residual = new double[inputData.nodesX.Length * 3 - boundaryDof.Length];
         }
         public void NewtonRaphson()
         {
             internalForcesTotalVector = discretization.CreateTotalInternalForcesVector();
-
-            residual = VectorOperations.VectorVectorSubtraction(BoundaryConditionsImposition.ReducedVector(internalForcesTotalVector, boundaryDof), forceVector);
             
+            residual = VectorOperations.VectorVectorSubtraction(BoundaryConditionsImposition.ReducedVector(internalForcesTotalVector, boundaryDof), forceVector);
+
             residualNorm = VectorOperations.VectorNorm2(residual);
             int iteration = 0;
             while (residualNorm > tolerance && iteration < maxIterations)
@@ -40,7 +41,7 @@ namespace FiniteElementsProject
                 discretization.CreateTotalStiffnessMatrix();
                 double[,] reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
                 
-                DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, residual);
+                IterativeSolver linearSolution = new IterativeSolver(reducedStiffnessMatrix, residual, 1000);
                 linearSolution.SolveWithMethod("PCG");
                 deltaU = linearSolution.GetSolutionVector;
 

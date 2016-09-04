@@ -9,7 +9,7 @@ namespace FiniteElementsProject
     {
         double[] localDisplacementVector;
         private double[] initialLocalCoordinatesVector, currentLocalCoordinatesVector;
-        public double[] internalLocalForcesVector, internalGlobalForcesVector;
+        public double[] internalLocalForcesVector;
         private double deformationGradient,elasticityTensor, lambda, mi, cauchyStress;
 
         public NLTruss(double E, double A, double[] nodesX, double[] nodesY)
@@ -24,6 +24,8 @@ namespace FiniteElementsProject
             this.internalGlobalForcesVector = new double[6];
             initialLocalCoordinatesVector = new double[2];
             currentLocalCoordinatesVector = new double[2];
+            lambda = 0;
+            mi = E / 2;
         }
 
         public override double[,] CreateLambdaMatrix()
@@ -34,7 +36,7 @@ namespace FiniteElementsProject
 
         private double[] TransformToLocalCoordinates(double[] node1XY, double[] node2XY, double cosinus, double sinus)
         {
-            double[] globalCoordinatesVector = new double[] { node1XY[0], node2XY[0], node1XY[1], node2XY[1] };
+            double[] globalCoordinatesVector = new double[] { node1XY[0], node1XY[1], node2XY[0], node2XY[1] };
             double[,] transformationMatrix = new double[,] { { cosinus, sinus, 0, 0 }, { 0, 0, cosinus, sinus } };
             double[] localCoordinatesVector = VectorOperations.MatrixVectorProduct(transformationMatrix, globalCoordinatesVector);
             return localCoordinatesVector;
@@ -82,6 +84,23 @@ namespace FiniteElementsProject
             return fullTangentMatrix;
         }
 
+        public override double[,] CreateGlobalStiffnessMatrix()
+        {
+            double[,] lambdaTransposeMatrix = MatrixOperations.Transpose(lambdaMatrix);
+            double[,] localStiffByLambda = MatrixOperations.MatrixProduct(localStiffnessMatrix, lambdaMatrix);
+            double[,] globalStiffnessMatrix4x4 = MatrixOperations.MatrixProduct(lambdaTransposeMatrix, localStiffByLambda);
+            globalStiffnessMatrix = new double[,]
+                { { globalStiffnessMatrix4x4[0, 0], globalStiffnessMatrix4x4[0,1], 0, globalStiffnessMatrix4x4[0,2], globalStiffnessMatrix4x4[0,3], 0},
+                  { globalStiffnessMatrix4x4[1, 0], globalStiffnessMatrix4x4[1,1], 0, globalStiffnessMatrix4x4[1,2], globalStiffnessMatrix4x4[1,3], 0},
+                  { 0, 0, 0, 0, 0, 0 },
+                  { globalStiffnessMatrix4x4[2, 0], globalStiffnessMatrix4x4[2,1], 0, globalStiffnessMatrix4x4[2,2], globalStiffnessMatrix4x4[2,3], 0},
+                  { globalStiffnessMatrix4x4[3, 0], globalStiffnessMatrix4x4[3,1], 0, globalStiffnessMatrix4x4[3,2], globalStiffnessMatrix4x4[3,3], 0},
+                  { 0, 0, 0, 0, 0, 0 }
+                };
+
+            return globalStiffnessMatrix;
+        }
+
         private double[] CalculateInternalLocalForcesVector()
         {
             double[] internalLocalForcesVector = new double[] {-cauchyStress*A, cauchyStress*A};
@@ -91,7 +110,8 @@ namespace FiniteElementsProject
         private double[] CalculateInternalGlobalForcesVector()
         {
             double[,] transformationMatrix = new double[,] { { cosCurrent, sinCurrent, 0, 0 }, { 0, 0, cosCurrent, sinCurrent } };
-            double[] internalGlobalForcesVector = VectorOperations.MatrixVectorProduct(MatrixOperations.Transpose(transformationMatrix), internalLocalForcesVector);
+            double[] internalGlobalForcesVector4x1 = VectorOperations.MatrixVectorProduct(MatrixOperations.Transpose(transformationMatrix), internalLocalForcesVector);
+            internalGlobalForcesVector = new double[] { internalGlobalForcesVector4x1[0], internalGlobalForcesVector4x1[1], 0, internalGlobalForcesVector4x1[2], internalGlobalForcesVector4x1[3], 0 };
             return internalGlobalForcesVector;
         }
 
@@ -156,18 +176,24 @@ namespace FiniteElementsProject
 
         }
 
-        //public override void CalculateCurrentValues()
-        //{
-        //    CalculateCurrentNodalCoordinates();
-        //    lengthCurrent = CalculateElementLength(node1XYCurrent, node2XYCurrent);
-        //    sinCurrent = CalculateElementSinus(node1XYCurrent, node2XYCurrent, lengthCurrent);
-        //    cosCurrent = CalculateElementCosinus(node1XYCurrent, node2XYCurrent, lengthCurrent);
-        //    localDisplacementVector = CalculateLocalDisplacementVector();
-        //    internalLocalForcesVector = CalculateInternalLocalForcesVector();
-        //    internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
-        //    localStiffnessMatrix = CreateLocalStiffnessMatrix();
-        //    globalStiffnessMatrix = localStiffnessMatrix;
-        //}
+        public override void CalculateCurrentValues()
+        {
+            CalculateCurrentNodalCoordinates();
+            lengthCurrent = CalculateElementLength(node1XYCurrent, node2XYCurrent);
+            sinCurrent = CalculateElementSinus(node1XYCurrent, node2XYCurrent, lengthCurrent);
+            cosCurrent = CalculateElementCosinus(node1XYCurrent, node2XYCurrent, lengthCurrent);
+
+            currentLocalCoordinatesVector = TransformToLocalCoordinates(node1XYCurrent, node2XYCurrent, cosCurrent, sinCurrent);
+            //localDisplacementVector = CalculateLocalDisplacementVector();
+            deformationGradient = CalculateDeformationGradient();
+            elasticityTensor = CalculateNeoHookeElasticityTensor();
+            cauchyStress = CalculateCauchyStressForNeoHooke();
+            internalLocalForcesVector = CalculateInternalLocalForcesVector();
+            internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
+            localStiffnessMatrix = CreateLocalStiffnessMatrix();
+            lambdaMatrix = CreateLambdaMatrix();
+            globalStiffnessMatrix = localStiffnessMatrix;
+        }
 
     }
 }
