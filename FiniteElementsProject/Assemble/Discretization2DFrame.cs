@@ -44,16 +44,19 @@ namespace FiniteElementsProject
 
 				switch(elementType[elem])
 				{
-				case "Beam":
-					beamElementsList[elem] = new EulerBernoulli1DElement(E[elem], A[elem], I[elem], elementNodesX, elementNodesY);
-					break;
-				case "Bar":
-					beamElementsList[elem] = new Bar1DElement(E[elem], A[elem], elementNodesX, elementNodesY);
-					break;
-                case "NLBeam":
-                    beamElementsList[elem] = new NLEulerBernoulli1DElement(E[elem], A[elem], I[elem], elementNodesX, elementNodesY);
-                    break;
-				}
+                    case "Beam":
+                        beamElementsList[elem] = new EulerBernoulli1DElement(E[elem], A[elem], I[elem], elementNodesX, elementNodesY);
+                        break;
+                    case "Bar":
+                        beamElementsList[elem] = new Bar1DElement(E[elem], A[elem], elementNodesX, elementNodesY);
+                        break;
+                    case "NLBeam":
+                        beamElementsList[elem] = new NLEulerBernoulli1DElement(E[elem], A[elem], I[elem], elementNodesX, elementNodesY);
+                        break;
+                    case "NLTruss":
+                        beamElementsList[elem] = new NLTruss(E[elem], A[elem], elementNodesX, elementNodesY);
+                        break;
+                }
 
                 beamElementsList[elem].CalculateInitialValues();
             }
@@ -102,16 +105,13 @@ namespace FiniteElementsProject
         {
             int totalNodes = nodesX.Length;
             int totalElements = localNode1.Length;
-            //double[] internalForcesTotalVector = new double[totalNodes*3];
 
             for (int element = 0; element < totalElements; element++)
             {
                 int[] dof = { localNode1[element] * 3 - 2, localNode1[element] * 3 - 1, localNode1[element]*3, localNode2[element] * 3 - 2, localNode2[element] * 3 - 1, localNode2[element]*3 };
-                NLEulerBernoulli1DElement nonLinearBeamElement = beamElementsList[element] as NLEulerBernoulli1DElement;
-
                 for (int i = 0; i < 6; i++)
                 {
-                    internalForcesTotalVector[dof[i] - 1] = internalForcesTotalVector[dof[i] - 1] + nonLinearBeamElement.internalGlobalForcesVector[i];
+                    internalForcesTotalVector[dof[i] - 1] = internalForcesTotalVector[dof[i] - 1] + beamElementsList[element].internalGlobalForcesVector[i];
                 }
             }
             return internalForcesTotalVector;

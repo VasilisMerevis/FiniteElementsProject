@@ -8,7 +8,7 @@ namespace FiniteElementsProject
     class NLEulerBernoulli1DElement : Element1D
     {
         double[] localDisplacementVector;
-        public double[] internalLocalForcesVector, internalGlobalForcesVector;
+        public double[] internalLocalForcesVector;
         private double I;
         private double[,] Dmatrix;
         private double[,] Bmatrix;

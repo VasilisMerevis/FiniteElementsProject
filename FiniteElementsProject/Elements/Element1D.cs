@@ -14,6 +14,7 @@ namespace FiniteElementsProject
         protected double[] node1XYCurrent, node2XYCurrent;
         protected double cosInitial, sinInitial, lengthInitial;
         protected double cosCurrent, sinCurrent, lengthCurrent;
+        public double[] internalGlobalForcesVector;
 
         public Element1D (double E, double A, double[] nodesX, double[] nodesY)
 		{
