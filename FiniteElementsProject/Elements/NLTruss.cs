@@ -75,7 +75,8 @@ namespace FiniteElementsProject
         public override double[,] CreateLocalStiffnessMatrix()
         {
             double[,] constitutiveComponentMatrix = new double[,]
-            { {-elasticityTensor/Math.Pow(lengthCurrent,2), 0 }, {0, -elasticityTensor/Math.Pow(lengthCurrent,2) } };
+            { {elasticityTensor/Math.Pow(lengthCurrent,2), -elasticityTensor/Math.Pow(lengthCurrent,2) }, 
+              {-elasticityTensor/Math.Pow(lengthCurrent,2), elasticityTensor/Math.Pow(lengthCurrent,2) } };
 
             double[,] initialStressComponentmatrix = new double[,]
                 {{cauchyStress/Math.Pow(lengthCurrent,2), 0 }, {0, cauchyStress/Math.Pow(lengthCurrent,2) } };
@@ -192,7 +193,7 @@ namespace FiniteElementsProject
             internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
             localStiffnessMatrix = CreateLocalStiffnessMatrix();
             lambdaMatrix = CreateLambdaMatrix();
-            globalStiffnessMatrix = localStiffnessMatrix;
+            globalStiffnessMatrix = CreateGlobalStiffnessMatrix();
         }
 
     }
