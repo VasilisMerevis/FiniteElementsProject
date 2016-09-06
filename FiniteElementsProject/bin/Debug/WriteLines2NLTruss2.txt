@@ -1,0 +1,10 @@
+Xcoord: 0 10 20
+Ycoord: 0 10 0
+Loc.Node1: 1 2
+Loc.Node2: 2 3
+Type: NLTruss NLTruss
+Area: 1 1
+YoungMod: 1e6 1e6
+Inertia: 0 0
+BoundedDOF: 1 2 3 6 7 8 9
+ExtForces: 0 -200000

@@ -2,9 +2,9 @@ Xcoord: 0 1
 Ycoord: 0 0
 Loc.Node1: 1
 Loc.Node2: 2
-Type: NLTruss
+Type: Bar
 Area: 0.1
 YoungMod: 1e4
 Inertia: 0
 BoundedDOF: 1 2 3 5 6
-ExtForces: 2000
+ExtForces: -10000

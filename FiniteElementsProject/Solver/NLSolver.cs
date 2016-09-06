@@ -41,8 +41,8 @@ namespace FiniteElementsProject
                 discretization.CreateTotalStiffnessMatrix();
                 double[,] reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
                 
-                IterativeSolver linearSolution = new IterativeSolver(reducedStiffnessMatrix, residual, 1000);
-                linearSolution.SolveWithMethod("PCG");
+                DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, residual);
+                linearSolution.SolveWithMethod("Gauss");
                 deltaU = linearSolution.GetSolutionVector;
 
                 double[] reducedSolutionVector = BoundaryConditionsImposition.ReducedVector(solutionVector, boundaryDof);

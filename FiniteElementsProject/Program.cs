@@ -31,7 +31,7 @@ namespace FiniteElementsProject
                 Exercise1Frame.GetStiffnessMatrices();
 
                 //Exercise1Frame.CreateTotalStiffnessMatrix();
-                NLSolver solution = new NLSolver(Exercise1Frame, 1000, data);
+                NLSolver solution = new NLSolver(Exercise1Frame, 10000, data);
                 solution.SolveWithMethod("Newton-Raphson");
                 VectorOperations.PrintVector(solution.solutionVector);
             }
