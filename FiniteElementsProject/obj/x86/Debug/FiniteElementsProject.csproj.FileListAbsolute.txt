@@ -18,3 +18,5 @@ C:\Users\vasil\Source\Repos\FiniteElementsProject\FiniteElementsProject\obj\x86\
 C:\Users\vasil\Source\Repos\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.exe
 C:\Users\vasil\Source\Repos\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.pdb
 C:\Users\vasil\Source\Repos\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.csprojResolveAssemblyReference.cache
+C:\Users\Vasilis\Source\Repos\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.exe
+C:\Users\Vasilis\Source\Repos\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.pdb
