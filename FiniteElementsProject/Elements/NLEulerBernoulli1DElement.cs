@@ -83,17 +83,72 @@ namespace FiniteElementsProject
 
         public override double[,] CreateLocalStiffnessMatrix()
         {
-            double[,] transposeBmatrix = MatrixOperations.Transpose(Bmatrix);
-            double[] zVector = new[] {sinCurrent, -cosCurrent, 0, -sinCurrent, cosCurrent, 0};
-            double[] vVector = new[] {-cosCurrent, -sinCurrent, 0, cosCurrent, sinCurrent, 0};
-            double[,] zzMatrix = VectorOperations.VectorVectorTensorProduct(zVector, zVector);
-            double[,] vzMatrix = VectorOperations.VectorVectorTensorProduct(vVector, zVector);
-            double[,] zvMatrix = VectorOperations.VectorVectorTensorProduct(zVector, vVector);
-            double[,] vzPluszv = MatrixOperations.MatrixAddition(vzMatrix, zvMatrix);
-            double[,] firstMember = MatrixOperations.ScalarMatrixProduct(internalLocalForcesVector[0] / lengthCurrent, zzMatrix);
-            double[,] secondMember = MatrixOperations.ScalarMatrixProduct((internalLocalForcesVector[1] + internalLocalForcesVector[2]) / Math.Pow(lengthCurrent, 2), vzPluszv);
-            double[,] thirdMember = MatrixOperations.MatrixProduct(transposeBmatrix, MatrixOperations.MatrixProduct(Dmatrix, Bmatrix));
-            double[,] localStiffnessMatrix = MatrixOperations.MatrixAddition(MatrixOperations.MatrixAddition(firstMember, secondMember), thirdMember);
+            //double[,] transposeBmatrix = MatrixOperations.Transpose(Bmatrix);
+            //double[] zVector = new[] { sinCurrent, -cosCurrent, 0, -sinCurrent, cosCurrent, 0 };
+            //double[] vVector = new[] { -cosCurrent, -sinCurrent, 0, cosCurrent, sinCurrent, 0 };
+            //double[,] zzMatrix = VectorOperations.VectorVectorTensorProduct(zVector, zVector);
+            //double[,] vzMatrix = VectorOperations.VectorVectorTensorProduct(vVector, zVector);
+            //double[,] zvMatrix = VectorOperations.VectorVectorTensorProduct(zVector, vVector);
+            //double[,] vzPluszv = MatrixOperations.MatrixAddition(vzMatrix, zvMatrix);
+            //double[,] firstMember = MatrixOperations.ScalarMatrixProduct(internalLocalForcesVector[0] / lengthCurrent, zzMatrix);
+            //double[,] secondMember = MatrixOperations.ScalarMatrixProduct((internalLocalForcesVector[1] + internalLocalForcesVector[2]) / Math.Pow(lengthCurrent, 2), vzPluszv);
+            //double[,] thirdMember = MatrixOperations.MatrixProduct(transposeBmatrix, MatrixOperations.MatrixProduct(Dmatrix, Bmatrix));
+            //double[,] localStiffnessMatrix = MatrixOperations.MatrixAddition(MatrixOperations.MatrixAddition(firstMember, secondMember), thirdMember);
+
+            double N = internalLocalForcesVector[0];
+            double M1 = internalLocalForcesVector[1];
+            double M2 = internalLocalForcesVector[2];
+            double sinb = sinCurrent;
+            double cosb = cosCurrent;
+            double cosb2 = cosCurrent * cosCurrent;
+            double sinb2 = sinCurrent * sinCurrent;
+            double cosbsinb = cosCurrent * sinCurrent;
+            double Lc = lengthCurrent;
+            double L0 = lengthInitial;
+            double Lc2 = lengthCurrent * lengthCurrent;
+
+            double[,] localStiffnessMatrix = new double[6, 6];
+            localStiffnessMatrix[0, 0] = N * sinb2 / Lc + 12 * E * I * sinb2 / (L0 * Lc2) - 2 * (M2 + M1) * cosbsinb / Lc2 + A * E * cosb2 / L0;
+            localStiffnessMatrix[0, 1] = (M2 + M1) * (cosb2 - sinb2) / Lc2 - N * cosbsinb / Lc - 12 * E * I * cosbsinb / (L0 * Lc2) + A * E * cosbsinb / L0;
+            localStiffnessMatrix[0, 2] = -6 * E * I * sinb / (L0 * Lc);
+            localStiffnessMatrix[0, 3] = -N * sinb2 / Lc - 12 * E * I * sinb2 / (L0 * Lc2) + 2 * (M2 + M1) * cosbsinb / Lc2 - A * E * cosb2 / L0;
+            localStiffnessMatrix[0, 4] = (M2 + M1) * (sinb2 - cosb2) / Lc2 + N * cosbsinb / Lc + 12 * E * I * cosbsinb / (L0 * Lc2) - A * E * cosbsinb / L0;
+            localStiffnessMatrix[0, 5] = -6 * E * I * sinb / (L0 * Lc);
+
+            localStiffnessMatrix[1, 0] = localStiffnessMatrix[0, 1];
+            localStiffnessMatrix[1, 1] = A * E * sinb2 / L0 + 2 * (M2 + M1) * cosbsinb / Lc2 + N * cosb2 / Lc + 12 * E * I * cosb2 / (L0 * Lc2);
+            localStiffnessMatrix[1, 2] = 6 * E * I * cosb / (L0 * Lc);
+            localStiffnessMatrix[1, 3] = (M2 + M1) * (sinb2 - cosb2) / Lc2 + N * cosbsinb / Lc + 12 * E * I * cosbsinb / (L0 * Lc2) - A * E * cosbsinb / L0;
+            localStiffnessMatrix[1, 4] = -A * E * sinb2 / L0 - 2 * (M2 + M1) * cosbsinb / Lc2 - N * cosb2 / Lc - 12 * E * I * cosb2 / (L0 * Lc2);
+            localStiffnessMatrix[1, 5] = 6 * E * I * cosb / (L0 * Lc);
+
+            localStiffnessMatrix[2, 0] = localStiffnessMatrix[0, 2];
+            localStiffnessMatrix[2, 1] = localStiffnessMatrix[1, 2];
+            localStiffnessMatrix[2, 2] = 4 * E * I / L0;
+            localStiffnessMatrix[2, 3] = 6 * E * I * sinb / (L0 * Lc);
+            localStiffnessMatrix[2, 4] = -6 * E * I * cosb / (L0 * Lc);
+            localStiffnessMatrix[2, 5] = 2 * E * I / L0;
+
+            localStiffnessMatrix[3, 0] = localStiffnessMatrix[0, 3];
+            localStiffnessMatrix[3, 1] = localStiffnessMatrix[1, 3];
+            localStiffnessMatrix[3, 2] = localStiffnessMatrix[2, 3];
+            localStiffnessMatrix[3, 3] = N * sinb2 / Lc + 12 * E * I * sinb2 / (L0 * Lc2) - 2 * (M2 + M1) * cosbsinb / Lc2 + A * E * cosb2 / L0;
+            localStiffnessMatrix[3, 4] = (M2 + M1) * (cosb2 - sinb2) / Lc2 - N * cosbsinb / Lc - 12 * E * I * cosbsinb / (L0 * Lc2) + A * E * cosbsinb / L0;
+            localStiffnessMatrix[3, 5] = 6 * E * I * sinb / (L0 * Lc);
+
+            localStiffnessMatrix[4, 0] = localStiffnessMatrix[0, 4];
+            localStiffnessMatrix[4, 1] = localStiffnessMatrix[1, 4];
+            localStiffnessMatrix[4, 2] = localStiffnessMatrix[2, 4];
+            localStiffnessMatrix[4, 3] = localStiffnessMatrix[3, 4];
+            localStiffnessMatrix[4, 4] = A * E * sinb2 / L0 + 2 * (M2 + M1) * cosbsinb / Lc2 + N * cosb2 / Lc + 12 * E * I * cosb2 / (L0 * Lc2);
+            localStiffnessMatrix[4, 5] = -6 * E * I * cosb / (L0 * Lc);
+
+            localStiffnessMatrix[5, 0] = localStiffnessMatrix[0, 5];
+            localStiffnessMatrix[5, 1] = localStiffnessMatrix[1, 5];
+            localStiffnessMatrix[5, 2] = localStiffnessMatrix[2, 5];
+            localStiffnessMatrix[5, 3] = localStiffnessMatrix[3, 5];
+            localStiffnessMatrix[5, 4] = localStiffnessMatrix[4, 5];
+            localStiffnessMatrix[5, 5] = 4 * E * I / L0;
 
             return localStiffnessMatrix;
         }
