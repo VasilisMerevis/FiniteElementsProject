@@ -17,6 +17,8 @@ namespace FiniteElementsProject
         public double[] solutionVector;
         private double[] forceVector;
         private Discretization2DFrame discretization;
+        private double numberOfLoadSteps;
+        private double[] dU;
 
         public NLSolver(Discretization2DFrame discretization, int maxIterations, InputData inputData)
         {
@@ -59,6 +61,24 @@ namespace FiniteElementsProject
 
                 iteration = iteration + 1;
             }
+        }
+
+        public void LoadControlledNewtonRaphson()
+        {
+            double lambda = 1 / numberOfLoadSteps;
+            double[] df = VectorOperations.VectorScalarProduct(forceVector, lambda);
+
+            Array.Clear(discretization.TotalStiffnessMatrix, 0, discretization.TotalStiffnessMatrix.Length);
+            discretization.CreateTotalStiffnessMatrix();
+            double[,] reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
+
+            DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, df);
+            linearSolution.SolveWithMethod("Gauss");
+            dU = linearSolution.GetSolutionVector;
+
+            double[] reducedSolutionVector = BoundaryConditionsImposition.ReducedVector(solutionVector, boundaryDof);
+            reducedSolutionVector = VectorOperations.VectorVectorSubtraction(reducedSolutionVector, dU);
+            solutionVector = BoundaryConditionsImposition.CreateFullVectorFromReducedVector(reducedSolutionVector, boundaryDof);
         }
 
         public void SolveWithMethod(string method)
