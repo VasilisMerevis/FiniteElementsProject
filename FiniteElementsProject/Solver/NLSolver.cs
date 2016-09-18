@@ -20,7 +20,7 @@ namespace FiniteElementsProject
         private int numberOfLoadSteps = 10;
         private double[] dU;
         double[] checking;
-        readonly double[] df;
+        private readonly double[] incrementDf;
         double lambda;
 
         public NLSolver(Discretization2DFrame discretization, int maxIterations, InputData inputData)
@@ -33,7 +33,7 @@ namespace FiniteElementsProject
             this.residual = new double[inputData.nodesX.Length * 3 - boundaryDof.Length];
             //this.df = new double[forceVector.Length];
             this.lambda = 1 / Convert.ToDouble(numberOfLoadSteps);
-            this.df = VectorOperations.VectorScalarProduct(forceVector, lambda);
+            this.incrementDf = VectorOperations.VectorScalarProduct(forceVector, lambda);
         }
         public void NewtonRaphson()
         {
@@ -84,7 +84,7 @@ namespace FiniteElementsProject
             {
                 //lambda = 1 / Convert.ToDouble(numberOfLoadSteps);
                 //df = VectorOperations.VectorScalarProduct(forceVector, lambda);
-                incrementalExternalForcesVector = VectorOperations.VectorVectorAddition(incrementalExternalForcesVector, df);
+                incrementalExternalForcesVector = VectorOperations.VectorVectorAddition(incrementalExternalForcesVector, incrementDf);
 
 
                 discretization.UpdateValues(solutionVector);
@@ -95,9 +95,8 @@ namespace FiniteElementsProject
                 discretization.CreateTotalStiffnessMatrix();
                 double[,] reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
 
-                double[] tempdf = df;
-                DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, tempdf);
-                linearSolution.SolveWithMethod("Gauss");
+                DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, incrementDf);
+                linearSolution.SolveWithMethod("Cholesky");
                 dU = linearSolution.GetSolutionVector;
 
                 double[] reducedSolutionVector = BoundaryConditionsImposition.ReducedVector(solutionVector, boundaryDof);
