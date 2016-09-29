@@ -78,6 +78,16 @@ namespace FiniteElementsProject
         private double[] CalculateInternalGlobalForcesVector()
         {
             internalGlobalForcesVector = VectorOperations.MatrixVectorProduct(MatrixOperations.Transpose(Bmatrix), internalLocalForcesVector);
+            //double scalar1 = E*I*(node1GlobalDisplacementVector[2] - betaAngleInitial - betaAngleCurrent) / lengthInitial;
+            //double scalar2 = E*I*(node2GlobalDisplacementVector[2] - betaAngleInitial - betaAngleCurrent) / lengthInitial;
+            //double[] intforceV = new double[6];
+            //intforceV[0] = -sinCurrent * (4 * scalar2 + 2 * scalar1) / lengthCurrent - sinCurrent * (2 * scalar2 + 4 * scalar1) / lengthCurrent - A * E*(lengthCurrent - lengthInitial) * cosCurrent / lengthInitial;
+            //intforceV[1] = cosCurrent * (4 * scalar2 + 2 * scalar1) / lengthCurrent + cosCurrent * (2 * scalar2 + 4 * scalar1) / lengthCurrent - A * E * (lengthCurrent - lengthInitial) * sinCurrent / lengthInitial;
+            //intforceV[2] = 2 * scalar2 + 4 * scalar1;
+            //intforceV[3] = sinCurrent * (4 * scalar2 + 2 * scalar1) / lengthCurrent + sinCurrent * (2 * scalar2 + 4 * scalar1) / lengthCurrent + A * E * (lengthCurrent - lengthInitial) * cosCurrent / lengthInitial;
+            //intforceV[4] = -cosCurrent * (4 * scalar2 + 2 * scalar1) / lengthCurrent - cosCurrent * (2 * scalar2 + 4 * scalar1) / lengthCurrent + A * E * (lengthCurrent - lengthInitial) * cosCurrent / lengthInitial;
+            //intforceV[5] = 4 * scalar2 + 2 * scalar1;
+            //internalGlobalForcesVector = intforceV;
             return internalGlobalForcesVector; 
         }
 

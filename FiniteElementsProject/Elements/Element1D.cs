@@ -2,13 +2,13 @@ using System;
 
 namespace FiniteElementsProject
 {
-	public class Element1D : IElements1D
-	{
-		protected double E, A;
-		protected double[] nodesX, nodesY;
-		protected double[,] localStiffnessMatrix;
-		protected double[,] lambdaMatrix;
-		public double[,] globalStiffnessMatrix { get; set; }
+    public class Element1D : IElements1D
+    {
+        protected double E, A;
+        protected double[] nodesX, nodesY;
+        protected double[,] localStiffnessMatrix;
+        protected double[,] lambdaMatrix;
+        public double[,] globalStiffnessMatrix { get; set; }
         protected double[] node1GlobalDisplacementVector, node2GlobalDisplacementVector;
         protected double[] node1XYInitial, node2XYInitial;
         protected double[] node1XYCurrent, node2XYCurrent;
@@ -17,11 +17,11 @@ namespace FiniteElementsProject
         public double[] internalGlobalForcesVector;
 
         public Element1D (double E, double A, double[] nodesX, double[] nodesY)
-		{
-			this.E = E;
-			this.A = A;
-			this.nodesX = nodesX;
-			this.nodesY = nodesY;
+        {
+            this.E = E;
+            this.A = A;
+            this.nodesX = nodesX;
+            this.nodesY = nodesY;
             node1XYInitial = new[] { nodesX[0], nodesY[0] };
             node2XYInitial = new[] { nodesX[1], nodesY[1] };
             node1XYCurrent = new double[2];
@@ -62,23 +62,23 @@ namespace FiniteElementsProject
         }
 
         public virtual double[,] CreateLocalStiffnessMatrix()
-		{
-			return null;
-		}
+        {
+            return null;
+        }
 
-		public virtual double[,] CreateLambdaMatrix()
-		{
-			return null;
-		}
+        public virtual double[,] CreateLambdaMatrix()
+        {
+            return null;
+        }
 
-		public virtual double[,] CreateGlobalStiffnessMatrix()
-		{
-			double[,] lambdaTransposeMatrix = MatrixOperations.Transpose(lambdaMatrix);
-			double[,] localStiffByLambda = MatrixOperations.MatrixProduct(localStiffnessMatrix, lambdaMatrix);
-			globalStiffnessMatrix = MatrixOperations.MatrixProduct(lambdaTransposeMatrix, localStiffByLambda);
+        public virtual double[,] CreateGlobalStiffnessMatrix()
+        {
+            double[,] lambdaTransposeMatrix = MatrixOperations.Transpose(lambdaMatrix);
+            double[,] localStiffByLambda = MatrixOperations.MatrixProduct(localStiffnessMatrix, lambdaMatrix);
+            globalStiffnessMatrix = MatrixOperations.MatrixProduct(lambdaTransposeMatrix, localStiffByLambda);
 
-			return globalStiffnessMatrix;
-		}
+            return globalStiffnessMatrix;
+        }
 
         public virtual void CalculateInitialValues()
         {

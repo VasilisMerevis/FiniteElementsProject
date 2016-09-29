@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace FiniteElementsProject
 {
-	class Program
-	{
+    class Program
+    {
         static void Main(string[] args)
         {
             //Declaration of basic frame info

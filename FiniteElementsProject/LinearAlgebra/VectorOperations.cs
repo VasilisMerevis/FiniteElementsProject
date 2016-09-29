@@ -8,32 +8,32 @@ namespace FiniteElementsProject
 {
     static class VectorOperations
     {
-		public static void PrintVector(double [] vector)
-		{
-			int vectorRows = vector.GetLength(0);
-			for (int row = 0; row < vectorRows; row++)
-			{
-				Console.WriteLine(String.Format("{0}", vector[row]));
-			}
-		}
+        public static void PrintVector(double [] vector)
+        {
+            int vectorRows = vector.GetLength(0);
+            for (int row = 0; row < vectorRows; row++)
+            {
+                Console.WriteLine(String.Format("{0}", vector[row]));
+            }
+        }
 
         public static double CalculateVectorLengthFromEndPoints(double X1, double X2, double Y1, double Y2)
         {
-			double vectorLength = Math.Sqrt(Math.Pow((X2 - X1), 2) + Math.Pow((Y2 - Y1), 2));
-			return vectorLength;
+            double vectorLength = Math.Sqrt(Math.Pow((X2 - X1), 2) + Math.Pow((Y2 - Y1), 2));
+            return vectorLength;
         }
 
         public static double CalculateVectorCosinusFromEndPoints(double X1, double X2, double Y1, double Y2)
         {
-			double length = CalculateVectorLengthFromEndPoints(X1, X2, Y1, Y2);
-			double cosB = (X2 - X1) / length;
+            double length = CalculateVectorLengthFromEndPoints(X1, X2, Y1, Y2);
+            double cosB = (X2 - X1) / length;
             return cosB;
         }
 
         public static double CalculateVectorSinusFromEndPoints(double X1, double X2, double Y1, double Y2)
         {
-			double length = CalculateVectorLengthFromEndPoints(X1, X2, Y1, Y2);
-			double sinB = (Y2 - Y1) / length;
+            double length = CalculateVectorLengthFromEndPoints(X1, X2, Y1, Y2);
+            double sinB = (Y2 - Y1) / length;
             return sinB;
         }
 
@@ -120,31 +120,31 @@ namespace FiniteElementsProject
             return matrix;
         }
 
-		public static double VectorDotProduct(double[] vector1, double[] vector2)
-		{
-			if (vector1.Length == vector2.Length)
-			{
-				double sum = 0;
-				for (int row = 0; row < vector1.Length; row++)
-				{
-					sum = sum + vector1 [row] * vector2 [row];
-				}
-				return sum;
-			}
-			else
-			{
-				throw new Exception("Vectors Dot Product: Not equally sized vectors");
-			}
-		}
+        public static double VectorDotProduct(double[] vector1, double[] vector2)
+        {
+            if (vector1.Length == vector2.Length)
+            {
+                double sum = 0;
+                for (int row = 0; row < vector1.Length; row++)
+                {
+                    sum = sum + vector1 [row] * vector2 [row];
+                }
+                return sum;
+            }
+            else
+            {
+                throw new Exception("Vectors Dot Product: Not equally sized vectors");
+            }
+        }
 
-		public static double[] VectorScalarProduct(double[] vector, double scalar)
-		{
-			for (int row = 0; row < vector.Length; row++)
-			{
-				vector [row] = scalar * vector [row];
-			}
-			return vector;
-		}
+        public static double[] VectorScalarProduct(double[] vector, double scalar)
+        {
+            for (int row = 0; row < vector.Length; row++)
+            {
+                vector [row] = scalar * vector [row];
+            }
+            return vector;
+        }
 
     }
 }

@@ -16,6 +16,10 @@ namespace FiniteElementsProject
 			globalStiffnessMatrix = new double[6, 6];
 		}
 
+        /// <summary>
+        /// Hello teo
+        /// </summary>
+        /// <returns>returns the stiffness </returns>
 		public override double[,] CreateLocalStiffnessMatrix()
 		{
 			double length = VectorOperations.CalculateVectorLengthFromEndPoints (nodesX [0], nodesX [1], nodesY [0], nodesY [1]);			localStiffnessMatrix = new[,]
