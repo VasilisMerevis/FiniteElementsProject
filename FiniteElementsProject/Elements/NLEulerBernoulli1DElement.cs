@@ -7,11 +7,11 @@ namespace FiniteElementsProject
 {
     class NLEulerBernoulli1DElement : Element1D
     {
-        double[] localDisplacementVector;
-        public double[] internalLocalForcesVector;
+        //double[] localDisplacementVector;
+        //public double[] internalLocalForcesVector;
         private double I;
-        private double[,] Dmatrix;
-        private double[,] Bmatrix;
+        //private double[,] Dmatrix;
+        //private double[,] Bmatrix;
         private double betaAngleInitial;
         private double betaAngleCurrent;
 
@@ -33,69 +33,69 @@ namespace FiniteElementsProject
             return betaAngle;
         }
 
-        private double[] CalculateLocalDisplacementVector()
-        {
-            localDisplacementVector = new[]
-            {
-                lengthCurrent - lengthInitial,
-                node1GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial,
-                node2GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial
-            };
-            return localDisplacementVector;
-        }
+        //private double[] CalculateLocalDisplacementVector()
+        //{
+        //    localDisplacementVector = new[]
+        //    {
+        //        lengthCurrent - lengthInitial,
+        //        node1GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial,
+        //        node2GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial
+        //    };
+        //    return localDisplacementVector;
+        //}
       
+        //private double[,] CreateDMatrix()
+        //{
+        //    Dmatrix = new[,]
+        //    {
+        //        { E * A / lengthInitial, 0, 0 },
+        //        { 0 , 4 * E * I / lengthInitial, 2 * E * I / lengthInitial },
+        //        { 0 , 2 * E * I / lengthInitial, 4 * E * I / lengthInitial }
+        //    };
 
-        private double[,] CreateDMatrix()
-        {
-            Dmatrix = new[,]
-            {
-                { E * A / lengthInitial, 0, 0 },
-                { 0 , 4 * E * I / lengthInitial, 2 * E * I / lengthInitial },
-                { 0 , 2 * E * I / lengthInitial, 4 * E * I / lengthInitial }
-            };
+        //    return Dmatrix;
+        //}
 
-            return Dmatrix;
-        }
+        //private double[,] CreateBMatrix()
+        //{
+        //    Bmatrix = new[,]
+        //    {
+        //        { -cosCurrent, -sinCurrent, 0, cosCurrent, sinCurrent, 0 },
+        //        { -sinCurrent / lengthCurrent, cosCurrent / lengthCurrent, 1, sinCurrent / lengthCurrent, -cosCurrent / lengthCurrent, 0 },
+        //        { -sinCurrent / lengthCurrent, cosCurrent / lengthCurrent, 0, sinCurrent / lengthCurrent, -cosCurrent / lengthCurrent, 1 }
+        //    };
 
-        private double[,] CreateBMatrix()
-        {
-            Bmatrix = new[,]
-            {
-                { -cosCurrent, -sinCurrent, 0, cosCurrent, sinCurrent, 0 },
-                { -sinCurrent / lengthCurrent, cosCurrent / lengthCurrent, 1, sinCurrent / lengthCurrent, -cosCurrent / lengthCurrent, 0 },
-                { -sinCurrent / lengthCurrent, cosCurrent / lengthCurrent, 0, sinCurrent / lengthCurrent, -cosCurrent / lengthCurrent, 1 }
-            };
+        //    return Bmatrix;
+        //}
 
-            return Bmatrix;
-        }
-
-        private double[] CalculateInternalLocalForcesVector()
-        {
-            internalLocalForcesVector = VectorOperations.MatrixVectorProduct(Dmatrix, localDisplacementVector);
-            return internalLocalForcesVector;
-        }
+        //private double[] CalculateInternalLocalForcesVector()
+        //{
+        //    internalLocalForcesVector = VectorOperations.MatrixVectorProduct(Dmatrix, localDisplacementVector);
+        //    return internalLocalForcesVector;
+        //}
 
         private double[] CalculateInternalGlobalForcesVector()
         {
-            internalGlobalForcesVector = VectorOperations.MatrixVectorProduct(MatrixOperations.Transpose(Bmatrix), internalLocalForcesVector);
-            //double scalar1 = E*I*(node1GlobalDisplacementVector[2] - betaAngleInitial - betaAngleCurrent) / lengthInitial;
-            //double scalar2 = E*I*(node2GlobalDisplacementVector[2] - betaAngleInitial - betaAngleCurrent) / lengthInitial;
-            //double[] intforceV = new double[6];
-            //intforceV[0] = -sinCurrent * (4 * scalar2 + 2 * scalar1) / lengthCurrent - sinCurrent * (2 * scalar2 + 4 * scalar1) / lengthCurrent - A * E*(lengthCurrent - lengthInitial) * cosCurrent / lengthInitial;
-            //intforceV[1] = cosCurrent * (4 * scalar2 + 2 * scalar1) / lengthCurrent + cosCurrent * (2 * scalar2 + 4 * scalar1) / lengthCurrent - A * E * (lengthCurrent - lengthInitial) * sinCurrent / lengthInitial;
-            //intforceV[2] = 2 * scalar2 + 4 * scalar1;
-            //intforceV[3] = sinCurrent * (4 * scalar2 + 2 * scalar1) / lengthCurrent + sinCurrent * (2 * scalar2 + 4 * scalar1) / lengthCurrent + A * E * (lengthCurrent - lengthInitial) * cosCurrent / lengthInitial;
-            //intforceV[4] = -cosCurrent * (4 * scalar2 + 2 * scalar1) / lengthCurrent - cosCurrent * (2 * scalar2 + 4 * scalar1) / lengthCurrent + A * E * (lengthCurrent - lengthInitial) * cosCurrent / lengthInitial;
-            //intforceV[5] = 4 * scalar2 + 2 * scalar1;
+            //internalGlobalForcesVector = VectorOperations.MatrixVectorProduct(MatrixOperations.Transpose(Bmatrix), internalLocalForcesVector);
+            double N = A * E * (lengthCurrent - lengthInitial) / lengthInitial;
+            double M1 = 2 * E * I * (node2GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial) / lengthInitial + 4 * E * I * (node1GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial) / lengthInitial;
+            double M2 = 4 * E * I * (node2GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial) / lengthInitial + 2 * E * I * (node1GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial) / lengthInitial;
+            double[] intforceV = new double[6];
+            intforceV[0] = -(M2 * sinCurrent / lengthCurrent) - (M1 * sinCurrent / lengthCurrent) - N * cosCurrent;
+            intforceV[1] = (M2 * cosCurrent / lengthCurrent) + (M1 * cosCurrent / lengthCurrent) - N * sinCurrent;
+            intforceV[2] = M1;
+            intforceV[3] = (M2 * sinCurrent / lengthCurrent) + (M1 * sinCurrent / lengthCurrent) + N * cosCurrent;
+            intforceV[4] = -(M2 * cosCurrent / lengthCurrent) - (M1 * cosCurrent / lengthCurrent) + N * sinCurrent;
+            intforceV[5] = M2;
             //internalGlobalForcesVector = intforceV;
-            return internalGlobalForcesVector; 
+            return intforceV; 
         }
 
         public override double[,] CreateLocalStiffnessMatrix()
         {
-            double N = internalLocalForcesVector[0];
-            double M1 = internalLocalForcesVector[1];
-            double M2 = internalLocalForcesVector[2];
+            double N = A * E * (lengthCurrent - lengthInitial) / lengthInitial;
+            double M1 = 2 * E * I * (node2GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial) / lengthInitial + 4 * E * I * (node1GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial) / lengthInitial;
+            double M2 = 4 * E * I * (node2GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial) / lengthInitial + 2 * E * I * (node1GlobalDisplacementVector[2] - betaAngleCurrent + betaAngleInitial) / lengthInitial;
             double sinb = sinCurrent;
             double cosb = cosCurrent;
             double cosb2 = cosCurrent * cosCurrent;
@@ -179,10 +179,10 @@ namespace FiniteElementsProject
             cosCurrent = cosInitial;
             betaAngleCurrent = betaAngleInitial;
 
-            Bmatrix = CreateBMatrix();
-            localDisplacementVector = CalculateLocalDisplacementVector();
-            Dmatrix = CreateDMatrix();
-            internalLocalForcesVector = CalculateInternalLocalForcesVector();
+            //Bmatrix = CreateBMatrix();
+            //localDisplacementVector = CalculateLocalDisplacementVector();
+            //Dmatrix = CreateDMatrix();
+            //internalLocalForcesVector = CalculateInternalLocalForcesVector();
             internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
             localStiffnessMatrix = CreateLocalStiffnessMatrix();
             globalStiffnessMatrix = localStiffnessMatrix;
@@ -196,10 +196,10 @@ namespace FiniteElementsProject
             sinCurrent = CalculateElementSinus(node1XYCurrent, node2XYCurrent, lengthCurrent);
             cosCurrent = CalculateElementCosinus(node1XYCurrent, node2XYCurrent, lengthCurrent);
             betaAngleCurrent = CalculateElementBetaAngle(node1XYCurrent, node2XYCurrent);
-            Bmatrix = CreateBMatrix();
-            localDisplacementVector = CalculateLocalDisplacementVector();
-            Dmatrix = CreateDMatrix();
-            internalLocalForcesVector = CalculateInternalLocalForcesVector();
+            //Bmatrix = CreateBMatrix();
+            //localDisplacementVector = CalculateLocalDisplacementVector();
+            //Dmatrix = CreateDMatrix();
+            //internalLocalForcesVector = CalculateInternalLocalForcesVector();
             internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
             localStiffnessMatrix = CreateLocalStiffnessMatrix();
             globalStiffnessMatrix = localStiffnessMatrix;

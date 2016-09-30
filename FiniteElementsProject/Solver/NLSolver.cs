@@ -50,7 +50,7 @@ namespace FiniteElementsProject
                 double[,] reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
                 
                 DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, residual);
-                linearSolution.SolveWithMethod("Gauss");
+                linearSolution.SolveWithMethod("PCG");
                 deltaU = linearSolution.GetSolutionVector;
 
                 double[] reducedSolutionVector = BoundaryConditionsImposition.ReducedVector(solutionVector, boundaryDof);
@@ -66,7 +66,10 @@ namespace FiniteElementsProject
                 residualNorm = VectorOperations.VectorNorm2(residual);
 
                 iteration = iteration + 1;
+               
             }
+            Console.WriteLine("Solution stopped at iteration");
+            Console.WriteLine(iteration);
         }
 
         public void LoadControlledNewtonRaphson()
