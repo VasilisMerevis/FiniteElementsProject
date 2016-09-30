@@ -93,18 +93,6 @@ namespace FiniteElementsProject
 
         public override double[,] CreateLocalStiffnessMatrix()
         {
-            //double[,] transposeBmatrix = MatrixOperations.Transpose(Bmatrix);
-            //double[] zVector = new[] { sinCurrent, -cosCurrent, 0, -sinCurrent, cosCurrent, 0 };
-            //double[] vVector = new[] { -cosCurrent, -sinCurrent, 0, cosCurrent, sinCurrent, 0 };
-            //double[,] zzMatrix = VectorOperations.VectorVectorTensorProduct(zVector, zVector);
-            //double[,] vzMatrix = VectorOperations.VectorVectorTensorProduct(vVector, zVector);
-            //double[,] zvMatrix = VectorOperations.VectorVectorTensorProduct(zVector, vVector);
-            //double[,] vzPluszv = MatrixOperations.MatrixAddition(vzMatrix, zvMatrix);
-            //double[,] firstMember = MatrixOperations.ScalarMatrixProduct(internalLocalForcesVector[0] / lengthCurrent, zzMatrix);
-            //double[,] secondMember = MatrixOperations.ScalarMatrixProduct((internalLocalForcesVector[1] + internalLocalForcesVector[2]) / Math.Pow(lengthCurrent, 2), vzPluszv);
-            //double[,] thirdMember = MatrixOperations.MatrixProduct(transposeBmatrix, MatrixOperations.MatrixProduct(Dmatrix, Bmatrix));
-            //double[,] localStiffnessMatrix = MatrixOperations.MatrixAddition(MatrixOperations.MatrixAddition(firstMember, secondMember), thirdMember);
-
             double N = internalLocalForcesVector[0];
             double M1 = internalLocalForcesVector[1];
             double M2 = internalLocalForcesVector[2];
