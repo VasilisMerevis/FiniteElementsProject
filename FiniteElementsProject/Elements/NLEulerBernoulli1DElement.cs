@@ -7,7 +7,7 @@ namespace FiniteElementsProject
 {
     public class NLEulerBernoulli1DElement : Element1D
     {
-        private double I;
+        private readonly double I;
         private double betaAngleInitial;
         private double betaAngleCurrent;
 
@@ -15,10 +15,10 @@ namespace FiniteElementsProject
             : base(E, A, nodesX, nodesY)
         {
             this.I = I;
-            this.node1GlobalDisplacementVector = new double[3];
-            this.node2GlobalDisplacementVector = new double[3];
+            node1GlobalDisplacementVector = new double[3];
+            node2GlobalDisplacementVector = new double[3];
             globalStiffnessMatrix = new double[6, 6];
-            this.internalGlobalForcesVector = new double[6];
+            internalGlobalForcesVector = new double[6];
         }
 
         private double CalculateElementBetaAngle(double[] node1XY, double[] node2XY)
