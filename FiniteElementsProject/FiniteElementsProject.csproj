@@ -37,6 +37,7 @@
     <Compile Include="Elements\NLEulerBernoulli1DElement.cs" />
     <Compile Include="Elements\NLTruss.cs" />
     <Compile Include="Elements\NLTruss2.cs" />
+    <Compile Include="Solver\CentralDifferencesSolver.cs" />
     <Compile Include="Solver\NLSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
