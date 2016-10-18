@@ -28,6 +28,7 @@ namespace FiniteElementsProject
             node2XYCurrent = new double[2];
         }
 
+        #region Calculate_Geometric_Data
         protected void CalculateCurrentNodalCoordinates()
         {
             node1XYCurrent = new[]
@@ -60,6 +61,7 @@ namespace FiniteElementsProject
             double sinus = (node2XY[1] - node1XY[1]) / length;
             return sinus;
         }
+        #endregion
 
         public virtual double[,] CreateLocalStiffnessMatrix()
         {
