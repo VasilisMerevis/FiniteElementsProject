@@ -1,0 +1,10 @@
+Xcoord: 0 0,3
+Ycoord: 0 0
+Loc.Node1: 1
+Loc.Node2: 2
+Type: NLBeam
+Area: 0,01
+YoungMod: 200e9
+Inertia: 8,333e-6
+BoundedDOF: 1 2 3
+ExtForces: 0 -2000000 0
