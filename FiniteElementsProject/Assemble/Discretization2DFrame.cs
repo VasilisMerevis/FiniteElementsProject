@@ -63,6 +63,14 @@ namespace FiniteElementsProject
             return beamElementsList;
         }
 
+        public void GetMassMatrices()
+        {
+            for (int elem = 0; elem < localNode1.Length; elem++)
+            {
+                beamElementsList[elem].CreateMassMatrix();
+            }
+        }
+
         public void UpdateValues(double[] totalDisplacementVector)
         {
             int totalElements = localNode1.Length;

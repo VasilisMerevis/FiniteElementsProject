@@ -8,6 +8,9 @@ namespace FiniteElementsProject
 {
     class Bar1DElement : Element1D
     {
+        
+        public double density = 1;
+
         public Bar1DElement(double E, double A, double[] nodesX, double[] nodesY)
             :base(E, A, nodesX, nodesY)
         {
@@ -43,6 +46,22 @@ namespace FiniteElementsProject
                 { 0, 0, 0, 0, 0, 1 }};
 
             return lambdaMatrix;
+        }
+
+        public override double[,] CreateMassMatrix()
+        {
+            double length = Math.Sqrt(Math.Pow((nodesY[1] - nodesY[0]), 2) + Math.Pow((nodesX[1] - nodesX[0]), 2));
+            double elementMass = density * A * length;
+            massMatrix = new double[,]
+            {
+                {elementMass/2, 0, 0, 0, 0, 0},
+                {0, elementMass/2, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0},
+                {0, 0, 0, elementMass/2, 0, 0},
+                {0, 0, 0, 0, elementMass/2, 0},
+                {0, 0, 0, 0, 0, 0}
+            };
+            return massMatrix;
         }
     }
 }

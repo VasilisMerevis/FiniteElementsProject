@@ -6,7 +6,7 @@ namespace FiniteElementsProject
     {
         protected double E, A;
         protected double[] nodesX, nodesY;
-        protected double[,] localStiffnessMatrix;
+        protected double[,] localStiffnessMatrix, massMatrix;
         protected double[,] lambdaMatrix;
         public double[,] globalStiffnessMatrix { get; set; }
         protected double[] node1GlobalDisplacementVector, node2GlobalDisplacementVector;
@@ -64,6 +64,11 @@ namespace FiniteElementsProject
         #endregion
 
         public virtual double[,] CreateLocalStiffnessMatrix()
+        {
+            return null;
+        }
+
+        public virtual double[,] CreateMassMatrix()
         {
             return null;
         }
