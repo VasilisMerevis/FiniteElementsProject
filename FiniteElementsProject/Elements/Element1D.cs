@@ -6,9 +6,10 @@ namespace FiniteElementsProject
     {
         protected double E, A;
         protected double[] nodesX, nodesY;
-        protected double[,] localStiffnessMatrix, massMatrix;
+        protected double[,] localStiffnessMatrix;
         protected double[,] lambdaMatrix;
         public double[,] globalStiffnessMatrix { get; set; }
+        public double[,] massMatrix { get; set; }
         protected double[] node1GlobalDisplacementVector, node2GlobalDisplacementVector;
         protected double[] node1XYInitial, node2XYInitial;
         protected double[] node1XYCurrent, node2XYCurrent;

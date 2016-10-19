@@ -41,7 +41,7 @@ namespace FiniteElementsProject
                 Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
                 Exercise1Frame.GetStiffnessMatrices();
                 Exercise1Frame.CreateTotalStiffnessMatrix();
-
+                Exercise1Frame.GetMassMatrices();
                 //Creation reduced matrix depended on boundary conditions
                 double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
 

@@ -10,7 +10,7 @@ namespace FiniteElementsProject.Solver
         public double totalTime;
         public int timeStepsNumber;
         public double time;
-        public double[,] explicitSolution;
+        public Dictionary<double,double[]> explicitSolution;
         private double timeStep;
 
         public CentralDifferencesSolver(double totalTime, int timeStepsNumber)
@@ -22,7 +22,10 @@ namespace FiniteElementsProject.Solver
 
         public void SolveExplicit()
         {
+            for (int i = 0; i < timeStepsNumber; i++)
+            {
 
+            }
         }
     }
 }
