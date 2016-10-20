@@ -29,16 +29,23 @@ namespace FiniteElementsProject.Solver
 
         public void SolveExplicit()
         {
+            double[,] twoI = MatrixOperations.CreateDiagonalMatrix(solutionLength, 2);
+            double[,] oneI = MatrixOperations.CreateDiagonalMatrix(solutionLength, 1);
             for (int i = 1; i < timeStepsNumber; i++)
             {
                 time = i * timeStep;
                 double[] solution = new double[solutionLength];
                 double[] dt2MR = VectorOperations.VectorScalarProduct(
                                     VectorOperations.MatrixVectorProduct(invertedMassMatrix, externalForcesVector), timeStep * timeStep);
-                double[] 
-                solution =  VectorOperations.MatrixVectorProduct(invertedMassMatrix, externalForcesVector)
-                explicitSolution.Add(time, )
-                explicitSolution<time,> = 
+                double[,] dt2MK = MatrixOperations.ScalarMatrixProduct(timeStep * timeStep,
+                                    MatrixOperations.MatrixProduct(invertedMassMatrix, stiffenessMatrix));
+                double[] dt2MKminus2IbyU = VectorOperations.MatrixVectorProduct(
+                                                MatrixOperations.MatrixSubtraction(dt2MK, twoI), solution);
+                double[] IbyU = VectorOperations.MatrixVectorProduct(oneI, solution);
+                double[] explicitSolutionVector = VectorOperations.VectorVectorSubtraction(dt2MR,
+                                                VectorOperations.VectorVectorAddition(dt2MKminus2IbyU, IbyU));
+
+                explicitSolution.Add(time, explicitSolutionVector);
             }
         }
     }

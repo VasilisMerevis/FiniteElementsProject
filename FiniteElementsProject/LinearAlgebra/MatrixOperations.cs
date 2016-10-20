@@ -24,6 +24,16 @@ namespace FiniteElementsProject
 
         }
 
+        public static double[,] CreateDiagonalMatrix(int dimension, double diagonalNumber)
+        {
+            double[,] diagMatrix = new double[dimension, dimension];
+            for (int i = 0; i < dimension; i++)
+            {
+                diagMatrix[i, i] = diagonalNumber;
+            }
+            return diagMatrix;
+        }
+
         public static double [,] Transpose(double [,] matrix)
         {
             int matrixRows = matrix.GetLength(0);
@@ -70,6 +80,22 @@ namespace FiniteElementsProject
                 for (int col = 0; col < matrixcols; col++)
                 {
                     sumMatrix[row, col] = matrix1[row, col] + matrix2[row, col];
+                }
+            }
+            return sumMatrix;
+        }
+
+        public static double[,] MatrixSubtraction(double[,] matrix1, double[,] matrix2)
+        {
+            int matrixrows = matrix1.GetLength(0);
+            int matrixcols = matrix1.GetLength(1);
+            double[,] sumMatrix = new double[matrixrows, matrixcols];
+
+            for (int row = 0; row < matrixrows; row++)
+            {
+                for (int col = 0; col < matrixcols; col++)
+                {
+                    sumMatrix[row, col] = matrix1[row, col] - matrix2[row, col];
                 }
             }
             return sumMatrix;
