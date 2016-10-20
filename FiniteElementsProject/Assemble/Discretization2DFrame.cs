@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FiniteElementsProject
 {
-    class Discretization2DFrame
+    public class Discretization2DFrame
     {
 		private string[] elementType;
 		protected double[] E, A, I, nodesX, nodesY;
