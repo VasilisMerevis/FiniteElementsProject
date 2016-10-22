@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FiniteElementsProject.Solver
+namespace FiniteElementsProject
 {
     public class CentralDifferencesSolver
     {
         private double totalTime, timeStep;
         private int timeStepsNumber;
-        private Dictionary<double,double[]> explicitSolution ;
+        private Dictionary<int,double[]> explicitSolution = new Dictionary<int, double[]>();
         int totalDOFs;
-        double[,] invertedMassMatrix, massMatrix, dampingMatrix;
+        double[,] massMatrix, dampingMatrix;
         double[,] stiffenessMatrix;
-        double[] externalForcesVector;
+        double[] externalForcesVector = new double[8];
         double a0, a1, a2, a3;
         double[] initialDisplacementVector, initialVelocityVector, initialAccelerationVector;
         double initialTime;
 
-        public CentralDifferencesSolver(double initialTime, double[] initialDisp, double[] initialVel, double[] initialAcc, double totalTime, int timeStepsNumber, Discretization2DFrame discretization)
+        public CentralDifferencesSolver(double initialTime, double[] initialDisp, double[] initialVel, double[] initialAcc, double totalTime, int timeStepsNumber, double[,] stiffnessMatrix, double[,] massMatrix)
         {
-            totalDOFs = discretization.TotalStiffnessMatrix.GetLength(0);
+            totalDOFs = stiffnessMatrix.GetLength(0);
             this.totalTime = totalTime;
             this.timeStepsNumber = timeStepsNumber;
             timeStep = totalTime / timeStepsNumber;
-            massMatrix = discretization.TotalMassMatrix;
-            stiffenessMatrix = discretization.TotalStiffnessMatrix;
+            this.massMatrix = massMatrix;
+            this.stiffenessMatrix = stiffnessMatrix;
             dampingMatrix = new double[totalDOFs, totalDOFs];
             initialDisplacementVector = initialDisp;
             initialVelocityVector = initialVel;
@@ -62,12 +62,12 @@ namespace FiniteElementsProject.Solver
             return hatK;
         }
 
-        private double[] CalculateHatRVector(double time)
+        private double[] CalculateHatRVector(int timeIncrement)
         {
             double[,] hatKMatrix = CalculateHatKMatrix();
             double[,] hatMMatrix = CalculateHatMMatrix();
-            double[] hatCurrentU = VectorOperations.MatrixVectorProduct(hatKMatrix, explicitSolution[time]);
-            double[] hatPreviousU = VectorOperations.MatrixVectorProduct(hatMMatrix, explicitSolution[time - timeStep]);
+            double[] hatCurrentU = VectorOperations.MatrixVectorProduct(hatKMatrix, explicitSolution[timeIncrement]);
+            double[] hatPreviousU = VectorOperations.MatrixVectorProduct(hatMMatrix, explicitSolution[timeIncrement - 1]);
 
             double[] hatR = VectorOperations.VectorVectorSubtraction(externalForcesVector,
                             VectorOperations.VectorVectorAddition(hatCurrentU, hatPreviousU));
@@ -84,14 +84,14 @@ namespace FiniteElementsProject.Solver
 
             double[,] hatMassMatrix = CalculateHatMMatrix();
             double[] previousDisplacement = CalculatePreviousDisplacementVector();
-            explicitSolution.Add(initialTime - timeStep, previousDisplacement);
+            explicitSolution.Add(-1, previousDisplacement);
             for (int i = 1; i < timeStepsNumber; i++)
             {
                 double time = i * timeStep + initialTime;
-                double[] hatRVector = CalculateHatRVector(time);
+                double[] hatRVector = CalculateHatRVector(i);
                 DirectSolver linearSolver = new DirectSolver(hatMassMatrix, hatRVector);
                 double[] nextSolution = linearSolver.GetSolutionVector;
-                explicitSolution.Add(time, nextSolution);
+                explicitSolution.Add(i, nextSolution);
 
                 //double[] solution = new double[solutionLength];
                 //double[] dt2MR = VectorOperations.VectorScalarProduct(

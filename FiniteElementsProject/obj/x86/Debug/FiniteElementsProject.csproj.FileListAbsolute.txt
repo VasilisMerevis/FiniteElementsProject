@@ -29,3 +29,4 @@ C:\Users\user\Source\Repos\FiniteElementsProject\FiniteElementsProject\bin\Debug
 C:\Users\user\Source\Repos\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.pdb
 C:\Users\user\Source\Repos\FiniteElementsProject\FiniteElementsProject\obj\x86\Debug\FiniteElementsProject.csprojResolveAssemblyReference.cache
 C:\Users\user\Source\Repos\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.XML
+C:\Users\vasil\Source\Repos\FiniteElementsProject\FiniteElementsProject\bin\Debug\FiniteElementsProject.XML
