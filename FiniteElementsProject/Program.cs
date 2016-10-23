@@ -63,6 +63,7 @@ namespace FiniteElementsProject
             Exercise1Frame.GetStiffnessMatrices();
             Exercise1Frame.CreateTotalStiffnessMatrix();
             Exercise1Frame.GetMassMatrices();
+            Exercise1Frame.CreateTotalMassMatrix();
             //Creation reduced matrix depended on boundary conditions
             double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
             double[,] reducedMassMatrix = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalMassMatrix, data.boundaryDof);

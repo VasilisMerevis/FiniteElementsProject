@@ -9,7 +9,7 @@ namespace FiniteElementsProject
     class Bar1DElement : Element1D
     {
         
-        public double density = 1;
+        public double density = 8000;
 
         public Bar1DElement(double E, double A, double[] nodesX, double[] nodesY)
             :base(E, A, nodesX, nodesY)
@@ -21,7 +21,8 @@ namespace FiniteElementsProject
 
         public override double[,] CreateLocalStiffnessMatrix()
         {
-            double length = VectorOperations.CalculateVectorLengthFromEndPoints (nodesX [0], nodesX [1], nodesY [0], nodesY [1]);			localStiffnessMatrix = new[,]
+            double length = VectorOperations.CalculateVectorLengthFromEndPoints (nodesX [0], nodesX [1], nodesY [0], nodesY [1]);
+            localStiffnessMatrix = new[,]
             { { E * A / length, 0, 0, -E * A / length, 0, 0 },
                 { 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0},
@@ -61,6 +62,7 @@ namespace FiniteElementsProject
                 {0, 0, 0, 0, elementMass/2, 0},
                 {0, 0, 0, 0, 0, 0}
             };
+            
             return massMatrix;
         }
     }

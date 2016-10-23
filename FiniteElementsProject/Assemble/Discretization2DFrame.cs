@@ -22,7 +22,7 @@ namespace FiniteElementsProject
 
         public double[,] TotalMassMatrix
         {
-            get { return totalStiffnessMatrix; }
+            get { return totalMassMatrix; }
         }
 
         public Discretization2DFrame(InputData inputData) 
@@ -37,6 +37,7 @@ namespace FiniteElementsProject
 			this.localNode2 = inputData.localnode2;
             beamElementsList = new Element1D[localNode1.Length];
             totalStiffnessMatrix = new double [3*nodesX.Length,3*nodesX.Length];
+            totalMassMatrix = new double[3 * nodesX.Length, 3 * nodesX.Length];
             this.internalForcesTotalVector = new double[3 * nodesX.Length];
         }
 
@@ -114,7 +115,7 @@ namespace FiniteElementsProject
             return totalStiffnessMatrix;
         }
 
-        public double[,] CreateMassStiffnessMatrix()
+        public double[,] CreateTotalMassMatrix()
         {
             for (int element = 0; element < localNode1.Length; element++)
             {

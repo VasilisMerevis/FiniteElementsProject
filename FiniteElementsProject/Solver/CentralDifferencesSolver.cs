@@ -49,9 +49,9 @@ namespace FiniteElementsProject
 
         private double[,] CalculateHatMMatrix()
         {
-            double[,] hutM = MatrixOperations.MatrixAddition(
-                                        MatrixOperations.ScalarMatrixProduct(a0, massMatrix),
-                                        MatrixOperations.ScalarMatrixProduct(a1, dampingMatrix));
+            double[,] a0M = MatrixOperations.ScalarMatrixProduct(a0, massMatrix);
+            double[,] a1C = MatrixOperations.ScalarMatrixProduct(a1, dampingMatrix);
+            double[,] hutM = MatrixOperations.MatrixAddition(a0M, a1C);
             return hutM;
         }
 
@@ -90,7 +90,12 @@ namespace FiniteElementsProject
             {
                 double time = i * timeStep + initialTime;
                 double[] hatRVector = CalculateHatRVector(i);
-                DirectSolver linearSolver = new DirectSolver(hatMassMatrix, hatRVector);
+                IterativeSolver linearSolver = new IterativeSolver(hatMassMatrix, hatRVector, 1000);
+                linearSolver.SolveWithMethod("PCG");
+
+                //DirectSolver linearSolver = new DirectSolver(hatMassMatrix, hatRVector);
+                //linearSolver.SolveWithMethod("Cholesky");
+
                 double[] nextSolution = linearSolver.GetSolutionVector;
                 explicitSolution.Add(i+1, nextSolution);
 
