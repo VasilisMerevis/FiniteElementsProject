@@ -13,7 +13,7 @@ namespace FiniteElementsProject
         int totalDOFs;
         double[,] massMatrix, dampingMatrix;
         double[,] stiffenessMatrix;
-        double[] externalForcesVector = new double[8];
+        double[] externalForcesVector = new double[12];
         double a0, a1, a2, a3;
         double[] initialDisplacementVector, initialVelocityVector, initialAccelerationVector;
         double initialTime;
@@ -85,13 +85,14 @@ namespace FiniteElementsProject
             double[,] hatMassMatrix = CalculateHatMMatrix();
             double[] previousDisplacement = CalculatePreviousDisplacementVector();
             explicitSolution.Add(-1, previousDisplacement);
-            for (int i = 1; i < timeStepsNumber; i++)
+            explicitSolution.Add(0, initialDisplacementVector);
+            for (int i = 0; i < timeStepsNumber; i++)
             {
                 double time = i * timeStep + initialTime;
                 double[] hatRVector = CalculateHatRVector(i);
                 DirectSolver linearSolver = new DirectSolver(hatMassMatrix, hatRVector);
                 double[] nextSolution = linearSolver.GetSolutionVector;
-                explicitSolution.Add(i, nextSolution);
+                explicitSolution.Add(i+1, nextSolution);
 
                 //double[] solution = new double[solutionLength];
                 //double[] dt2MR = VectorOperations.VectorScalarProduct(

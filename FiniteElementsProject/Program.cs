@@ -67,9 +67,9 @@ namespace FiniteElementsProject
             double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
             double[,] reducedMassMatrix = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalMassMatrix, data.boundaryDof);
 
-            double[] reducedInitialU = new double[8];
-            double[] reducedInitialV = new double[8]; reducedInitialV[6] = -1.3888;
-            double[] reducedInitialA = new double[8];
+            double[] reducedInitialU = new double[12];
+            double[] reducedInitialV = new double[12]; reducedInitialV[9] = -1.3888;
+            double[] reducedInitialA = new double[12];
             CentralDifferencesSolver expSolu = new CentralDifferencesSolver(0, reducedInitialU, reducedInitialV, reducedInitialA, 1, 1000, reducedTotalStiff, reducedMassMatrix);
 
             expSolu.SolveExplicit();
