@@ -33,11 +33,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elements\NLEulerBernoulli1DElement.cs" />
     <Compile Include="Elements\NLTruss.cs" />
     <Compile Include="Elements\NLTruss2.cs" />
+    <Compile Include="LinearAlgebra\Matrix.cs" />
     <Compile Include="Solver\CentralDifferencesSolver.cs" />
     <Compile Include="Solver\NLSolver.cs" />
     <Compile Include="Program.cs" />

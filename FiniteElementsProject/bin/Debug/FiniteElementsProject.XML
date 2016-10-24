@@ -4,10 +4,5 @@
         <name>FiniteElementsProject</name>
     </assembly>
     <members>
-        <member name="M:FiniteElementsProject.CentralDifferencesSolver.SolveExplicit">
-            <summary>
-            Explicit solver for dynamic problems.
-            </summary>
-        </member>
     </members>
 </doc>

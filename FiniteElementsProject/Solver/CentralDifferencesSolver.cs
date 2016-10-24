@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Media;
 
 namespace FiniteElementsProject
 {
@@ -74,9 +76,7 @@ namespace FiniteElementsProject
             return hatR;
         }
 
-        /// <summary>
-        /// Explicit solver for dynamic problems.
-        /// </summary>
+        
         public void SolveExplicit()
         {
             //double[,] twoI = MatrixOperations.CreateDiagonalMatrix(solutionLength, 2);

@@ -73,19 +73,25 @@ namespace FiniteElementsProject
             double[] reducedInitialA = new double[12];
             CentralDifferencesSolver expSolu = new CentralDifferencesSolver(0, reducedInitialU, reducedInitialV, reducedInitialA, 1, 1000, reducedTotalStiff, reducedMassMatrix);
 
-            expSolu.SolveExplicit();
+            //expSolu.SolveExplicit();
             //Solution using Cholesky factorization with forward and backward substitution
-           
 
-             
+
+
 
             //Console.WriteLine();
             //IterativeSolver solution2 = new IterativeSolver(reducedTotalStiff, data.externalForcesVector, 1000);
             //solution2.SolveWithMethod("PCG");
 
             //VectorOperations.PrintVector(solution2.GetSolutionVector);
-
-
+            Console.WriteLine();
+            
+            Matrix<double> bill = new Matrix<double>(new double[,] { { 1, 3 }, { 4, 6 } });
+            bill.PrintMatrix();
+            double a = 2;
+            Matrix<double> bill2 = a * bill;
+            Console.WriteLine();
+            bill2.PrintMatrix();
         }
     }
 }
