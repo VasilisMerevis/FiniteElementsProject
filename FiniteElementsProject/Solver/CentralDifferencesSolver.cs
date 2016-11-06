@@ -20,15 +20,20 @@ namespace FiniteElementsProject
         double[] initialDisplacementVector, initialVelocityVector, initialAccelerationVector;
         double initialTime;
 
+        public double[] GetExplicitSolution
+        {
+            get { return explicitSolution[timeStepsNumber]; }
+        }
+
         public CentralDifferencesSolver(double initialTime, double[] initialDisp, double[] initialVel, double[] initialAcc, double totalTime, int timeStepsNumber, double[,] stiffnessMatrix, double[,] massMatrix)
         {
             totalDOFs = stiffnessMatrix.GetLength(0);
             this.totalTime = totalTime;
             this.timeStepsNumber = timeStepsNumber;
             timeStep = totalTime / timeStepsNumber;
-            this.massMatrix = massMatrix;
-            this.stiffenessMatrix = stiffnessMatrix;
-            dampingMatrix = new double[totalDOFs, totalDOFs];
+            this.massMatrix = MatrixOperations.CreateDiagonalMatrix(12, 1); //massMatrix;
+            this.stiffenessMatrix = MatrixOperations.CreateDiagonalMatrix(12, 1); //stiffnessMatrix;
+            dampingMatrix = MatrixOperations.CreateDiagonalMatrix(12, 1); //new double[totalDOFs, totalDOFs];
             initialDisplacementVector = initialDisp;
             initialVelocityVector = initialVel;
             initialAccelerationVector = initialAcc;
@@ -44,8 +49,8 @@ namespace FiniteElementsProject
         {
             double[] previousDisp = VectorOperations.VectorVectorAddition(
                                     VectorOperations.VectorVectorSubtraction(initialDisplacementVector,
-                                    VectorOperations.VectorScalarProduct(initialVelocityVector, timeStep)),
-                                    VectorOperations.VectorScalarProduct(initialAccelerationVector, a3));
+                                    VectorOperations.VectorScalarProductNew(initialVelocityVector, timeStep)),
+                                    VectorOperations.VectorScalarProductNew(initialAccelerationVector, a3));
             return previousDisp;
         }
 
@@ -90,8 +95,8 @@ namespace FiniteElementsProject
             {
                 double time = i * timeStep + initialTime;
                 double[] hatRVector = CalculateHatRVector(i);
-                IterativeSolver linearSolver = new IterativeSolver(hatMassMatrix, hatRVector, 1000);
-                linearSolver.SolveWithMethod("PCG");
+                DirectSolver linearSolver = new DirectSolver(hatMassMatrix, hatRVector);
+                linearSolver.SolveWithMethod("Cholesky");
 
                 //DirectSolver linearSolver = new DirectSolver(hatMassMatrix, hatRVector);
                 //linearSolver.SolveWithMethod("Cholesky");
