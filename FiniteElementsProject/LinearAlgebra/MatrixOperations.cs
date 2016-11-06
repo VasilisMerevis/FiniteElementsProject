@@ -115,6 +115,21 @@ namespace FiniteElementsProject
             return matrix;
         }
 
+        public static double[,] ScalarMatrixProductNew(double scalar, double[,] matrix)
+        {
+            int matrixrows = matrix.GetLength(0);
+            int matrixcols = matrix.GetLength(1);
+            double[,] resultMatrix = new double[matrixrows, matrixcols];
+            for (int row = 0; row < matrixrows; row++)
+            {
+                for (int col = 0; col < matrixcols; col++)
+                {
+                    resultMatrix[row, col] = scalar * matrix[row, col];
+                }
+            }
+            return resultMatrix;
+        }
+
         public static double [] ScalarByVectorProduct(double scalarFactor, double [] initialVector )
         {
             int dimension = initialVector.GetLength(0);
