@@ -51,8 +51,8 @@ namespace FiniteElementsProject
 
         private double[,] CalculateHatMMatrix()
         {
-            double[,] a0M = MatrixOperations.ScalarMatrixProduct(a0, massMatrix);
-            double[,] a1C = MatrixOperations.ScalarMatrixProduct(a1, dampingMatrix);
+            double[,] a0M = MatrixOperations.ScalarMatrixProductNew(a0, massMatrix);
+            double[,] a1C = MatrixOperations.ScalarMatrixProductNew(a1, dampingMatrix);
             double[,] hutM = MatrixOperations.MatrixAddition(a0M, a1C);
             return hutM;
         }
@@ -60,7 +60,7 @@ namespace FiniteElementsProject
         private double[,] CalculateHatKMatrix()
         {
             double[,] hatK = MatrixOperations.MatrixSubtraction(stiffenessMatrix,
-                                MatrixOperations.ScalarMatrixProduct(a2, massMatrix));
+                                MatrixOperations.ScalarMatrixProductNew(a2, massMatrix));
             return hatK;
         }
 

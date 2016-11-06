@@ -146,5 +146,15 @@ namespace FiniteElementsProject
             return vector;
         }
 
+        public static double[] VectorScalarProductNew(double[] vector, double scalar)
+        {
+            double[] resultVector = new double[vector.Length];
+            for (int row = 0; row < vector.Length; row++)
+            {
+                resultVector[row] = scalar * vector[row];
+            }
+            return resultVector;
+        }
+
     }
 }
