@@ -29,6 +29,11 @@ namespace FiniteElementsProject
             rawDataLine = System.IO.File.ReadAllLines(@"WriteLines2.txt");
         }
 
+        public void SetNewInputFile(string newFileName)
+        {
+            rawDataLine = System.IO.File.ReadAllLines(@newFileName);
+        }
+
         private void SplitRawDataLine(int row)
         {
             splitLine = new List<string>(rawDataLine[row].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries));

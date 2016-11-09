@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FiniteElementsProject.FEProject
+namespace FiniteElementsProject
 {
     class FEProject
     {
         //Declaration of basic frame info
         private InputData data;
-        private string txtName;
 
-        public FEProject(string txtName)
+        public FEProject()
         {
             this.data = new InputData();
-            this.txtName = txtName;
+        }
+
+        public void ChangeInputFile(string newInputFile)
+        {
+            data.SetNewInputFile(newInputFile);
         }
 
         public void ReadInputFile()

@@ -1,0 +1,10 @@
+Xcoord: 0 0,5 1 1,5 2
+Ycoord: 0 0 0 0 0
+Loc.Node1: 1 2 3 4
+Loc.Node2: 2 3 4 5
+Type: Bar Bar Bar Bar
+Area: 0,5 0,5 0,5 0,5
+YoungMod: 70e9 70e9 70e9 70e9
+Inertia: 0 0 0 0
+BoundedDOF: 1 2 3
+ExtForces: 0 0 0 0 0 0 0 0 0 0 0 0
