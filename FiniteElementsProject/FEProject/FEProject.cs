@@ -8,11 +8,18 @@ namespace FiniteElementsProject.FEProject
     class FEProject
     {
         //Declaration of basic frame info
-        InputData data = new InputData();
+        private InputData data;
+        private string txtName;
 
-        public FEProject(string path)
+        public FEProject(string txtName)
         {
-            this.data = new InputData("path");
+            this.data = new InputData();
+            this.txtName = txtName;
+        }
+
+        public void ReadInputFile()
+        {
+            data.ReadAllData();
         }
 
         public void CreateModel()
@@ -62,31 +69,31 @@ namespace FiniteElementsProject.FEProject
             }
         }
 
-        data.ReadAllData();
+        
 
 
             
 
             
 
-            //Creation of local, global and total stiffness matrices
-            Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
-        Exercise1Frame.GetStiffnessMatrices();
-            Exercise1Frame.CreateTotalStiffnessMatrix();
-            Exercise1Frame.GetMassMatrices();
-            Exercise1Frame.CreateTotalMassMatrix();
-            //Creation reduced matrix depended on boundary conditions
-            double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
-        double[,] reducedMassMatrix = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalMassMatrix, data.boundaryDof);
+        //    //Creation of local, global and total stiffness matrices
+        //    Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
+        //Exercise1Frame.GetStiffnessMatrices();
+        //    Exercise1Frame.CreateTotalStiffnessMatrix();
+        //    Exercise1Frame.GetMassMatrices();
+        //    Exercise1Frame.CreateTotalMassMatrix();
+        //    //Creation reduced matrix depended on boundary conditions
+        //    double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
+        //double[,] reducedMassMatrix = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalMassMatrix, data.boundaryDof);
 
-        double[] reducedInitialU = new double[12];
-        double[] reducedInitialV = new double[12]; reducedInitialV[9] = -1.3888;
-            double[] reducedInitialA = new double[12];
-        CentralDifferencesSolver expSolu = new CentralDifferencesSolver(0, reducedInitialU, reducedInitialV, reducedInitialA, 1, 10, reducedTotalStiff, reducedMassMatrix);
+        //double[] reducedInitialU = new double[12];
+        //double[] reducedInitialV = new double[12]; reducedInitialV[9] = -1.3888;
+        //    double[] reducedInitialA = new double[12];
+        //CentralDifferencesSolver expSolu = new CentralDifferencesSolver(0, reducedInitialU, reducedInitialV, reducedInitialA, 1, 10, reducedTotalStiff, reducedMassMatrix);
 
-        expSolu.SolveExplicit();
-            VectorOperations.PrintVector(expSolu.GetExplicitSolution);
-            //Solution using Cholesky factorization with forward and backward substitution
+        //expSolu.SolveExplicit();
+        //    VectorOperations.PrintVector(expSolu.GetExplicitSolution);
+        //    //Solution using Cholesky factorization with forward and backward substitution
 
 
 
