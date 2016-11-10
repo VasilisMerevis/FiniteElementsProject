@@ -77,6 +77,19 @@ namespace FiniteElementsProject
             }
         }
 
+        private int[] ElementDOFs(int elementNumber)
+        {
+            int[] dof = new int[6];
+            dof[0] = localNode1[elementNumber] * 3 - 2;
+            dof[1] = localNode1[elementNumber] * 3 - 1;
+            dof[2] = localNode1[elementNumber] * 3;
+
+            dof[3] = localNode2[elementNumber] * 3 - 2;
+            dof[4] = localNode2[elementNumber] * 3 - 1;
+            dof[5] = localNode2[elementNumber] * 3;
+            return dof;
+        }
+
         public void UpdateValues(double[] totalDisplacementVector)
         {
             int totalElements = localNode1.Length;
@@ -95,14 +108,7 @@ namespace FiniteElementsProject
         {
             for (int element = 0; element < localNode1.Length; element++)
             {
-                int[] dof = new int[6];
-                dof[0] = localNode1[element] * 3 - 2;
-                dof[1] = localNode1[element] * 3 - 1;
-                dof[2] = localNode1[element] * 3;
-
-                dof[3] = localNode2[element] * 3 - 2;
-                dof[4] = localNode2[element] * 3 - 1;
-                dof[5] = localNode2[element] * 3;
+                int[] dof = ElementDOFs(element);
 
                 for (int i = 0; i < 6; i++)
                 {
@@ -119,14 +125,7 @@ namespace FiniteElementsProject
         {
             for (int element = 0; element < localNode1.Length; element++)
             {
-                int[] dof = new int[6];
-                dof[0] = localNode1[element] * 3 - 2;
-                dof[1] = localNode1[element] * 3 - 1;
-                dof[2] = localNode1[element] * 3;
-
-                dof[3] = localNode2[element] * 3 - 2;
-                dof[4] = localNode2[element] * 3 - 1;
-                dof[5] = localNode2[element] * 3;
+                int[] dof = ElementDOFs(element);
 
                 for (int i = 0; i < 6; i++)
                 {
