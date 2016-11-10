@@ -4,5 +4,24 @@
         <name>FiniteElementsProject</name>
     </assembly>
     <members>
+        <member name="T:FiniteElementsProject.InputData">
+            <summary>
+            Creates an object which holds all the necessary data and properties of the model.
+            Specifically it stores: 
+            1. nodal coordinates, 2. connectivity info, 3. for each element its type, section area, young modulus, moment of inertia,
+            4. bounded nodes, 5. external forces
+            </summary>
+        </member>
+        <member name="M:FiniteElementsProject.InputData.#ctor">
+            <summary>
+            Default constructor for InputData class. The default .txt name is WriteLines2.txt
+            </summary>
+        </member>
+        <member name="M:FiniteElementsProject.InputData.SetNewInputFile(System.String)">
+            <summary>
+            Changes the name of the default input .txt file
+            </summary>
+            <param name="newFileName"></param>
+        </member>
     </members>
 </doc>

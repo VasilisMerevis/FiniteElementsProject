@@ -5,13 +5,17 @@ using System.IO;
 
 namespace FiniteElementsProject
 {
+    /// <summary>
+    /// Creates an object which holds all the necessary data and properties of the model.
+    /// Specifically it stores: 
+    /// 1. nodal coordinates, 2. connectivity info, 3. for each element its type, section area, young modulus, moment of inertia,
+    /// 4. bounded nodes, 5. external forces
+    /// </summary>
 	public class InputData
 	{
         string[] rawDataLine;
         string[] stringSeparators = new string[] { " " };
-
         List<string> splitLine;
-
         public double[] nodesX;
         public double[] nodesY;
         public int[] localnode1;
@@ -22,13 +26,19 @@ namespace FiniteElementsProject
         public double[] inertia;
         public int[] boundaryDof;
         public double[] externalForcesVector;
-        
 
+        /// <summary>
+        /// Default constructor for InputData class. The default .txt name is WriteLines2.txt
+        /// </summary>
         public InputData()
         {
             rawDataLine = System.IO.File.ReadAllLines(@"WriteLines2.txt");
         }
 
+        /// <summary>
+        /// Changes the name of the default input .txt file
+        /// </summary>
+        /// <param name="newFileName"></param>
         public void SetNewInputFile(string newFileName)
         {
             rawDataLine = System.IO.File.ReadAllLines(@newFileName);
@@ -39,15 +49,7 @@ namespace FiniteElementsProject
             splitLine = new List<string>(rawDataLine[row].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries));
         }
 
-        //public void ReadAllData()
-        //{
-        //    for (int i = 0; i < 9; i++)
-        //    {
-        //        SplitRawDataLine(i);
-        //        splitLine.RemoveAt(0);
-        //    }
-        //}
-
+        #region Read_Model_Properties
         private void ReadNodalCoordinates()
         {
             SplitRawDataLine(0);
@@ -161,7 +163,7 @@ namespace FiniteElementsProject
             ReadBoundedDOF();
             ReadExternalForces();
         }
-
+        #endregion
     }
 }
 
