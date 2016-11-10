@@ -10,11 +10,11 @@ namespace FiniteElementsProject
     {
         static void Main(string[] args)
         {
-            FEProject linearCantilever = new FEProject();
+            IFEProject linearCantilever = new FEProject();
             linearCantilever.ReadInputFile();
             linearCantilever.CreateModel();
 
-            FEProject nLCantilever = new FEProject();
+            IFEProject nLCantilever = new FEProject();
             nLCantilever.ChangeInputFile("Writelines2NLCantilever.txt.");
             nLCantilever.ReadInputFile();
             nLCantilever.CreateModel();

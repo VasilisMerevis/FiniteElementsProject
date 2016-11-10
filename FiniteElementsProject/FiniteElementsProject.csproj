@@ -41,6 +41,7 @@
     <Compile Include="Elements\NLTruss.cs" />
     <Compile Include="Elements\NLTruss2.cs" />
     <Compile Include="FEProject\FEProject.cs" />
+    <Compile Include="FEProject\IFEProject.cs" />
     <Compile Include="LinearAlgebra\Matrix.cs" />
     <Compile Include="Solver\CentralDifferencesSolver.cs" />
     <Compile Include="Solver\NLSolver.cs" />

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    class FEProject
+    public class FEProject : IFEProject
     {
         //Declaration of basic frame info
         private InputData data;
@@ -15,6 +15,10 @@ namespace FiniteElementsProject
             this.data = new InputData();
         }
 
+        /// <summary>
+        /// Changes the default name of .txt input file
+        /// </summary>
+        /// <param name="newInputFile"></param>
         public void ChangeInputFile(string newInputFile)
         {
             data.SetNewInputFile(newInputFile);

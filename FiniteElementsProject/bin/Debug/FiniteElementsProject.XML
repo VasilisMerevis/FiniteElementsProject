@@ -4,6 +4,18 @@
         <name>FiniteElementsProject</name>
     </assembly>
     <members>
+        <member name="M:FiniteElementsProject.FEProject.ChangeInputFile(System.String)">
+            <summary>
+            Changes the default name of .txt input file
+            </summary>
+            <param name="newInputFile"></param>
+        </member>
+        <member name="M:FiniteElementsProject.IFEProject.ChangeInputFile(System.String)">
+            <summary>
+            Changes the default name of .txt input file
+            </summary>
+            <param name="newInputFile"></param>
+        </member>
         <member name="T:FiniteElementsProject.InputData">
             <summary>
             Creates an object which holds all the necessary data and properties of the model.
