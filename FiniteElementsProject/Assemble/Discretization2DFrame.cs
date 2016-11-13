@@ -77,16 +77,42 @@ namespace FiniteElementsProject
             }
         }
 
-        private int[] ElementDOFs(int elementNumber)
+        private int[] NodalDOFs(int globalNode)
         {
-            int[] dof = new int[6];
-            dof[0] = localNode1[elementNumber] * 3 - 2;
-            dof[1] = localNode1[elementNumber] * 3 - 1;
-            dof[2] = localNode1[elementNumber] * 3;
+            int totalNodalDOFs = 3;
+            int[] nodalDOFs = new int[totalNodalDOFs];
+            int factor = totalNodalDOFs - 1;
+            for (int i = 0; i < totalNodalDOFs; i++)
+            {
+                nodalDOFs[i] = globalNode * totalNodalDOFs - factor;
+                factor = factor - 1;
+            }
+            return nodalDOFs;
+        }
 
-            dof[3] = localNode2[elementNumber] * 3 - 2;
-            dof[4] = localNode2[elementNumber] * 3 - 1;
-            dof[5] = localNode2[elementNumber] * 3;
+        private List<int> ElementDOFs(int elementNumber)
+        {
+            int[] globalNodes = new int[] { localNode1[elementNumber], localNode2[elementNumber] };
+            int totalNodalDOFs = 3;
+            int totalElementNodes = globalNodes.Length;
+            List < int > dof = new List<int>();
+            //int[] dof = new int[6];
+            for (int i = 0; i < totalElementNodes; i++)
+            {
+                int[] globalDOFs = NodalDOFs(globalNodes[i]);
+                foreach (int globalDOF in globalDOFs)
+                {
+                    dof.Add(globalDOF);
+                }
+            }
+
+            //dof[0] = localNode1[elementNumber] * 3 - 2;
+            //dof[1] = localNode1[elementNumber] * 3 - 1;
+            //dof[2] = localNode1[elementNumber] * 3;
+
+            //dof[3] = localNode2[elementNumber] * 3 - 2;
+            //dof[4] = localNode2[elementNumber] * 3 - 1;
+            //dof[5] = localNode2[elementNumber] * 3;
             return dof;
         }
 
@@ -108,8 +134,8 @@ namespace FiniteElementsProject
         {
             for (int element = 0; element < localNode1.Length; element++)
             {
-                int[] dof = ElementDOFs(element);
-
+                //int[] dof = ElementDOFs(element);
+                List<int> dof = ElementDOFs(element);
                 for (int i = 0; i < 6; i++)
                 {
                     for (int j = 0; j < 6; j++)
@@ -125,8 +151,8 @@ namespace FiniteElementsProject
         {
             for (int element = 0; element < localNode1.Length; element++)
             {
-                int[] dof = ElementDOFs(element);
-
+                //int[] dof = ElementDOFs(element);
+                List<int> dof = ElementDOFs(element);
                 for (int i = 0; i < 6; i++)
                 {
                     for (int j = 0; j < 6; j++)
