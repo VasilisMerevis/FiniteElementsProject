@@ -80,5 +80,10 @@ namespace FiniteElementsProject
 
             return massMatrix;
         }
+
+        public override void CalculateInitialValues()
+        {
+            globalStiffnessMatrix = this.CreateGlobalStiffnessmatrix();
+        }
     }
 }

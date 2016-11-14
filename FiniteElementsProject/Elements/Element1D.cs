@@ -109,7 +109,7 @@ namespace FiniteElementsProject
 
         private int[] NodalDOFs(int globalNode)
         {
-            int totalNodalDOFs = 3;
+            int totalNodalDOFs = globalStiffnessMatrix.GetLength(0) / 2;
             int[] nodalDOFs = new int[totalNodalDOFs];
             int factor = totalNodalDOFs - 1;
             for (int i = 0; i < totalNodalDOFs; i++)

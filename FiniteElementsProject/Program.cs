@@ -18,6 +18,11 @@ namespace FiniteElementsProject
             nLCantilever.ChangeInputFile("Writelines2NLCantilever.txt.");
             nLCantilever.ReadInputFile();
             nLCantilever.CreateModel();
+
+            IFEProject linearTruss = new FEProject();
+            linearTruss.ChangeInputFile("LinearTruss.txt");
+            linearTruss.ReadInputFile();
+            linearTruss.CreateModel();
         }
     }
 }

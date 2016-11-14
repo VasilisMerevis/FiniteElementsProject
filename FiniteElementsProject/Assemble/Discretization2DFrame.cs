@@ -56,6 +56,9 @@ namespace FiniteElementsProject
                     case "Bar":
                         beamElementsList[elem] = new Bar1DElement(E[elem], A[elem], elementNodesX, elementNodesY);
                         break;
+                    case "Bar2D":
+                        beamElementsList[elem] = new Bar2D(E[elem], A[elem], elementNodesX, elementNodesY);
+                        break;
                     case "NLBeam":
                         beamElementsList[elem] = new NLEulerBernoulli1DElement(E[elem], A[elem], I[elem], elementNodesX, elementNodesY);
                         break;
