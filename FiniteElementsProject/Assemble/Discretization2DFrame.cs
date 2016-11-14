@@ -77,45 +77,6 @@ namespace FiniteElementsProject
             }
         }
 
-        private int[] NodalDOFs(int globalNode)
-        {
-            int totalNodalDOFs = 3;
-            int[] nodalDOFs = new int[totalNodalDOFs];
-            int factor = totalNodalDOFs - 1;
-            for (int i = 0; i < totalNodalDOFs; i++)
-            {
-                nodalDOFs[i] = globalNode * totalNodalDOFs - factor;
-                factor = factor - 1;
-            }
-            return nodalDOFs;
-        }
-
-        private List<int> ElementDOFs(int elementNumber)
-        {
-            int[] globalNodes = new int[] { localNode1[elementNumber], localNode2[elementNumber] };
-            int totalNodalDOFs = 3;
-            int totalElementNodes = globalNodes.Length;
-            List < int > dof = new List<int>();
-            //int[] dof = new int[6];
-            for (int i = 0; i < totalElementNodes; i++)
-            {
-                int[] globalDOFs = NodalDOFs(globalNodes[i]);
-                foreach (int globalDOF in globalDOFs)
-                {
-                    dof.Add(globalDOF);
-                }
-            }
-
-            //dof[0] = localNode1[elementNumber] * 3 - 2;
-            //dof[1] = localNode1[elementNumber] * 3 - 1;
-            //dof[2] = localNode1[elementNumber] * 3;
-
-            //dof[3] = localNode2[elementNumber] * 3 - 2;
-            //dof[4] = localNode2[elementNumber] * 3 - 1;
-            //dof[5] = localNode2[elementNumber] * 3;
-            return dof;
-        }
-
         public void UpdateValues(double[] totalDisplacementVector)
         {
             int totalElements = localNode1.Length;
@@ -133,12 +94,11 @@ namespace FiniteElementsProject
         public double[,] CreateTotalStiffnessMatrix()
         {
             for (int element = 0; element < localNode1.Length; element++)
-            {
-                //int[] dof = ElementDOFs(element);
-                List<int> dof = ElementDOFs(element);
-                for (int i = 0; i < 6; i++)
+            {                
+                List<int> dof = beamElementsList[element].ElementDOFs(localNode1, localNode2, element);
+                for (int i = 0; i < dof.Count; i++)
                 {
-                    for (int j = 0; j < 6; j++)
+                    for (int j = 0; j < dof.Count; j++)
                     {
                         totalStiffnessMatrix[dof[i] - 1, dof[j] - 1] = totalStiffnessMatrix[dof[i] - 1, dof[j] - 1] + beamElementsList[element].globalStiffnessMatrix[i, j];
                     }
@@ -150,12 +110,11 @@ namespace FiniteElementsProject
         public double[,] CreateTotalMassMatrix()
         {
             for (int element = 0; element < localNode1.Length; element++)
-            {
-                //int[] dof = ElementDOFs(element);
-                List<int> dof = ElementDOFs(element);
-                for (int i = 0; i < 6; i++)
+            {                
+                List<int> dof = beamElementsList[element].ElementDOFs(localNode1, localNode2, element);
+                for (int i = 0; i < dof.Count; i++)
                 {
-                    for (int j = 0; j < 6; j++)
+                    for (int j = 0; j < dof.Count; j++)
                     {
                         totalMassMatrix[dof[i] - 1, dof[j] - 1] = totalMassMatrix[dof[i] - 1, dof[j] - 1] + beamElementsList[element].massMatrix[i, j];
                     }

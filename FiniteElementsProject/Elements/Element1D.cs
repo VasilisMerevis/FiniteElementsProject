@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace FiniteElementsProject
 {
@@ -104,6 +105,38 @@ namespace FiniteElementsProject
         {
             this.node1GlobalDisplacementVector = node1GlobalDisplacementVector;
             this.node2GlobalDisplacementVector = node2GlobalDisplacementVector;
+        }
+
+        private int[] NodalDOFs(int globalNode)
+        {
+            int totalNodalDOFs = 3;
+            int[] nodalDOFs = new int[totalNodalDOFs];
+            int factor = totalNodalDOFs - 1;
+            for (int i = 0; i < totalNodalDOFs; i++)
+            {
+                nodalDOFs[i] = globalNode * totalNodalDOFs - factor;
+                factor = factor - 1;
+            }
+            return nodalDOFs;
+        }
+
+        public List<int> ElementDOFs(int[] localNode1, int[] localNode2, int elementNumber)
+        {
+            int[] globalNodes = new int[] { localNode1[elementNumber], localNode2[elementNumber] };
+            
+            int totalElementNodes = globalNodes.Length;
+            List<int> dof = new List<int>();
+
+            for (int i = 0; i < totalElementNodes; i++)
+            {
+                int[] globalDOFs = NodalDOFs(globalNodes[i]);
+                foreach (int globalDOF in globalDOFs)
+                {
+                    dof.Add(globalDOF);
+                }
+            }
+
+            return dof;
         }
     }
 }
