@@ -14,6 +14,7 @@ namespace FiniteElementsProject
 		protected Element1D[] beamElementsList;
 		private double[,] totalStiffnessMatrix, totalMassMatrix;
         public double[] internalForcesTotalVector;
+        private int totalDOF;
 
 
         public double[,] TotalStiffnessMatrix {
@@ -41,6 +42,13 @@ namespace FiniteElementsProject
             this.internalForcesTotalVector = new double[3 * nodesX.Length];
         }
 
+        public void InitializeMatrices()
+        {
+            this.totalStiffnessMatrix = new double[totalDOF, totalDOF];
+            this.totalMassMatrix = new double[totalDOF, totalDOF];
+            this.internalForcesTotalVector = new double[totalDOF];
+        }
+
         public Element1D[] GetStiffnessMatrices()
         {
             for (int elem = 0; elem < localNode1.Length; elem++)
@@ -52,18 +60,23 @@ namespace FiniteElementsProject
 				{
                     case "Beam":
                         beamElementsList[elem] = new EulerBernoulli1DElement(E[elem], A[elem], I[elem], elementNodesX, elementNodesY);
+                        totalDOF = 3 * nodesX.Length;
                         break;
                     case "Bar":
                         beamElementsList[elem] = new Bar1DElement(E[elem], A[elem], elementNodesX, elementNodesY);
+                        totalDOF = 2 * nodesX.Length;
                         break;
                     case "Bar2D":
                         beamElementsList[elem] = new Bar2D(E[elem], A[elem], elementNodesX, elementNodesY);
+                        totalDOF = 2 * nodesX.Length;
                         break;
                     case "NLBeam":
                         beamElementsList[elem] = new NLEulerBernoulli1DElement(E[elem], A[elem], I[elem], elementNodesX, elementNodesY);
+                        totalDOF = 3 * nodesX.Length;
                         break;
                     case "NLTruss":
                         beamElementsList[elem] = new NLTruss(E[elem], A[elem], elementNodesX, elementNodesY);
+                        totalDOF = 3 * nodesX.Length;
                         break;
                 }
 

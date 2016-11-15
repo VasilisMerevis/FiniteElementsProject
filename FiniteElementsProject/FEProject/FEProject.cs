@@ -57,6 +57,7 @@ namespace FiniteElementsProject
                 //Creation of local, global and total stiffness matrices
                 Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
                 Exercise1Frame.GetStiffnessMatrices();
+                Exercise1Frame.InitializeMatrices();
                 Exercise1Frame.CreateTotalStiffnessMatrix();
                 Exercise1Frame.GetMassMatrices();
                 //Creation reduced matrix depended on boundary conditions
@@ -65,6 +66,7 @@ namespace FiniteElementsProject
                 //Solution using Cholesky factorization with forward and backward substitution
                 DirectSolver solution = new DirectSolver(reducedTotalStiff, data.externalForcesVector);
                 solution.SolveWithMethod("Gauss");
+                Console.WriteLine();
 
                 VectorOperations.PrintVector(solution.GetSolutionVector);
 
