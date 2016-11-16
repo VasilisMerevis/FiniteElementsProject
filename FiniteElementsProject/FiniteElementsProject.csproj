@@ -45,6 +45,9 @@
     <Compile Include="FEProject\IFEProject.cs" />
     <Compile Include="LinearAlgebra\Matrix.cs" />
     <Compile Include="Solver\CentralDifferencesSolver.cs" />
+    <Compile Include="Solver\DirectMethods.cs" />
+    <Compile Include="Solver\GaussElimination.cs" />
+    <Compile Include="Solver\IDirectSolver.cs" />
     <Compile Include="Solver\NLSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
