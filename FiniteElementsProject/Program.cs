@@ -23,6 +23,8 @@ namespace FiniteElementsProject
             linearTruss.ChangeInputFile("LinearTruss.txt");
             linearTruss.ReadInputFile();
             linearTruss.CreateModel();
+
+            
         }
     }
 }

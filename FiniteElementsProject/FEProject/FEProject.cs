@@ -75,6 +75,27 @@ namespace FiniteElementsProject
                 solution2.SolveWithMethod("PCG");
 
                 VectorOperations.PrintVector(solution2.GetSolutionVector);
+
+
+
+
+                Console.WriteLine();
+                Discretization2DFrame Exercise1Frame2 = new Discretization2DFrame(data);
+                Exercise1Frame2.GetStiffnessMatrices();
+                Exercise1Frame2.InitializeMatrices();
+                Exercise1Frame2.CreateTotalStiffnessMatrix();
+                Exercise1Frame2.GetMassMatrices();
+                //Creation reduced matrix depended on boundary conditions
+                double[,] reducedTotalStiff2 = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame2.TotalStiffnessMatrix, data.boundaryDof);
+
+                LinearSolver solution3 = new DirectMethods();
+                solution3.SetSolutionMethodToGauss();
+                //solution3.GetStiffnessMatrixAndForceVector(reducedTotalStiff, data.externalForcesVector);
+                
+                solution3.Solve(reducedTotalStiff2, data.externalForcesVector);
+                solution3.PrintSolution();
+
+                //VectorOperations.PrintVector(solution3.GetSolutionVector);
             }
         }
 

@@ -5,8 +5,10 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    class Gauss : DirectMethods, IDirectSolver
+    class Gauss : DirectMethods
     {
+        private double[] gaussSolution;
+
         private void GaussElimination(double[,] matrix, double[] vector)
         {
             for (int k = 0; k < vector.Length - 1; k++)
@@ -23,10 +25,19 @@ namespace FiniteElementsProject
             }
         }
 
-        public void Solve()
+        public override void Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
+            gaussSolution = new double[forceVector.Length];
             GaussElimination(stiffnessMatrix, forceVector);
-            this.solutionVector = BackSubstitution(stiffnessMatrix, forceVector);
+            gaussSolution = BackSubstitution(stiffnessMatrix, forceVector);
         }
+
+        public override void PrintDirectSolution()
+        {
+            VectorOperations.PrintVector(gaussSolution);
+        }
+
+        
+
     }
 }

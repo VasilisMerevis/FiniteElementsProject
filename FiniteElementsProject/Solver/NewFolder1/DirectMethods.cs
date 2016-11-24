@@ -5,11 +5,30 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    abstract class DirectMethods
+    public class DirectMethods : LinearSolver
     {
-        protected double[] solutionVector;
-        protected double[,] stiffnessMatrix;
-        protected double[] forceVector;
+        //protected double[] solutionVector;
+        //protected double[,] stiffnessMatrix;
+        //protected double[] forceVector;
+
+        
+
+        override public void SolveWithMethod(string method)
+        {
+
+        }
+
+        public virtual void PrintDirectSolution()
+        {
+            
+        }
+
+        
+
+        public virtual void Solve(double[,] stiffnessMatrix, double[] forceVector)
+        {
+            
+        }
 
         protected double[] BackSubstitution(double[,] upperTriangMatrix, double[] forceVector)
         {

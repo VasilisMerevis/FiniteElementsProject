@@ -10,7 +10,7 @@ namespace FiniteElementsProject
         protected double[] solutionVector;
         protected double[,] stiffnessMatrix;
         protected double[] forceVector;
-       
+        public DirectMethods directMethod;    
 
         public double[] GetSolutionVector
         {
@@ -19,6 +19,19 @@ namespace FiniteElementsProject
 
         abstract public void SolveWithMethod(string method);
 
+        public void SetSolutionMethodToGauss()
+        {
+            directMethod = new Gauss();
+        }
 
+        public void Solve(double[,] stiffnessMatrix, double[] forceVector)
+        {
+            directMethod.Solve(stiffnessMatrix, forceVector);
+        }
+
+        public void PrintSolution()
+        {
+            directMethod.PrintDirectSolution();
+        }
     }
 }
