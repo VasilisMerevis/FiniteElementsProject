@@ -7,7 +7,7 @@ namespace FiniteElementsProject
 {
     public class LinearSolution : ILinearSolution
     {
-        protected double[] linearSolutionVector;
+        private double[] linearSolutionVector;
         //protected double[,] stiffnessMatrix;
         //protected double[] forceVector;
         public LinearSolution solutionMethod;
@@ -16,8 +16,12 @@ namespace FiniteElementsProject
         {
             get { return this.linearSolutionVector; }
         }
+        public double[] SetSolutionVector
+        {
+            set { linearSolutionVector = value; }
+        }
 
-        
+
 
         public void SetSolutionMethodToGauss()
         {
@@ -29,9 +33,9 @@ namespace FiniteElementsProject
             solutionMethod.Solve(stiffnessMatrix, forceVector);
         }
 
-        public virtual void PrintSolution()
+        public void PrintSolution()
         {
-            solutionMethod.PrintSolution();
+            VectorOperations.PrintVector(solutionMethod.GetSolutionVector);
         }
 
         protected double[] BackSubstitution(double[,] upperTriangMatrix, double[] forceVector)

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    class GaussSolver : LinearSolution
+    public class GaussSolver : LinearSolution
     {
         private void GaussElimination(double[,] matrix, double[] vector)
         {
@@ -25,17 +25,12 @@ namespace FiniteElementsProject
 
         public override void Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
-            linearSolutionVector = new double[forceVector.Length];
+            double[] tempSolutionVector = new double[forceVector.Length];
+            tempSolutionVector = new double[forceVector.Length];
             GaussElimination(stiffnessMatrix, forceVector);
-            linearSolutionVector = BackSubstitution(stiffnessMatrix, forceVector);
+            tempSolutionVector = BackSubstitution(stiffnessMatrix, forceVector);
+            SetSolutionVector = tempSolutionVector;
         }
-
-        public override void PrintSolution()
-        {
-            VectorOperations.PrintVector(linearSolutionVector);
-        }
-
-
 
     }
 }
