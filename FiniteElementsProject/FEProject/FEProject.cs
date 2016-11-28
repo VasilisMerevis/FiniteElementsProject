@@ -96,6 +96,11 @@ namespace FiniteElementsProject
                 solution3.PrintSolution();
 
                 //VectorOperations.PrintVector(solution3.GetSolutionVector);
+                Console.WriteLine("newSolu is:");
+                ILinearSolution newSolu = new LinearSolution();
+                newSolu.SetSolutionMethodToGauss();
+                newSolu.Solve(reducedTotalStiff2, data.externalForcesVector);
+                newSolu.PrintSolution();
             }
         }
 

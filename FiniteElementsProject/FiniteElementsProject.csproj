@@ -45,9 +45,11 @@
     <Compile Include="FEProject\IFEProject.cs" />
     <Compile Include="LinearAlgebra\Matrix.cs" />
     <Compile Include="Solver\CentralDifferencesSolver.cs" />
-    <Compile Include="Solver\NewFolder1\DirectMethods.cs" />
-    <Compile Include="Solver\NewFolder1\Gauss.cs" />
-    <Compile Include="Solver\NewFolder1\IDirectSolver.cs" />
+    <Compile Include="Solver\Deleted\DirectMethods.cs" />
+    <Compile Include="Solver\Deleted\Gauss.cs" />
+    <Compile Include="Solver\DirectMethods\GaussSolver.cs" />
+    <Compile Include="Solver\ILinearSolution.cs" />
+    <Compile Include="Solver\LinearSolution.cs" />
     <Compile Include="Solver\NLSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
