@@ -63,45 +63,44 @@ namespace FiniteElementsProject
                 //Creation reduced matrix depended on boundary conditions
                 double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
 
-                //Solution using Cholesky factorization with forward and backward substitution
-                DirectSolver solution = new DirectSolver(reducedTotalStiff, data.externalForcesVector);
-                solution.SolveWithMethod("Cholesky");
-                Console.WriteLine();
+                #region CodeForDeletion
+                ////Solution using Cholesky factorization with forward and backward substitution
+                //DirectSolver solution = new DirectSolver(reducedTotalStiff, data.externalForcesVector);
+                //solution.SolveWithMethod("Cholesky");
+                //Console.WriteLine();
 
-                VectorOperations.PrintVector(solution.GetSolutionVector);
+                //VectorOperations.PrintVector(solution.GetSolutionVector);
 
-                Console.WriteLine();
-                IterativeSolver solution2 = new IterativeSolver(reducedTotalStiff, data.externalForcesVector, 1000);
-                solution2.SolveWithMethod("PCG");
+                //Console.WriteLine();
+                //IterativeSolver solution2 = new IterativeSolver(reducedTotalStiff, data.externalForcesVector, 1000);
+                //solution2.SolveWithMethod("PCG");
 
-                VectorOperations.PrintVector(solution2.GetSolutionVector);
-
-
+                //VectorOperations.PrintVector(solution2.GetSolutionVector);
 
 
-                Console.WriteLine();
-                Discretization2DFrame Exercise1Frame2 = new Discretization2DFrame(data);
-                Exercise1Frame2.GetStiffnessMatrices();
-                Exercise1Frame2.InitializeMatrices();
-                Exercise1Frame2.CreateTotalStiffnessMatrix();
-                Exercise1Frame2.GetMassMatrices();
-                //Creation reduced matrix depended on boundary conditions
-                double[,] reducedTotalStiff2 = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame2.TotalStiffnessMatrix, data.boundaryDof);
 
-                LinearSolver solution3 = new DirectMethods();
-                solution3.SetSolutionMethodToGauss();
-                //solution3.GetStiffnessMatrixAndForceVector(reducedTotalStiff, data.externalForcesVector);
-                
-                solution3.Solve(reducedTotalStiff2, data.externalForcesVector);
-                solution3.PrintSolution();
 
-                //VectorOperations.PrintVector(solution3.GetSolutionVector);
+                //Console.WriteLine();
+                //Discretization2DFrame Exercise1Frame2 = new Discretization2DFrame(data);
+                //Exercise1Frame2.GetStiffnessMatrices();
+                //Exercise1Frame2.InitializeMatrices();
+                //Exercise1Frame2.CreateTotalStiffnessMatrix();
+                //Exercise1Frame2.GetMassMatrices();
+                ////Creation reduced matrix depended on boundary conditions
+                //double[,] reducedTotalStiff2 = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame2.TotalStiffnessMatrix, data.boundaryDof);
+
+                //LinearSolver solution3 = new DirectMethods();
+                //solution3.SetSolutionMethodToGauss();
+                ////solution3.GetStiffnessMatrixAndForceVector(reducedTotalStiff, data.externalForcesVector);
+
+                //solution3.Solve(reducedTotalStiff2, data.externalForcesVector);
+                //solution3.PrintSolution();
+                #endregion
+
                 Console.WriteLine("newSolu is:");
-                StaticSolver newSolu = new StaticSolver();
-                
-                //ILinearSolution newSolu = new LinearSolution();
-                newSolu.SetSolutionMethodToGauss();
-                newSolu.Solve(reducedTotalStiff2, data.externalForcesVector);
+                ISolver newSolu = new StaticSolver();
+                newSolu.SetSolutionMethodToCholesky();
+                newSolu.Solve(reducedTotalStiff, data.externalForcesVector);
                 newSolu.PrintSolution();
             }
         }

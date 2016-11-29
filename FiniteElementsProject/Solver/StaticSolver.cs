@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    class StaticSolver
+    class StaticSolver : ISolver
     {
         private double[] staticSolutionVector;
         private LinearSolution solutionMethod;
