@@ -23,13 +23,13 @@ namespace FiniteElementsProject
             }
         }
 
-        public override void Solve(double[,] stiffnessMatrix, double[] forceVector)
+        public double[] Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
             double[] tempSolutionVector = new double[forceVector.Length];
             tempSolutionVector = new double[forceVector.Length];
             GaussElimination(stiffnessMatrix, forceVector);
             tempSolutionVector = BackSubstitution(stiffnessMatrix, forceVector);
-            SetSolutionVector = tempSolutionVector;
+            return tempSolutionVector;
         }
 
     }

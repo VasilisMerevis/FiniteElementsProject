@@ -65,7 +65,7 @@ namespace FiniteElementsProject
 
                 //Solution using Cholesky factorization with forward and backward substitution
                 DirectSolver solution = new DirectSolver(reducedTotalStiff, data.externalForcesVector);
-                solution.SolveWithMethod("Gauss");
+                solution.SolveWithMethod("Cholesky");
                 Console.WriteLine();
 
                 VectorOperations.PrintVector(solution.GetSolutionVector);
@@ -97,7 +97,9 @@ namespace FiniteElementsProject
 
                 //VectorOperations.PrintVector(solution3.GetSolutionVector);
                 Console.WriteLine("newSolu is:");
-                ILinearSolution newSolu = new LinearSolution();
+                StaticSolver newSolu = new StaticSolver();
+                
+                //ILinearSolution newSolu = new LinearSolution();
                 newSolu.SetSolutionMethodToGauss();
                 newSolu.Solve(reducedTotalStiff2, data.externalForcesVector);
                 newSolu.PrintSolution();

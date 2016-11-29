@@ -5,39 +5,16 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    public class LinearSolution : ILinearSolution
+    public abstract class LinearSolution
     {
-        private double[] linearSolutionVector;
-        //protected double[,] stiffnessMatrix;
-        //protected double[] forceVector;
-        public LinearSolution solutionMethod;
-
-        public double[] GetSolutionVector
+        public virtual double[] Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
-            get { return this.linearSolutionVector; }
-        }
-        public double[] SetSolutionVector
-        {
-            set { linearSolutionVector = value; }
+            throw new Exception("LinearSolution.Solve not implemented");
+            return null;
         }
 
-
-
-        public void SetSolutionMethodToGauss()
-        {
-            solutionMethod = new GaussSolver();
-        }
-
-        public virtual void Solve(double[,] stiffnessMatrix, double[] forceVector)
-        {
-            solutionMethod.Solve(stiffnessMatrix, forceVector);
-        }
-
-        public void PrintSolution()
-        {
-            VectorOperations.PrintVector(solutionMethod.GetSolutionVector);
-        }
-
+        
+        #region SecondaryMethods
         protected double[] BackSubstitution(double[,] upperTriangMatrix, double[] forceVector)
         {
             int rows = forceVector.GetLength(0);
@@ -78,5 +55,6 @@ namespace FiniteElementsProject
             }
             return solutionVector;
         }
+        #endregion
     }
 }

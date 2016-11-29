@@ -9,6 +9,7 @@ namespace FiniteElementsProject
     {
         void Solve(double[,] stiffnessMatrix, double[] forceVector);
         void SetSolutionMethodToGauss();
+        void SetSolutionMethodToCholesky();
         void PrintSolution();
     }
 }
