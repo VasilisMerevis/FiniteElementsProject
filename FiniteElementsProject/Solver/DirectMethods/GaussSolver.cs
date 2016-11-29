@@ -23,7 +23,7 @@ namespace FiniteElementsProject
             }
         }
 
-        public double[] Solve(double[,] stiffnessMatrix, double[] forceVector)
+        public override double[] Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
             double[] tempSolutionVector = new double[forceVector.Length];
             tempSolutionVector = new double[forceVector.Length];

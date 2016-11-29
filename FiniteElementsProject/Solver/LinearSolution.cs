@@ -10,12 +10,11 @@ namespace FiniteElementsProject
         public virtual double[] Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
             throw new Exception("LinearSolution.Solve not implemented");
-            return null;
         }
 
-        
-        #region SecondaryMethods
-        protected double[] BackSubstitution(double[,] upperTriangMatrix, double[] forceVector)
+
+    #region SecondaryMethods
+    protected double[] BackSubstitution(double[,] upperTriangMatrix, double[] forceVector)
         {
             int rows = forceVector.GetLength(0);
             double[] solutionVector = new double[rows];
