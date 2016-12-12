@@ -20,6 +20,11 @@ namespace FiniteElementsProject
             solutionMethod = new CholeskyFactorization();
         }
 
+        public void SetSolutionMethodToPCG()
+        {
+            solutionMethod = new PCGSolver();
+        }
+
         public void Solve(double[,] coefMatrix, double[] rhsVector)
         {
             staticSolutionVector = solutionMethod.Solve(coefMatrix, rhsVector);

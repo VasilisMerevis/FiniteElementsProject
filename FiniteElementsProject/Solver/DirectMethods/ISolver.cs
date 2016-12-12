@@ -9,6 +9,7 @@ namespace FiniteElementsProject
     {
         void SetSolutionMethodToGauss();
         void SetSolutionMethodToCholesky();
+        void SetSolutionMethodToPCG();
         void Solve(double[,] coefMatrix, double[] rhsVector);
         void PrintSolution();
     }

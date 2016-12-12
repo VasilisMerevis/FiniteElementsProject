@@ -99,7 +99,7 @@ namespace FiniteElementsProject
 
                 Console.WriteLine("newSolu is:");
                 ISolver newSolu = new StaticSolver();
-                newSolu.SetSolutionMethodToCholesky();
+                newSolu.SetSolutionMethodToPCG();
                 newSolu.Solve(reducedTotalStiff, data.externalForcesVector);
                 newSolu.PrintSolution();
             }
