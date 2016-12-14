@@ -49,6 +49,8 @@
     <Compile Include="Solver\Deleted\Gauss.cs" />
     <Compile Include="Solver\DirectMethods\CholeskyFactorization.cs" />
     <Compile Include="Solver\DirectMethods\GaussSolver.cs" />
+    <Compile Include="Solver\DirectMethods\LoadControlledNewtonRaphson.cs" />
+    <Compile Include="Solver\DirectMethods\NonLinearSolution.cs" />
     <Compile Include="Solver\DirectMethods\PCGSolver.cs" />
     <Compile Include="Solver\ILinearSolution.cs" />
     <Compile Include="Solver\DirectMethods\ISolver.cs" />
