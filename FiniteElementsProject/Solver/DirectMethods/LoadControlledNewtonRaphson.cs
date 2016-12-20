@@ -20,14 +20,14 @@ namespace FiniteElementsProject
             this.boundaryDof = boundaryDof;
             this.numberOfLoadSteps = numberOfLoadSteps;
             this.discretization = discretization;
-            this.lambda = 1 / numberOfLoadSteps;
+            this.lambda = 1.0 / numberOfLoadSteps;
             
         }
         
-        public void LoadControlledNR(double[] forceVector)
+        private double[] LoadControlledNR(double[] forceVector)
         {
-            double[] incrementDf = VectorOperations.VectorScalarProduct(forceVector, lambda);
-            double[] solutionVector = new double[forceVector.Length];
+            double[] incrementDf = VectorOperations.VectorScalarProductNew(forceVector, lambda);
+            double[] solutionVector = new double[forceVector.Length+boundaryDof.Length];
             double[] incrementalExternalForcesVector = new double[forceVector.Length];
             double[] tempSolutionVector = new double[solutionVector.Length];
             //double lambda;
@@ -105,8 +105,14 @@ namespace FiniteElementsProject
                 double[] checking = incrementalExternalForcesVector;
             }
             //checking = incrementalExternalForcesVector;
+            return solutionVector;
         }
 
-        
+        public override double[] NLSolve(double[] forceVector)
+        {
+            double[] solution = LoadControlledNR(forceVector);
+            return solution;
+        }
+
     }
 }

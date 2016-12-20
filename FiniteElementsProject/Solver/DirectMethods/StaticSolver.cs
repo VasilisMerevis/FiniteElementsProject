@@ -9,6 +9,7 @@ namespace FiniteElementsProject
     {
         private double[] staticSolutionVector;
         private LinearSolution solutionMethod;
+        private NonLinearSolution nonLinearSolutionMethod;
 
         public void SetSolutionMethodToGauss()
         {
@@ -25,9 +26,19 @@ namespace FiniteElementsProject
             solutionMethod = new PCGSolver();
         }
 
+        public void SetNonLinearMethodToLoadControlledNewtonRaphson(int[] boundaryDof, int numberOfLoadSteps, Discretization2DFrame discretization)
+        {
+            nonLinearSolutionMethod = new LoadControlledNewtonRaphson(boundaryDof, numberOfLoadSteps, discretization);
+        }
+
         public void Solve(double[,] coefMatrix, double[] rhsVector)
         {
             staticSolutionVector = solutionMethod.Solve(coefMatrix, rhsVector);
+        }
+
+        public void NLSolve(double[] rhsVector)
+        {
+            staticSolutionVector = nonLinearSolutionMethod.NLSolve(rhsVector);
         }
 
         public void PrintSolution()

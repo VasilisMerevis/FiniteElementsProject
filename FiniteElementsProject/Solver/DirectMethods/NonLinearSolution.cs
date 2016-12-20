@@ -12,6 +12,11 @@ namespace FiniteElementsProject
             throw new Exception("LinearSolution.Solve not implemented");
         }
 
-        
+        public virtual double[] NLSolve(double[] forceVector)
+        {
+            throw new Exception("LinearSolution.Solve not implemented");
+        }
+
+
     }
 }
