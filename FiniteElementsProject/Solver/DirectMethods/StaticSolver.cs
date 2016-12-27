@@ -26,9 +26,14 @@ namespace FiniteElementsProject
             solutionMethod = new PCGSolver();
         }
 
-        public void SetNonLinearMethodToLoadControlledNewtonRaphson(int[] boundaryDof, int numberOfLoadSteps, Discretization2DFrame discretization)
+        public void SetNonLinearMethodToLoadControlledNewtonRaphson(Discretization2DFrame discretization)
         {
-            nonLinearSolutionMethod = new LoadControlledNewtonRaphson(boundaryDof, numberOfLoadSteps, discretization);
+            nonLinearSolutionMethod = new LoadControlledNewtonRaphson(discretization);
+        }
+
+        public void ReadBoundaryConditions(int[] boundaryCond)
+        {
+            nonLinearSolutionMethod.DefineBoundaryConditions(boundaryCond);
         }
 
         public void Solve(double[,] coefMatrix, double[] rhsVector)

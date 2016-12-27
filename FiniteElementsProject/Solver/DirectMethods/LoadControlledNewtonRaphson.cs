@@ -7,21 +7,10 @@ namespace FiniteElementsProject
 {
     class LoadControlledNewtonRaphson : NonLinearSolution
     {
-        int numberOfLoadSteps;
-        int[] boundaryDof;
-        Discretization2DFrame discretization;
-        double lambda;
-        double tolerance = 1e-5;
-        int maxIterations = 1000;
-
-
-        public LoadControlledNewtonRaphson(int[] boundaryDof, int numberOfLoadSteps, Discretization2DFrame discretization)
+        public LoadControlledNewtonRaphson(Discretization2DFrame discretization)
         {
-            this.boundaryDof = boundaryDof;
-            this.numberOfLoadSteps = numberOfLoadSteps;
             this.discretization = discretization;
-            this.lambda = 1.0 / numberOfLoadSteps;
-            
+            lambda = 1.0 / numberOfLoadSteps;
         }
         
         private double[] LoadControlledNR(double[] forceVector)
@@ -30,21 +19,16 @@ namespace FiniteElementsProject
             double[] solutionVector = new double[forceVector.Length+boundaryDof.Length];
             double[] incrementalExternalForcesVector = new double[forceVector.Length];
             double[] tempSolutionVector = new double[solutionVector.Length];
-            //double lambda;
-            //double[] df = new double[forceVector.Length];
+            
             double[] deltaU = new double[solutionVector.Length - boundaryDof.Length];
-            //numberOfLoadSteps = 10;
-            //double[] reducedTempSolutionVector = BoundaryConditionsImposition.ReducedVector(tempSolutionVector, boundaryDof);
-            //lambda = 1 / Convert.ToDouble(numberOfLoadSteps);
-            //df = VectorOperations.VectorScalarProduct(forceVector, lambda);
+            
             double[] internalForcesTotalVector;
             double[] dU;
             double[] residual;
             double residualNorm;
             for (int i = 0; i < numberOfLoadSteps; i++)
             {
-                //lambda = 1 / Convert.ToDouble(numberOfLoadSteps);
-                //df = VectorOperations.VectorScalarProduct(forceVector, lambda);
+               
                 incrementalExternalForcesVector = VectorOperations.VectorVectorAddition(incrementalExternalForcesVector, incrementDf);
 
 
@@ -71,7 +55,7 @@ namespace FiniteElementsProject
 
                 residualNorm = VectorOperations.VectorNorm2(residual);
 
-                //tempSolutionVector = solutionVector;
+                
                 int iteration = 0;
                 Array.Clear(deltaU, 0, deltaU.Length);
                 while (residualNorm > tolerance && iteration < maxIterations)
@@ -104,7 +88,7 @@ namespace FiniteElementsProject
                 solutionVector = VectorOperations.VectorVectorAddition(solutionVector, BoundaryConditionsImposition.CreateFullVectorFromReducedVector(deltaU, boundaryDof));
                 double[] checking = incrementalExternalForcesVector;
             }
-            //checking = incrementalExternalForcesVector;
+           
             return solutionVector;
         }
 

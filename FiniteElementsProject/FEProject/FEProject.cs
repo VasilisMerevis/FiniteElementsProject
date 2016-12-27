@@ -40,7 +40,8 @@ namespace FiniteElementsProject
                 int[] boundDOF = data.boundaryDof;
                 double[] nlForceVec = data.externalForcesVector;
                 ISolver nonLin = new StaticSolver();
-                nonLin.SetNonLinearMethodToLoadControlledNewtonRaphson(boundDOF, 10, Exercise1Frame);
+                nonLin.SetNonLinearMethodToLoadControlledNewtonRaphson(Exercise1Frame);
+                nonLin.ReadBoundaryConditions(boundDOF);
                 nonLin.NLSolve(nlForceVec);
                 nonLin.PrintSolution();
                 ////Exercise1Frame.CreateTotalStiffnessMatrix();
