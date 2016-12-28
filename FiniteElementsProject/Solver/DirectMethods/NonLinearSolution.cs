@@ -13,6 +13,7 @@ namespace FiniteElementsProject
         protected double lambda;
         protected double tolerance = 1e-5;
         protected int maxIterations = 1000;
+        protected LinearSolution linearSolver;
 
         public void DefineBoundaryConditions(int[] boundaryConditionsVector)
         {

@@ -7,10 +7,11 @@ namespace FiniteElementsProject
 {
     class LoadControlledNewtonRaphson : NonLinearSolution
     {
-        public LoadControlledNewtonRaphson(Discretization2DFrame discretization)
+        public LoadControlledNewtonRaphson(Discretization2DFrame discretization, LinearSolution linearSolver)
         {
             this.discretization = discretization;
             lambda = 1.0 / numberOfLoadSteps;
+            this.linearSolver = linearSolver;
         }
         
         private double[] LoadControlledNR(double[] forceVector)
@@ -30,8 +31,6 @@ namespace FiniteElementsProject
             {
                
                 incrementalExternalForcesVector = VectorOperations.VectorVectorAddition(incrementalExternalForcesVector, incrementDf);
-
-
                 discretization.UpdateValues(solutionVector);
                 Array.Clear(discretization.internalForcesTotalVector, 0, discretization.internalForcesTotalVector.Length);
                 internalForcesTotalVector = discretization.CreateTotalInternalForcesVector();
@@ -40,9 +39,12 @@ namespace FiniteElementsProject
                 discretization.CreateTotalStiffnessMatrix();
                 double[,] reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
 
-                DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, incrementDf);
-                linearSolution.SolveWithMethod("Cholesky");
-                dU = linearSolution.GetSolutionVector;
+                dU = linearSolver.Solve(reducedStiffnessMatrix, incrementDf);
+                //dU = tempSolutionVector;
+
+                //DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, incrementDf);
+                //linearSolution.SolveWithMethod("Cholesky");
+                //dU = linearSolution.GetSolutionVector;
 
                 double[] reducedSolutionVector = BoundaryConditionsImposition.ReducedVector(solutionVector, boundaryDof);
                 reducedSolutionVector = VectorOperations.VectorVectorAddition(reducedSolutionVector, dU);
@@ -64,11 +66,13 @@ namespace FiniteElementsProject
                     discretization.CreateTotalStiffnessMatrix();
                     reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
 
-                    double[] tempResidual = residual;
-                    DirectSolver tempLinearSolution = new DirectSolver(reducedStiffnessMatrix, residual);
-                    tempLinearSolution.SolveWithMethod("Gauss");
-                    double[] addFactorVector = tempLinearSolution.GetSolutionVector;
-                    deltaU = VectorOperations.VectorVectorSubtraction(deltaU, addFactorVector);
+                    //double[] tempResidual = residual;
+
+                    //double[] addFactorVector = linearSolver.Solve(reducedStiffnessMatrix, residual);
+                    //DirectSolver tempLinearSolution = new DirectSolver(reducedStiffnessMatrix, residual);
+                    //tempLinearSolution.SolveWithMethod("Gauss");
+                    //double[] addFactorVector = tempLinearSolution.GetSolutionVector;
+                    deltaU = VectorOperations.VectorVectorSubtraction(deltaU, linearSolver.Solve(reducedStiffnessMatrix, residual));
 
                     double[] reducedTempSolutionVector = BoundaryConditionsImposition.ReducedVector(tempSolutionVector, boundaryDof);
                     reducedTempSolutionVector = VectorOperations.VectorVectorAddition(reducedSolutionVector, deltaU);

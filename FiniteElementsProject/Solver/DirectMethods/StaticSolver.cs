@@ -28,7 +28,7 @@ namespace FiniteElementsProject
 
         public void SetNonLinearMethodToLoadControlledNewtonRaphson(Discretization2DFrame discretization)
         {
-            nonLinearSolutionMethod = new LoadControlledNewtonRaphson(discretization);
+            nonLinearSolutionMethod = new LoadControlledNewtonRaphson(discretization, solutionMethod);
         }
 
         public void ReadBoundaryConditions(int[] boundaryCond)

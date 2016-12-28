@@ -40,6 +40,7 @@ namespace FiniteElementsProject
                 int[] boundDOF = data.boundaryDof;
                 double[] nlForceVec = data.externalForcesVector;
                 ISolver nonLin = new StaticSolver();
+                nonLin.SetSolutionMethodToCholesky();
                 nonLin.SetNonLinearMethodToLoadControlledNewtonRaphson(Exercise1Frame);
                 nonLin.ReadBoundaryConditions(boundDOF);
                 nonLin.NLSolve(nlForceVec);
