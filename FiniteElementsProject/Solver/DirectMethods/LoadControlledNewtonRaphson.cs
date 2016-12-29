@@ -29,49 +29,30 @@ namespace FiniteElementsProject
             double residualNorm;
             for (int i = 0; i < numberOfLoadSteps; i++)
             {
-               
                 incrementalExternalForcesVector = VectorOperations.VectorVectorAddition(incrementalExternalForcesVector, incrementDf);
                 discretization.UpdateValues(solutionVector);
-                Array.Clear(discretization.internalForcesTotalVector, 0, discretization.internalForcesTotalVector.Length);
                 internalForcesTotalVector = discretization.CreateTotalInternalForcesVector();
 
-                Array.Clear(discretization.TotalStiffnessMatrix, 0, discretization.TotalStiffnessMatrix.Length);
                 discretization.CreateTotalStiffnessMatrix();
                 double[,] reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
 
                 dU = linearSolver.Solve(reducedStiffnessMatrix, incrementDf);
-                //dU = tempSolutionVector;
-
-                //DirectSolver linearSolution = new DirectSolver(reducedStiffnessMatrix, incrementDf);
-                //linearSolution.SolveWithMethod("Cholesky");
-                //dU = linearSolution.GetSolutionVector;
-
+                
                 double[] reducedSolutionVector = BoundaryConditionsImposition.ReducedVector(solutionVector, boundaryDof);
                 reducedSolutionVector = VectorOperations.VectorVectorAddition(reducedSolutionVector, dU);
                 solutionVector = BoundaryConditionsImposition.CreateFullVectorFromReducedVector(reducedSolutionVector, boundaryDof);
-
-
-
 
                 residual = VectorOperations.VectorVectorSubtraction(BoundaryConditionsImposition.ReducedVector(internalForcesTotalVector, boundaryDof), incrementalExternalForcesVector);
 
                 residualNorm = VectorOperations.VectorNorm2(residual);
 
-                
                 int iteration = 0;
                 Array.Clear(deltaU, 0, deltaU.Length);
                 while (residualNorm > tolerance && iteration < maxIterations)
                 {
-                    Array.Clear(discretization.TotalStiffnessMatrix, 0, discretization.TotalStiffnessMatrix.Length);
                     discretization.CreateTotalStiffnessMatrix();
                     reducedStiffnessMatrix = BoundaryConditionsImposition.ReducedTotalStiff(discretization.TotalStiffnessMatrix, boundaryDof);
 
-                    //double[] tempResidual = residual;
-
-                    //double[] addFactorVector = linearSolver.Solve(reducedStiffnessMatrix, residual);
-                    //DirectSolver tempLinearSolution = new DirectSolver(reducedStiffnessMatrix, residual);
-                    //tempLinearSolution.SolveWithMethod("Gauss");
-                    //double[] addFactorVector = tempLinearSolution.GetSolutionVector;
                     deltaU = VectorOperations.VectorVectorSubtraction(deltaU, linearSolver.Solve(reducedStiffnessMatrix, residual));
 
                     double[] reducedTempSolutionVector = BoundaryConditionsImposition.ReducedVector(tempSolutionVector, boundaryDof);
@@ -79,7 +60,6 @@ namespace FiniteElementsProject
                     tempSolutionVector = BoundaryConditionsImposition.CreateFullVectorFromReducedVector(reducedTempSolutionVector, boundaryDof);
 
                     discretization.UpdateValues(tempSolutionVector);
-                    Array.Clear(discretization.internalForcesTotalVector, 0, discretization.internalForcesTotalVector.Length);
                     internalForcesTotalVector = discretization.CreateTotalInternalForcesVector();
 
                     residual = VectorOperations.VectorVectorSubtraction(BoundaryConditionsImposition.ReducedVector(internalForcesTotalVector, boundaryDof), incrementalExternalForcesVector);

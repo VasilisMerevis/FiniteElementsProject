@@ -36,6 +36,7 @@ namespace FiniteElementsProject
                 //Creation of local, global and total stiffness matrices
                 Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
                 Exercise1Frame.GetStiffnessMatrices();
+                Exercise1Frame.BoundedDOFsVector = data.boundaryDof;
 
                 int[] boundDOF = data.boundaryDof;
                 double[] nlForceVec = data.externalForcesVector;

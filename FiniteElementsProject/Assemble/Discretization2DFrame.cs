@@ -15,7 +15,9 @@ namespace FiniteElementsProject
 		private double[,] totalStiffnessMatrix, totalMassMatrix;
         public double[] internalForcesTotalVector;
         private int totalDOF;
+        private int[] boundedDOFsVector;
 
+         
 
         public double[,] TotalStiffnessMatrix {
 			get{ return totalStiffnessMatrix;}
@@ -24,6 +26,19 @@ namespace FiniteElementsProject
         public double[,] TotalMassMatrix
         {
             get { return totalMassMatrix; }
+        }
+
+        public int[] BoundedDOFsVector
+        {
+            get
+            {
+                return boundedDOFsVector;
+            }
+
+            set
+            {
+                boundedDOFsVector = value;
+            }
         }
 
         public Discretization2DFrame(InputData inputData) 
@@ -109,6 +124,7 @@ namespace FiniteElementsProject
 
         public double[,] CreateTotalStiffnessMatrix()
         {
+            Array.Clear(TotalStiffnessMatrix, 0, TotalStiffnessMatrix.Length);
             for (int element = 0; element < localNode1.Length; element++)
             {                
                 List<int> dof = beamElementsList[element].ElementDOFs(localNode1, localNode2, element);
@@ -125,6 +141,7 @@ namespace FiniteElementsProject
 
         public double[,] CreateTotalMassMatrix()
         {
+            Array.Clear(TotalMassMatrix, 0, TotalMassMatrix.Length);
             for (int element = 0; element < localNode1.Length; element++)
             {                
                 List<int> dof = beamElementsList[element].ElementDOFs(localNode1, localNode2, element);
@@ -141,6 +158,7 @@ namespace FiniteElementsProject
 
         public double[] CreateTotalInternalForcesVector()
         {
+            Array.Clear(internalForcesTotalVector, 0, internalForcesTotalVector.Length);
             int totalNodes = nodesX.Length;
             int totalElements = localNode1.Length;
 
