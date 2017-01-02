@@ -10,7 +10,7 @@ namespace FiniteElementsProject
         void SetSolutionMethodToGauss();
         void SetSolutionMethodToCholesky();
         void SetSolutionMethodToPCG();
-        void SetNonLinearMethodToLoadControlledNewtonRaphson(Discretization2DFrame discretization);
+        void SetNonLinearMethodToLoadControlledNewtonRaphson(IAssembly discretization);
         void Solve(double[,] coefMatrix, double[] rhsVector);
         void NLSolve(double[] rhsVector);
         void ReadBoundaryConditions(int[] boundaryCond);

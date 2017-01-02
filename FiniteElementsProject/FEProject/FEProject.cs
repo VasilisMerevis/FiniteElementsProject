@@ -34,7 +34,20 @@ namespace FiniteElementsProject
             if (data.elementType.Contains("NLBeam"))// | data.elementType.Contains("NLTruss"))
             {
                 //Creation of local, global and total stiffness matrices
-                Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
+                //Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
+                //Exercise1Frame.GetStiffnessMatrices();
+                //Exercise1Frame.BoundedDOFsVector = data.boundaryDof;
+
+                //int[] boundDOF = data.boundaryDof;
+                //double[] nlForceVec = data.externalForcesVector;
+                //ISolver nonLin = new StaticSolver();
+                //nonLin.SetSolutionMethodToCholesky();
+                //nonLin.SetNonLinearMethodToLoadControlledNewtonRaphson(Exercise1Frame);
+                //nonLin.ReadBoundaryConditions(boundDOF);
+                //nonLin.NLSolve(nlForceVec);
+                //nonLin.PrintSolution();
+
+                IAssembly Exercise1Frame = new Assembly(data);
                 Exercise1Frame.GetStiffnessMatrices();
                 Exercise1Frame.BoundedDOFsVector = data.boundaryDof;
 
@@ -43,9 +56,11 @@ namespace FiniteElementsProject
                 ISolver nonLin = new StaticSolver();
                 nonLin.SetSolutionMethodToCholesky();
                 nonLin.SetNonLinearMethodToLoadControlledNewtonRaphson(Exercise1Frame);
-                nonLin.ReadBoundaryConditions(boundDOF);
+                //nonLin.ReadBoundaryConditions(boundDOF);
                 nonLin.NLSolve(nlForceVec);
                 nonLin.PrintSolution();
+
+
                 ////Exercise1Frame.CreateTotalStiffnessMatrix();
                 //NLSolver solution = new NLSolver(Exercise1Frame, 1000, data);
                 //solution.SolveWithMethod("Load Controlled Newton-Raphson");

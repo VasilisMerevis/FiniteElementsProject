@@ -37,6 +37,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assemble\Assembly.cs" />
+    <Compile Include="Assemble\IAssembly.cs" />
     <Compile Include="Elements\Bar2D.cs" />
     <Compile Include="Elements\NLEulerBernoulli1DElement.cs" />
     <Compile Include="Elements\NLTruss.cs" />

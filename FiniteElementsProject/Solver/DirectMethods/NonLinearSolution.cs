@@ -9,7 +9,7 @@ namespace FiniteElementsProject
     {
         protected int numberOfLoadSteps = 10;
         protected int[] boundaryDof;
-        protected Discretization2DFrame discretization;
+        protected IAssembly discretization;
         protected double lambda;
         protected double tolerance = 1e-5;
         protected int maxIterations = 1000;

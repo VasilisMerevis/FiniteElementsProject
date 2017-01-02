@@ -26,7 +26,7 @@ namespace FiniteElementsProject
             solutionMethod = new PCGSolver();
         }
 
-        public void SetNonLinearMethodToLoadControlledNewtonRaphson(Discretization2DFrame discretization)
+        public void SetNonLinearMethodToLoadControlledNewtonRaphson(IAssembly discretization)
         {
             nonLinearSolutionMethod = new LoadControlledNewtonRaphson(discretization, solutionMethod);
         }
