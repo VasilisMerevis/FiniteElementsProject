@@ -60,9 +60,9 @@ namespace FiniteElementsProject
 
         public void InitializeMatrices()
         {
-            this.totalStiffnessMatrix = new double[totalDOF-boundedDOFsVector.Length, totalDOF-boundedDOFsVector.Length];
-            this.totalMassMatrix = new double[totalDOF-boundedDOFsVector.Length, totalDOF-boundedDOFsVector.Length];
-            this.internalForcesTotalVector = new double[totalDOF-boundedDOFsVector.Length];
+            this.totalStiffnessMatrix = new double[totalDOF, totalDOF];
+            this.totalMassMatrix = new double[totalDOF, totalDOF];
+            this.internalForcesTotalVector = new double[totalDOF];
         }
 
         public Element1D[] GetStiffnessMatrices()

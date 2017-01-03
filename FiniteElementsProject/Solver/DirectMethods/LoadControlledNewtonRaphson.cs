@@ -32,45 +32,27 @@ namespace FiniteElementsProject
                 incrementalExternalForcesVector = VectorOperations.VectorVectorAddition(incrementalExternalForcesVector, incrementDf);
                 discretization.UpdateValues(solutionVector);
                 internalForcesTotalVector = discretization.CreateTotalInternalForcesVector();
-
                 double[,] stiffnessMatrix = discretization.CreateTotalStiffnessMatrix();
-                
-
                 dU = linearSolver.Solve(stiffnessMatrix, incrementDf);
-                
-                
                 solutionVector = VectorOperations.VectorVectorAddition(solutionVector, dU);
-                
-
                 residual = VectorOperations.VectorVectorSubtraction(internalForcesTotalVector, incrementalExternalForcesVector);
-
                 residualNorm = VectorOperations.VectorNorm2(residual);
-
                 int iteration = 0;
                 Array.Clear(deltaU, 0, deltaU.Length);
                 while (residualNorm > tolerance && iteration < maxIterations)
                 {
                     stiffnessMatrix = discretization.CreateTotalStiffnessMatrix();
-                    
-
                     deltaU = VectorOperations.VectorVectorSubtraction(deltaU, linearSolver.Solve(stiffnessMatrix, residual));
-
-                    
                     tempSolutionVector = VectorOperations.VectorVectorAddition(solutionVector, deltaU);
-                    
-
                     discretization.UpdateValues(tempSolutionVector);
                     internalForcesTotalVector = discretization.CreateTotalInternalForcesVector();
-
                     residual = VectorOperations.VectorVectorSubtraction(internalForcesTotalVector, incrementalExternalForcesVector);
-
                     residualNorm = VectorOperations.VectorNorm2(residual);
-
                     iteration = iteration + 1;
                 }
 
                 solutionVector = VectorOperations.VectorVectorAddition(solutionVector, deltaU);
-                double[] checking = incrementalExternalForcesVector;
+                //double[] checking = incrementalExternalForcesVector;
             }
            
             return solutionVector;

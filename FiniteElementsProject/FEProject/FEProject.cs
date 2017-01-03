@@ -31,98 +31,40 @@ namespace FiniteElementsProject
 
         public void CreateModel()
         {
-            if (data.elementType.Contains("NLBeam"))// | data.elementType.Contains("NLTruss"))
+            if (data.elementType.Contains("NLBeam") | data.elementType.Contains("NLTruss"))
             {
-                //Creation of local, global and total stiffness matrices
-                //Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
-                //Exercise1Frame.GetStiffnessMatrices();
-                //Exercise1Frame.BoundedDOFsVector = data.boundaryDof;
-
-                //int[] boundDOF = data.boundaryDof;
-                //double[] nlForceVec = data.externalForcesVector;
-                //ISolver nonLin = new StaticSolver();
-                //nonLin.SetSolutionMethodToCholesky();
-                //nonLin.SetNonLinearMethodToLoadControlledNewtonRaphson(Exercise1Frame);
-                //nonLin.ReadBoundaryConditions(boundDOF);
-                //nonLin.NLSolve(nlForceVec);
-                //nonLin.PrintSolution();
-
+                Console.WriteLine("Non-linear Solution is:");
                 IAssembly Exercise1Frame = new Assembly(data);
                 Exercise1Frame.GetStiffnessMatrices();
                 Exercise1Frame.BoundedDOFsVector = data.boundaryDof;
 
-                int[] boundDOF = data.boundaryDof;
-                double[] nlForceVec = data.externalForcesVector;
                 ISolver nonLin = new StaticSolver();
                 nonLin.SetSolutionMethodToCholesky();
                 nonLin.SetNonLinearMethodToLoadControlledNewtonRaphson(Exercise1Frame);
-                //nonLin.ReadBoundaryConditions(boundDOF);
-                nonLin.NLSolve(nlForceVec);
+                nonLin.NLSolve(data.externalForcesVector);
                 nonLin.PrintSolution();
-
-
-                ////Exercise1Frame.CreateTotalStiffnessMatrix();
-                //NLSolver solution = new NLSolver(Exercise1Frame, 1000, data);
-                //solution.SolveWithMethod("Load Controlled Newton-Raphson");
-                //VectorOperations.PrintVector(solution.solutionVector);
             }
-            else if (data.elementType.Contains("NLTruss"))
-            {
-                //Creation of local, global and total stiffness matrices
-                Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
-                Exercise1Frame.GetStiffnessMatrices();
-
-                //Exercise1Frame.CreateTotalStiffnessMatrix();
-                NLSolver solution = new NLSolver(Exercise1Frame, 10000, data);
-                solution.SolveWithMethod("Newton-Raphson");
-                VectorOperations.PrintVector(solution.solutionVector);
-            }
+           
             else
             {
-                //Creation of local, global and total stiffness matrices
-                Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
+                ////Creation of local, global and total stiffness matrices
+                //Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
+                //Exercise1Frame.GetStiffnessMatrices();
+                //Exercise1Frame.InitializeMatrices();
+                //Exercise1Frame.CreateTotalStiffnessMatrix();
+                //Exercise1Frame.GetMassMatrices();
+                ////Creation reduced matrix depended on boundary conditions
+                //double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
+
+                IAssembly Exercise1Frame = new Assembly(data);
+                Exercise1Frame.BoundedDOFsVector = data.boundaryDof;
                 Exercise1Frame.GetStiffnessMatrices();
                 Exercise1Frame.InitializeMatrices();
-                Exercise1Frame.CreateTotalStiffnessMatrix();
+
+                double[,] reducedTotalStiff = Exercise1Frame.CreateTotalStiffnessMatrix();
                 Exercise1Frame.GetMassMatrices();
-                //Creation reduced matrix depended on boundary conditions
-                double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
 
-                #region CodeForDeletion
-                ////Solution using Cholesky factorization with forward and backward substitution
-                //DirectSolver solution = new DirectSolver(reducedTotalStiff, data.externalForcesVector);
-                //solution.SolveWithMethod("Cholesky");
-                //Console.WriteLine();
-
-                //VectorOperations.PrintVector(solution.GetSolutionVector);
-
-                //Console.WriteLine();
-                //IterativeSolver solution2 = new IterativeSolver(reducedTotalStiff, data.externalForcesVector, 1000);
-                //solution2.SolveWithMethod("PCG");
-
-                //VectorOperations.PrintVector(solution2.GetSolutionVector);
-
-
-
-
-                //Console.WriteLine();
-                //Discretization2DFrame Exercise1Frame2 = new Discretization2DFrame(data);
-                //Exercise1Frame2.GetStiffnessMatrices();
-                //Exercise1Frame2.InitializeMatrices();
-                //Exercise1Frame2.CreateTotalStiffnessMatrix();
-                //Exercise1Frame2.GetMassMatrices();
-                ////Creation reduced matrix depended on boundary conditions
-                //double[,] reducedTotalStiff2 = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame2.TotalStiffnessMatrix, data.boundaryDof);
-
-                //LinearSolver solution3 = new DirectMethods();
-                //solution3.SetSolutionMethodToGauss();
-                ////solution3.GetStiffnessMatrixAndForceVector(reducedTotalStiff, data.externalForcesVector);
-
-                //solution3.Solve(reducedTotalStiff2, data.externalForcesVector);
-                //solution3.PrintSolution();
-                #endregion
-
-                Console.WriteLine("newSolu is:");
+                Console.WriteLine("Linear Solution is:");
                 ISolver newSolu = new StaticSolver();
                 newSolu.SetSolutionMethodToPCG();
                 newSolu.Solve(reducedTotalStiff, data.externalForcesVector);

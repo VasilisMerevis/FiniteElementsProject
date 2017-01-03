@@ -19,7 +19,8 @@ namespace FiniteElementsProject
 
          
 
-        public double[,] TotalStiffnessMatrix {
+        public double[,] TotalStiffnessMatrix
+        {
 			get{ return totalStiffnessMatrix;}
 		}
 
