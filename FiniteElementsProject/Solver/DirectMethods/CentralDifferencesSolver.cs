@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace FiniteElementsProject
 {
-    public class CentralDifferencesSolver
+    public class CentralDifferencesSolver : ExplicitSolution
     {
         private double totalTime, timeStep;
         private int timeStepsNumber;
