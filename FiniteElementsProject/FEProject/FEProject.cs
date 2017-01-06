@@ -7,7 +7,6 @@ namespace FiniteElementsProject
 {
     public class FEProject : IFEProject
     {
-        //Declaration of basic frame info
         private InputData data;
 
         public FEProject()
@@ -47,15 +46,6 @@ namespace FiniteElementsProject
            
             else
             {
-                ////Creation of local, global and total stiffness matrices
-                //Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
-                //Exercise1Frame.GetStiffnessMatrices();
-                //Exercise1Frame.InitializeMatrices();
-                //Exercise1Frame.CreateTotalStiffnessMatrix();
-                //Exercise1Frame.GetMassMatrices();
-                ////Creation reduced matrix depended on boundary conditions
-                //double[,] reducedTotalStiff = BoundaryConditionsImposition.ReducedTotalStiff(Exercise1Frame.TotalStiffnessMatrix, data.boundaryDof);
-
                 IAssembly Exercise1Frame = new Assembly(data);
                 Exercise1Frame.BoundedDOFsVector = data.boundaryDof;
                 Exercise1Frame.GetStiffnessMatrices();
@@ -71,14 +61,6 @@ namespace FiniteElementsProject
                 newSolu.PrintSolution();
             }
         }
-
-        
-
-
-            
-
-            
-
         //    //Creation of local, global and total stiffness matrices
         //    Discretization2DFrame Exercise1Frame = new Discretization2DFrame(data);
         //Exercise1Frame.GetStiffnessMatrices();

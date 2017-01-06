@@ -46,22 +46,24 @@
     <Compile Include="FEProject\FEProject.cs" />
     <Compile Include="FEProject\IFEProject.cs" />
     <Compile Include="LinearAlgebra\Matrix.cs" />
-    <Compile Include="Solver\CentralDifferencesSolver.cs" />
+    <Compile Include="Solver\DirectMethods\CentralDifferencesSolver.cs" />
     <Compile Include="Solver\Deleted\DirectMethods.cs" />
     <Compile Include="Solver\Deleted\Gauss.cs" />
     <Compile Include="Solver\DirectMethods\CholeskyFactorization.cs" />
+    <Compile Include="Solver\DirectMethods\DynamicSolver.cs" />
+    <Compile Include="Solver\DirectMethods\ExplicitSolution.cs" />
     <Compile Include="Solver\DirectMethods\GaussSolver.cs" />
     <Compile Include="Solver\DirectMethods\LoadControlledNewtonRaphson.cs" />
     <Compile Include="Solver\DirectMethods\NonLinearSolution.cs" />
     <Compile Include="Solver\DirectMethods\PCGSolver.cs" />
-    <Compile Include="Solver\ILinearSolution.cs" />
+    <Compile Include="Solver\Deleted\ILinearSolution.cs" />
     <Compile Include="Solver\DirectMethods\ISolver.cs" />
     <Compile Include="Solver\DirectMethods\LinearSolution.cs" />
-    <Compile Include="Solver\NLSolver.cs" />
+    <Compile Include="Solver\Deleted\NLSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Solver\DirectSolver.cs" />
-    <Compile Include="Solver\LinearSolver.cs" />
+    <Compile Include="Solver\Deleted\DirectSolver.cs" />
+    <Compile Include="Solver\Deleted\LinearSolver.cs" />
     <Compile Include="LinearAlgebra\VectorOperations.cs" />
     <Compile Include="Assemble\BoundaryConditionsImposition.cs" />
     <Compile Include="LinearAlgebra\MatrixOperations.cs" />
@@ -71,7 +73,7 @@
     <Compile Include="Elements\Bar1DElement.cs" />
     <Compile Include="Elements\IElements1D.cs" />
     <Compile Include="Data\InputData.cs" />
-    <Compile Include="Solver\IterativeSolver.cs" />
+    <Compile Include="Solver\Deleted\IterativeSolver.cs" />
     <Compile Include="Solver\DirectMethods\StaticSolver.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -20,9 +20,7 @@ namespace FiniteElementsProject
             double[] solutionVector = new double[forceVector.Length];
             double[] incrementalExternalForcesVector = new double[forceVector.Length];
             double[] tempSolutionVector = new double[solutionVector.Length];
-            
             double[] deltaU = new double[solutionVector.Length];
-            
             double[] internalForcesTotalVector;
             double[] dU;
             double[] residual;
@@ -50,9 +48,7 @@ namespace FiniteElementsProject
                     residualNorm = VectorOperations.VectorNorm2(residual);
                     iteration = iteration + 1;
                 }
-
                 solutionVector = VectorOperations.VectorVectorAddition(solutionVector, deltaU);
-                //double[] checking = incrementalExternalForcesVector;
             }
            
             return solutionVector;
