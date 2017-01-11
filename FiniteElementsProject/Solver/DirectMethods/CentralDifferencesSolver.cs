@@ -11,7 +11,7 @@ namespace FiniteElementsProject
     {
         private double totalTime, timeStep;
         private int timeStepsNumber;
-        private Dictionary<int,double[]> explicitSolution = new Dictionary<int, double[]>();
+        private Dictionary<double,double[]> explicitSolution = new Dictionary<double, double[]>();
         int totalDOFs;
         double[,] massMatrix, dampingMatrix;
         double[,] stiffenessMatrix;
@@ -88,10 +88,11 @@ namespace FiniteElementsProject
             //double[,] oneI = MatrixOperations.CreateDiagonalMatrix(solutionLength, 1);
 
             double[,] hatMassMatrix = CalculateHatMMatrix();
-            double[] previousDisplacement = CalculatePreviousDisplacementVector();
-            explicitSolution.Add(-1, previousDisplacement);
-            explicitSolution.Add(0, initialDisplacementVector);
-            for (int i = 0; i < timeStepsNumber; i++)
+            //double[] previousDisplacement = CalculatePreviousDisplacementVector();
+            explicitSolution.Add(-timeStep, CalculatePreviousDisplacementVector());
+            //explicitSolution.Add(-1, previousDisplacement);
+            explicitSolution.Add(initialTime, initialDisplacementVector);
+            for (int i = 1; i < timeStepsNumber; i++)
             {
                 double time = i * timeStep + initialTime;
                 double[] hatRVector = CalculateHatRVector(i);
@@ -102,7 +103,7 @@ namespace FiniteElementsProject
                 //linearSolver.SolveWithMethod("Cholesky");
 
                 double[] nextSolution = linearSolver.GetSolutionVector;
-                explicitSolution.Add(i+1, nextSolution);
+                explicitSolution.Add(time, nextSolution);
 
                 //double[] solution = new double[solutionLength];
                 //double[] dt2MR = VectorOperations.VectorScalarProduct(
