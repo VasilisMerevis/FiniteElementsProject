@@ -11,11 +11,11 @@ namespace FiniteElementsProject
     {
         private double totalTime, timeStep;
         private int timeStepsNumber;
-        private Dictionary<double,double[]> explicitSolution = new Dictionary<double, double[]>();
+        private Dictionary<int,double[]> explicitSolution = new Dictionary<int, double[]>();
         int totalDOFs;
         double[,] massMatrix, dampingMatrix;
-        double[,] stiffenessMatrix;
-        double[] externalForcesVector = new double[12];
+        double[,] stiffnessMatrix;
+        double[] externalForcesVector;
         double a0, a1, a2, a3;
         double[] initialDisplacementVector, initialVelocityVector, initialAccelerationVector;
         double initialTime;
@@ -25,15 +25,17 @@ namespace FiniteElementsProject
             get { return explicitSolution[timeStepsNumber]; }
         }
 
-        public CentralDifferencesSolver(double initialTime, double[] initialDisp, double[] initialVel, double[] initialAcc, double totalTime, int timeStepsNumber, double[,] stiffnessMatrix, double[,] massMatrix)
+        public CentralDifferencesSolver(double initialTime, double[] initialDisp, double[] initialVel, double[] initialAcc, double totalTime, 
+            int timeStepsNumber, double[,] stiffnessMatrix, double[,] massMatrix, double[] externalForcesVector)
         {
             totalDOFs = stiffnessMatrix.GetLength(0);
             this.totalTime = totalTime;
             this.timeStepsNumber = timeStepsNumber;
             timeStep = totalTime / timeStepsNumber;
-            this.massMatrix = MatrixOperations.CreateDiagonalMatrix(12, 1); //massMatrix;
-            this.stiffenessMatrix = MatrixOperations.CreateDiagonalMatrix(12, 1); //stiffnessMatrix;
-            dampingMatrix = MatrixOperations.CreateDiagonalMatrix(12, 1); //new double[totalDOFs, totalDOFs];
+            this.massMatrix = massMatrix;
+            this.stiffnessMatrix = stiffnessMatrix;
+            dampingMatrix = new double[totalDOFs, totalDOFs];
+            this.externalForcesVector = externalForcesVector;
             initialDisplacementVector = initialDisp;
             initialVelocityVector = initialVel;
             initialAccelerationVector = initialAcc;
@@ -64,17 +66,17 @@ namespace FiniteElementsProject
 
         private double[,] CalculateHatKMatrix()
         {
-            double[,] hatK = MatrixOperations.MatrixSubtraction(stiffenessMatrix,
+            double[,] hatK = MatrixOperations.MatrixSubtraction(stiffnessMatrix,
                                 MatrixOperations.ScalarMatrixProductNew(a2, massMatrix));
             return hatK;
         }
 
-        private double[] CalculateHatRVector(int timeIncrement)
+        private double[] CalculateHatRVector(int i)
         {
             double[,] hatKMatrix = CalculateHatKMatrix();
             double[,] hatMMatrix = CalculateHatMMatrix();
-            double[] hatCurrentU = VectorOperations.MatrixVectorProduct(hatKMatrix, explicitSolution[timeIncrement]);
-            double[] hatPreviousU = VectorOperations.MatrixVectorProduct(hatMMatrix, explicitSolution[timeIncrement - 1]);
+            double[] hatCurrentU = VectorOperations.MatrixVectorProduct(hatKMatrix, explicitSolution[i-1]);
+            double[] hatPreviousU = VectorOperations.MatrixVectorProduct(hatMMatrix, explicitSolution[i - 2]);
 
             double[] hatR = VectorOperations.VectorVectorSubtraction(externalForcesVector,
                             VectorOperations.VectorVectorAddition(hatCurrentU, hatPreviousU));
@@ -84,39 +86,28 @@ namespace FiniteElementsProject
         
         public void SolveExplicit()
         {
-            //double[,] twoI = MatrixOperations.CreateDiagonalMatrix(solutionLength, 2);
-            //double[,] oneI = MatrixOperations.CreateDiagonalMatrix(solutionLength, 1);
-
             double[,] hatMassMatrix = CalculateHatMMatrix();
-            //double[] previousDisplacement = CalculatePreviousDisplacementVector();
-            explicitSolution.Add(-timeStep, CalculatePreviousDisplacementVector());
-            //explicitSolution.Add(-1, previousDisplacement);
-            explicitSolution.Add(initialTime, initialDisplacementVector);
+            explicitSolution.Add(-1, CalculatePreviousDisplacementVector());
+            explicitSolution.Add(0, initialDisplacementVector);
             for (int i = 1; i < timeStepsNumber; i++)
             {
                 double time = i * timeStep + initialTime;
                 double[] hatRVector = CalculateHatRVector(i);
                 DirectSolver linearSolver = new DirectSolver(hatMassMatrix, hatRVector);
                 linearSolver.SolveWithMethod("Cholesky");
-
-                //DirectSolver linearSolver = new DirectSolver(hatMassMatrix, hatRVector);
-                //linearSolver.SolveWithMethod("Cholesky");
-
                 double[] nextSolution = linearSolver.GetSolutionVector;
-                explicitSolution.Add(time, nextSolution);
+                explicitSolution.Add(i, nextSolution);
+            }
+        }
 
-                //double[] solution = new double[solutionLength];
-                //double[] dt2MR = VectorOperations.VectorScalarProduct(
-                //                    VectorOperations.MatrixVectorProduct(invertedMassMatrix, externalForcesVector), timeStep * timeStep);
-                //double[,] dt2MK = MatrixOperations.ScalarMatrixProduct(timeStep * timeStep,
-                //                    MatrixOperations.MatrixProduct(invertedMassMatrix, stiffenessMatrix));
-                //double[] dt2MKminus2IbyU = VectorOperations.MatrixVectorProduct(
-                //                                MatrixOperations.MatrixSubtraction(dt2MK, twoI), solution);
-                //double[] IbyU = VectorOperations.MatrixVectorProduct(oneI, solution);
-                //double[] explicitSolutionVector = VectorOperations.VectorVectorSubtraction(dt2MR,
-                //                                VectorOperations.VectorVectorAddition(dt2MKminus2IbyU, IbyU));
-
-                //explicitSolution.Add(time, explicitSolutionVector);
+        public void PrintExplicitSolution()
+        {
+            foreach (KeyValuePair<int, double[]> element in explicitSolution)
+            {
+                int step = element.Key;
+                double[] solutionInStep = element.Value;
+                Console.WriteLine("Step is{0}", step);
+                VectorOperations.PrintVector(solutionInStep);
             }
         }
     }
