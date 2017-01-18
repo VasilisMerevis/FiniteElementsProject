@@ -37,6 +37,8 @@ namespace FiniteElementsProject
             dynamic.SolveExplicit();
             Console.WriteLine();
             dynamic.PrintExplicitSolution();
+
+          
         }
     }
 }

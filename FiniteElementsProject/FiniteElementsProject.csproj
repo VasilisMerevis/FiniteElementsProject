@@ -46,19 +46,20 @@
     <Compile Include="FEProject\FEProject.cs" />
     <Compile Include="FEProject\IFEProject.cs" />
     <Compile Include="LinearAlgebra\Matrix.cs" />
-    <Compile Include="Solver\DirectMethods\CentralDifferencesSolver.cs" />
+    <Compile Include="Solver\Explicit\ExplicitSchemes\CentralDifferencesSolver.cs" />
     <Compile Include="Solver\Deleted\DirectMethods.cs" />
     <Compile Include="Solver\Deleted\Gauss.cs" />
-    <Compile Include="Solver\DirectMethods\CholeskyFactorization.cs" />
-    <Compile Include="Solver\DirectMethods\DynamicSolver.cs" />
-    <Compile Include="Solver\DirectMethods\ExplicitSolution.cs" />
-    <Compile Include="Solver\DirectMethods\GaussSolver.cs" />
-    <Compile Include="Solver\DirectMethods\LoadControlledNewtonRaphson.cs" />
-    <Compile Include="Solver\DirectMethods\NonLinearSolution.cs" />
-    <Compile Include="Solver\DirectMethods\PCGSolver.cs" />
+    <Compile Include="Solver\Linear\ILinearSolution.cs" />
+    <Compile Include="Solver\Linear\LinearSchemes\CholeskyFactorization.cs" />
+    <Compile Include="Solver\DynamicSolver.cs" />
+    <Compile Include="Solver\Explicit\ExplicitSolution.cs" />
+    <Compile Include="Solver\Linear\LinearSchemes\GaussSolver.cs" />
+    <Compile Include="Solver\NonLinear\NonLinearSchemes\LoadControlledNewtonRaphson.cs" />
+    <Compile Include="Solver\NonLinear\NonLinearSolution.cs" />
+    <Compile Include="Solver\Linear\LinearSchemes\PCGSolver.cs" />
     <Compile Include="Solver\Deleted\ILinearSolution.cs" />
-    <Compile Include="Solver\DirectMethods\ISolver.cs" />
-    <Compile Include="Solver\DirectMethods\LinearSolution.cs" />
+    <Compile Include="Solver\ISolver.cs" />
+    <Compile Include="Solver\Linear\LinearSolution.cs" />
     <Compile Include="Solver\Deleted\NLSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,7 +75,7 @@
     <Compile Include="Elements\IElements1D.cs" />
     <Compile Include="Data\InputData.cs" />
     <Compile Include="Solver\Deleted\IterativeSolver.cs" />
-    <Compile Include="Solver\DirectMethods\StaticSolver.cs" />
+    <Compile Include="Solver\StaticSolver.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
