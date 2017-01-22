@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    public abstract class LinearSolution
+    public abstract class LinearSolution : ILinearSolution
     {
         public virtual double[] Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
