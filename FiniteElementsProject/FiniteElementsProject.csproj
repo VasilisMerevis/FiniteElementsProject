@@ -57,7 +57,6 @@
     <Compile Include="Solver\NonLinear\NonLinearSchemes\LoadControlledNewtonRaphson.cs" />
     <Compile Include="Solver\NonLinear\NonLinearSolution.cs" />
     <Compile Include="Solver\Linear\LinearSchemes\PCGSolver.cs" />
-    <Compile Include="Solver\Deleted\ILinearSolution.cs" />
     <Compile Include="Solver\ISolver.cs" />
     <Compile Include="Solver\Linear\LinearSolution.cs" />
     <Compile Include="Solver\Deleted\NLSolver.cs" />

@@ -5,16 +5,22 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    public abstract class LinearSolution : ILinearSolution
+    public class LinearSolution : ILinearSolution
     {
+        GaussSolver solMeth;
         public virtual double[] Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
             throw new Exception("LinearSolution.Solve not implemented");
         }
 
+        public void SetSolutionMethodToGauss()
+        {
+            solMeth = new GaussSolver();
+        }
 
-    #region SecondaryMethods
-    protected double[] BackSubstitution(double[,] upperTriangMatrix, double[] forceVector)
+
+        #region SecondaryMethods
+        protected double[] BackSubstitution(double[,] upperTriangMatrix, double[] forceVector)
         {
             int rows = forceVector.GetLength(0);
             double[] solutionVector = new double[rows];

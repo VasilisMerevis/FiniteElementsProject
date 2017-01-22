@@ -10,7 +10,8 @@ namespace FiniteElementsProject
         private double[] staticSolutionVector;
         private LinearSolution solutionMethod;
         private NonLinearSolution nonLinearSolutionMethod;
-
+        public ILinearSolution katineo { get; set; } 
+        
         public void SetSolutionMethodToGauss()
         {
             solutionMethod = new GaussSolver();

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FiniteElementsProject.Solver.Linear
+namespace FiniteElementsProject
 {
     interface ILinearSolution
     {
+        void SetSolutionMethodToGauss();
     }
 }

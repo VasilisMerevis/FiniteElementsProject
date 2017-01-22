@@ -15,5 +15,8 @@ namespace FiniteElementsProject
         void NLSolve(double[] rhsVector);
         void ReadBoundaryConditions(int[] boundaryCond);
         void PrintSolution();
+
+        ILinearSolution katineo { get; set; }
+
     }
 }

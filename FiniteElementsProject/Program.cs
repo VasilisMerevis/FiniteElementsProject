@@ -38,6 +38,8 @@ namespace FiniteElementsProject
             Console.WriteLine();
             dynamic.PrintExplicitSolution();
 
+            ISolver dokimi = new StaticSolver();
+            dokimi.katineo.SetSolutionMethodToGauss();
           
         }
     }
