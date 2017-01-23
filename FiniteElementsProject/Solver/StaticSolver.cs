@@ -10,7 +10,8 @@ namespace FiniteElementsProject
         private double[] staticSolutionVector;
         private LinearSolution solutionMethod;
         private NonLinearSolution nonLinearSolutionMethod;
-        public ILinearSolution LinearScheme { get; set; } 
+        public ILinearSolution LinearScheme { get; set; }
+        public INonLinearSolution NonLinearScheme { get; set; }
         public bool ActivateNonLinearSolver { get;  set; }
         public IAssembly AssemblyData { get; set; }
 
@@ -34,9 +35,9 @@ namespace FiniteElementsProject
             solutionMethod = new PCGSolver();
         }
 
-        public void SetNonLinearMethodToLoadControlledNewtonRaphson(IAssembly discretization)
+        public void SetNonLinearMethodToLoadControlledNewtonRaphson()
         {
-            nonLinearSolutionMethod = new LoadControlledNewtonRaphson(discretization, solutionMethod);
+            nonLinearSolutionMethod = new LoadControlledNewtonRaphson(AssemblyData, LinearScheme);
         }
 
         public void ReadBoundaryConditions(int[] boundaryCond)
@@ -63,7 +64,7 @@ namespace FiniteElementsProject
             else
             {
                 double[,] coefMatrix = AssemblyData.CreateTotalStiffnessMatrix();
-                staticSolutionVector = solutionMethod.Solve(coefMatrix, rhsVector);
+                staticSolutionVector = LinearScheme.Solve(coefMatrix, rhsVector);
             }
         }
 

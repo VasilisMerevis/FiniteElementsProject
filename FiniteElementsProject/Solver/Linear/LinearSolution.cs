@@ -7,15 +7,9 @@ namespace FiniteElementsProject
 {
     public class LinearSolution : ILinearSolution
     {
-        GaussSolver solMeth;
         public virtual double[] Solve(double[,] stiffnessMatrix, double[] forceVector)
         {
             throw new Exception("LinearSolution.Solve not implemented");
-        }
-
-        public void SetSolutionMethodToGauss()
-        {
-            solMeth = new GaussSolver();
         }
 
 

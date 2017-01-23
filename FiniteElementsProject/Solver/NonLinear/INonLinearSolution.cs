@@ -5,8 +5,7 @@ using System.Text;
 
 namespace FiniteElementsProject
 {
-    public interface ILinearSolution
+    interface INonLinearSolution
     {
-        double[] Solve(double[,] stiffnessMatrix, double[] forceVector);
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="Solver\DynamicSolver.cs" />
     <Compile Include="Solver\Explicit\ExplicitSolution.cs" />
     <Compile Include="Solver\Linear\LinearSchemes\GaussSolver.cs" />
+    <Compile Include="Solver\NonLinear\INonLinearSolution.cs" />
     <Compile Include="Solver\NonLinear\NonLinearSchemes\LoadControlledNewtonRaphson.cs" />
     <Compile Include="Solver\NonLinear\NonLinearSolution.cs" />
     <Compile Include="Solver\Linear\LinearSchemes\PCGSolver.cs" />

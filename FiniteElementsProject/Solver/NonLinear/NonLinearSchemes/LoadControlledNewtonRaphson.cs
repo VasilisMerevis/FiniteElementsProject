@@ -7,7 +7,7 @@ namespace FiniteElementsProject
 {
     class LoadControlledNewtonRaphson : NonLinearSolution
     {
-        public LoadControlledNewtonRaphson(IAssembly discretization, LinearSolution linearSolver)
+        public LoadControlledNewtonRaphson(IAssembly discretization, ILinearSolution linearSolver)
         {
             this.discretization = discretization;
             lambda = 1.0 / numberOfLoadSteps;
