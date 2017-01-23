@@ -51,13 +51,16 @@ namespace FiniteElementsProject
                 Exercise1Frame.GetStiffnessMatrices();
                 Exercise1Frame.InitializeMatrices();
 
-                double[,] reducedTotalStiff = Exercise1Frame.CreateTotalStiffnessMatrix();
-                Exercise1Frame.GetMassMatrices();
+                //double[,] reducedTotalStiff = Exercise1Frame.CreateTotalStiffnessMatrix();
+                //Exercise1Frame.GetMassMatrices();
 
                 Console.WriteLine("Linear Solution is:");
                 ISolver newSolu = new StaticSolver();
                 newSolu.SetSolutionMethodToPCG();
-                newSolu.Solve(reducedTotalStiff, data.externalForcesVector);
+                //newSolu.Solve(reducedTotalStiff, data.externalForcesVector);
+                //newSolu.PrintSolution();
+                newSolu.AssemblyData = Exercise1Frame;
+                newSolu.SolveStatic(data.externalForcesVector);
                 newSolu.PrintSolution();
             }
         }

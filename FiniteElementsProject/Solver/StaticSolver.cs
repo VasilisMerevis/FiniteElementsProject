@@ -10,7 +10,14 @@ namespace FiniteElementsProject
         private double[] staticSolutionVector;
         private LinearSolution solutionMethod;
         private NonLinearSolution nonLinearSolutionMethod;
-        public ILinearSolution katineo { get; set; } 
+        public ILinearSolution LinearScheme { get; set; } 
+        public bool ActivateNonLinearSolver { get;  set; }
+        public IAssembly AssemblyData { get; set; }
+
+        public StaticSolver()
+        {
+            ActivateNonLinearSolver = false;
+        }
         
         public void SetSolutionMethodToGauss()
         {
@@ -45,6 +52,19 @@ namespace FiniteElementsProject
         public void NLSolve(double[] rhsVector)
         {
             staticSolutionVector = nonLinearSolutionMethod.NLSolve(rhsVector);
+        }
+
+        public void SolveStatic(double[] rhsVector)
+        {
+            if (ActivateNonLinearSolver == true)
+            {
+                staticSolutionVector = nonLinearSolutionMethod.NLSolve(rhsVector);
+            }
+            else
+            {
+                double[,] coefMatrix = AssemblyData.CreateTotalStiffnessMatrix();
+                staticSolutionVector = solutionMethod.Solve(coefMatrix, rhsVector);
+            }
         }
 
         public void PrintSolution()

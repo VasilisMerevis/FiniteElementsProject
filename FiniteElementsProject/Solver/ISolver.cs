@@ -16,7 +16,9 @@ namespace FiniteElementsProject
         void ReadBoundaryConditions(int[] boundaryCond);
         void PrintSolution();
 
-        ILinearSolution katineo { get; set; }
+        ILinearSolution LinearScheme { get; set; }
+        IAssembly AssemblyData { get; set; }
+        void SolveStatic(double[] rhsVector);
 
     }
 }
