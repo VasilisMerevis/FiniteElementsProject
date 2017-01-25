@@ -40,11 +40,9 @@ namespace FiniteElementsProject
                 ISolver nonLin = new StaticSolver();
                 nonLin.AssemblyData = Exercise1Frame;
                 nonLin.LinearScheme = new CholeskyFactorization();
-                nonLin.NonLinearScheme = new LoadControlledNewtonRaphson();
-                //nonLin.SetNonLinearMethodToLoadControlledNewtonRaphson();
-                
+                nonLin.NonLinearScheme = new LoadControlledNewtonRaphson();           
                 nonLin.ActivateNonLinearSolver = true;
-                nonLin.SolveStatic(data.externalForcesVector);
+                nonLin.Solve(data.externalForcesVector);
                 nonLin.PrintSolution();
             }
            
@@ -60,7 +58,7 @@ namespace FiniteElementsProject
                 newSolu.LinearScheme = new PCGSolver();
              
                 newSolu.AssemblyData = Exercise1Frame;
-                newSolu.SolveStatic(data.externalForcesVector);
+                newSolu.Solve(data.externalForcesVector);
                 newSolu.PrintSolution();
             }
         }

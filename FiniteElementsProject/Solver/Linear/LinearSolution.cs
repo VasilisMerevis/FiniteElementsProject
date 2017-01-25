@@ -12,7 +12,6 @@ namespace FiniteElementsProject
             throw new Exception("LinearSolution.Solve not implemented");
         }
 
-
         #region SecondaryMethods
         protected double[] BackSubstitution(double[,] upperTriangMatrix, double[] forceVector)
         {
