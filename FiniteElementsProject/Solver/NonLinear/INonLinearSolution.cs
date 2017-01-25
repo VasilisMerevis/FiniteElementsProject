@@ -7,5 +7,7 @@ namespace FiniteElementsProject
 {
     interface INonLinearSolution
     {
+        double[] NLSolve(IAssembly assembly, ILinearSolution linearScheme, double[] forceVector);
+        //ILinearSolution LinearScheme { get; set; }
     }
 }

@@ -7,12 +7,12 @@ namespace FiniteElementsProject
 {
     class LoadControlledNewtonRaphson : NonLinearSolution
     {
-        public LoadControlledNewtonRaphson(IAssembly discretization, ILinearSolution linearSolver)
-        {
-            this.discretization = discretization;
-            lambda = 1.0 / numberOfLoadSteps;
-            this.linearSolver = linearSolver;
-        }
+        //public LoadControlledNewtonRaphson(IAssembly discretization, ILinearSolution linearSolver)
+        //{
+        //    this.discretization = discretization;
+        //    lambda = 1.0 / numberOfLoadSteps;
+        //    this.linearSolver = linearSolver;
+        //}
         
         private double[] LoadControlledNR(double[] forceVector)
         {
@@ -54,8 +54,11 @@ namespace FiniteElementsProject
             return solutionVector;
         }
 
-        public override double[] NLSolve(double[] forceVector)
+        public override double[] NLSolve(IAssembly assembly, ILinearSolution linearScheme, double[] forceVector)
         {
+            discretization = assembly;
+            linearSolver = linearScheme;
+            lambda = 1.0 / numberOfLoadSteps;
             double[] solution = LoadControlledNR(forceVector);
             return solution;
         }

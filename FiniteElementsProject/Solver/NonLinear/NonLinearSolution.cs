@@ -14,6 +14,7 @@ namespace FiniteElementsProject
         protected double tolerance = 1e-5;
         protected int maxIterations = 1000;
         protected ILinearSolution linearSolver;
+        //public ILinearSolution LinearScheme { get; set; }
         
 
         public void DefineBoundaryConditions(int[] boundaryConditionsVector)
@@ -26,7 +27,7 @@ namespace FiniteElementsProject
             throw new Exception("LinearSolution.Solve not implemented");
         }
 
-        public virtual double[] NLSolve(double[] forceVector)
+        public virtual double[] NLSolve(IAssembly assembly, ILinearSolution linearScheme, double[] forceVector)
         {
             throw new Exception("LinearSolution.Solve not implemented");
         }

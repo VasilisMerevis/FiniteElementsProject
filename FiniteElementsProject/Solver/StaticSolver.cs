@@ -8,7 +8,7 @@ namespace FiniteElementsProject
     class StaticSolver : ISolver
     {
         private double[] staticSolutionVector;
-        private LinearSolution solutionMethod;
+        
         private NonLinearSolution nonLinearSolutionMethod;
         public ILinearSolution LinearScheme { get; set; }
         public INonLinearSolution NonLinearScheme { get; set; }
@@ -20,46 +20,47 @@ namespace FiniteElementsProject
             ActivateNonLinearSolver = false;
         }
         
-        public void SetSolutionMethodToGauss()
-        {
-            solutionMethod = new GaussSolver();
-        }
+        //public void SetSolutionMethodToGauss()
+        //{
+        //    solutionMethod = new GaussSolver();
+        //}
 
-        public void SetSolutionMethodToCholesky()
-        {
-            solutionMethod = new CholeskyFactorization();
-        }
+        //public void SetSolutionMethodToCholesky()
+        //{
+        //    solutionMethod = new CholeskyFactorization();
+        //}
 
-        public void SetSolutionMethodToPCG()
-        {
-            solutionMethod = new PCGSolver();
-        }
+        //public void SetSolutionMethodToPCG()
+        //{
+        //    solutionMethod = new PCGSolver();
+        //}
 
-        public void SetNonLinearMethodToLoadControlledNewtonRaphson()
-        {
-            nonLinearSolutionMethod = new LoadControlledNewtonRaphson(AssemblyData, LinearScheme);
-        }
+        //public void SetNonLinearMethodToLoadControlledNewtonRaphson()
+        //{
+        //    nonLinearSolutionMethod = new LoadControlledNewtonRaphson(AssemblyData, LinearScheme);
+        //}
 
         public void ReadBoundaryConditions(int[] boundaryCond)
         {
             nonLinearSolutionMethod.DefineBoundaryConditions(boundaryCond);
         }
 
-        public void Solve(double[,] coefMatrix, double[] rhsVector)
-        {
-            staticSolutionVector = solutionMethod.Solve(coefMatrix, rhsVector);
-        }
+        //public void Solve(double[,] coefMatrix, double[] rhsVector)
+        //{
+        //    staticSolutionVector = solutionMethod.Solve(coefMatrix, rhsVector);
+        //}
 
-        public void NLSolve(double[] rhsVector)
-        {
-            staticSolutionVector = nonLinearSolutionMethod.NLSolve(rhsVector);
-        }
+        //public void NLSolve(double[] rhsVector)
+        //{
+        //    staticSolutionVector = nonLinearSolutionMethod.NLSolve(rhsVector);
+        //}
 
         public void SolveStatic(double[] rhsVector)
         {
             if (ActivateNonLinearSolver == true)
             {
-                staticSolutionVector = nonLinearSolutionMethod.NLSolve(rhsVector);
+                //staticSolutionVector = nonLinearSolutionMethod.NLSolve(AssemblyData, LinearScheme, rhsVector);
+                staticSolutionVector = NonLinearScheme.NLSolve(AssemblyData, LinearScheme, rhsVector);
             }
             else
             {

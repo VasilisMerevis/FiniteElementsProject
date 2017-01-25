@@ -7,12 +7,12 @@ namespace FiniteElementsProject
 {
     interface ISolver
     {
-        void SetSolutionMethodToGauss();
-        void SetSolutionMethodToCholesky();
-        void SetSolutionMethodToPCG();
-        void SetNonLinearMethodToLoadControlledNewtonRaphson();
-        void Solve(double[,] coefMatrix, double[] rhsVector);
-        void NLSolve(double[] rhsVector);
+        //void SetSolutionMethodToGauss();
+        //void SetSolutionMethodToCholesky();
+        //void SetSolutionMethodToPCG();
+        //void SetNonLinearMethodToLoadControlledNewtonRaphson();
+        //void Solve(double[,] coefMatrix, double[] rhsVector);
+        //void NLSolve(double[] rhsVector);
         void ReadBoundaryConditions(int[] boundaryCond);
         void PrintSolution();
 
@@ -20,6 +20,6 @@ namespace FiniteElementsProject
         IAssembly AssemblyData { get; set; }
         void SolveStatic(double[] rhsVector);
         bool ActivateNonLinearSolver { get; set; }
-
+        INonLinearSolution NonLinearScheme { get; set; }
     }
 }
