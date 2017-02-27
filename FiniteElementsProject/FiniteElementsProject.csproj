@@ -40,6 +40,7 @@
     <Compile Include="Assemble\Assembly.cs" />
     <Compile Include="Assemble\IAssembly.cs" />
     <Compile Include="Elements\Bar2D.cs" />
+    <Compile Include="Elements\ContactNTN2D.cs" />
     <Compile Include="Elements\NLEulerBernoulli1DElement.cs" />
     <Compile Include="Elements\NLTruss.cs" />
     <Compile Include="Elements\NLTruss2.cs" />
