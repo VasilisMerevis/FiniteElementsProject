@@ -93,7 +93,11 @@ namespace FiniteElementsProject
                 throw new IndexOutOfRangeException("Vectors Subtraction: Not equally sized vectors");
             }
         }
-
+        /// <summary>
+        /// Returns norm2 or length of a vector
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
         public static double VectorNorm2(double[] vector)
         {
             double sum = 0;

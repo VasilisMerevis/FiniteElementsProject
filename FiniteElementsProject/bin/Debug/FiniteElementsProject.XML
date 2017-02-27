@@ -16,6 +16,13 @@
             </summary>
             <param name="newInputFile"></param>
         </member>
+        <member name="M:FiniteElementsProject.VectorOperations.VectorNorm2(System.Double[])">
+            <summary>
+            Returns norm2 or length of a vector
+            </summary>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
         <member name="T:FiniteElementsProject.InputData">
             <summary>
             Creates an object which holds all the necessary data and properties of the model.
