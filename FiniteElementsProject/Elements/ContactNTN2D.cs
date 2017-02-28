@@ -10,6 +10,7 @@ namespace FiniteElementsProject
         private double PenaltyFactor { get; set; }
         private double[] normalUnitVector;
         private double[,] oldTangentMatrix;
+        private double penetration;
         public double[,] TangentMatrix { get; set; }
         public ContactNTN2D(double E, double A, double[] nodesX, double[] nodesY)
             : base(E, A, nodesX, nodesY)
@@ -20,11 +21,12 @@ namespace FiniteElementsProject
             oldTangentMatrix = new double[4, 4];
         }
 
-        private void CalculateNormalUnitVector()
+        private double[] CalculateNormalUnitVector()
         {
             double[] normalVector = new double[] { nodesX[1] - nodesX[0], nodesY[1] - nodesY[0] };
             double normalVectorLength = VectorOperations.VectorNorm2(normalVector);
-            normalUnitVector = new double[] { normalVector[0] / normalVectorLength, normalVector[1] / normalVectorLength };            
+            double[] normalUnitVec = new double[] { normalVector[0] / normalVectorLength, normalVector[1] / normalVectorLength };
+            return normalUnitVec;
         }
 
         private double[,] CalculatePositionMatrix()
@@ -41,8 +43,8 @@ namespace FiniteElementsProject
         {
             double[,] A = CalculatePositionMatrix();
             double[,] AT = MatrixOperations.Transpose(A);
-            CalculateNormalUnitVector();
-            double[] AT_n = VectorOperations.MatrixVectorProduct(AT, normalUnitVector);
+            double [] n = CalculateNormalUnitVector();
+            double[] AT_n = VectorOperations.MatrixVectorProduct(AT, n);
             double[] xupd = new double[] { node1XYCurrent[0], node1XYCurrent[1], node2XYCurrent[0], node2XYCurrent[1] };
             double ksi3 = VectorOperations.VectorDotProduct(xupd, AT_n);
             return ksi3;
@@ -50,10 +52,10 @@ namespace FiniteElementsProject
 
         public override double[,] CreateGlobalStiffnessMatrix()
         {
-            CalculateNormalUnitVector();
+            double[] n = CalculateNormalUnitVector();
             double[,] A = CalculatePositionMatrix();
             double[,] AT = MatrixOperations.Transpose(A);
-            double[,] nxn = VectorOperations.VectorVectorTensorProduct(normalUnitVector, normalUnitVector);
+            double[,] nxn = VectorOperations.VectorVectorTensorProduct(n, n);
             double[,] nxn_A = MatrixOperations.MatrixProduct(nxn, A);
             double[,] AT_nxn_A = MatrixOperations.MatrixProduct(AT, nxn_A);
             double[,] e_AT_nxn_A = MatrixOperations.ScalarMatrixProductNew(PenaltyFactor, AT_nxn_A);
@@ -65,12 +67,30 @@ namespace FiniteElementsProject
         {
             double[,] A = CalculatePositionMatrix();
             double[,] AT = MatrixOperations.Transpose(A);
-            CalculateNormalUnitVector();
-            double[] AT_n = VectorOperations.MatrixVectorProduct(AT, normalUnitVector);
+            double[] n = CalculateNormalUnitVector();
+            double[] AT_n = VectorOperations.MatrixVectorProduct(AT, n);
             double ksi = CalculateKsi3();
             double[] ksi_AT_n = VectorOperations.VectorScalarProductNew(AT_n, ksi);
             double[] e_ksi_AT_n = VectorOperations.VectorScalarProductNew(ksi_AT_n, PenaltyFactor);
             return e_ksi_AT_n;
+        }
+
+        public override void CalculateInitialValues()
+        {
+            penetration = CalculateKsi3();
+            globalStiffnessMatrix = CreateGlobalStiffnessMatrix();
+            internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
+        }
+
+        public override void CalculateCurrentValues()
+        {
+            CalculateCurrentNodalCoordinates();
+            penetration = CalculateKsi3();
+            if (penetration <= 0)
+            {
+                globalStiffnessMatrix = MatrixOperations.MatrixAddition(globalStiffnessMatrix, CreateGlobalStiffnessMatrix());
+                internalGlobalForcesVector = VectorOperations.VectorVectorSubtraction(internalGlobalForcesVector, CalculateInternalGlobalForcesVector());
+            }
         }
     }
 }
