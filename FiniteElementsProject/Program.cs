@@ -39,8 +39,13 @@ namespace FiniteElementsProject
             dynamic.PrintExplicitSolution();
 
             ISolver dokimi = new StaticSolver();
-            
-          
+
+
+            IFEProject nLContact = new FEProject();
+            nLContact.ChangeInputFile("Writelines2NLContact.txt.");
+            nLContact.ReadInputFile();
+            nLContact.CreateModel();
+
         }
     }
 }
