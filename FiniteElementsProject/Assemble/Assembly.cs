@@ -94,6 +94,11 @@ namespace FiniteElementsProject
                         beamElementsList[elem] = new NLTruss(E[elem], A[elem], elementNodesX, elementNodesY);
                         totalDOF = 3 * nodesX.Length;
                         break;
+                    case "Contact":
+                        beamElementsList[elem] = new ContactNTN2D(E[elem], A[elem], elementNodesX, elementNodesY);
+                        totalDOF = 3 * nodesX.Length;
+                        break;
+
                 }
 
                 beamElementsList[elem].CalculateInitialValues();

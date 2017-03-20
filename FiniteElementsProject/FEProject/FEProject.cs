@@ -30,7 +30,7 @@ namespace FiniteElementsProject
 
         public void CreateModel()
         {
-            if (data.elementType.Contains("NLBeam") | data.elementType.Contains("NLTruss"))
+            if (data.elementType.Contains("NLBeam") | data.elementType.Contains("NLTruss") | data.elementType.Contains("Contact"))
             {
                 Console.WriteLine("Non-linear Solution is:");
                 IAssembly Exercise1Frame = new Assembly(data);

@@ -77,7 +77,7 @@ namespace FiniteElementsProject
 
         public override void CalculateInitialValues()
         {
-            penetration = CalculateKsi3();
+            penetration = 0.0;
             globalStiffnessMatrix = CreateGlobalStiffnessMatrix();
             internalGlobalForcesVector = CalculateInternalGlobalForcesVector();
         }
