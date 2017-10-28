@@ -10,41 +10,41 @@ namespace FiniteElementsProject
     {
         static void Main(string[] args)
         {
-            IFEProject linearCantilever = new FEProject();
-            linearCantilever.ReadInputFile();
-            linearCantilever.CreateModel();
+            //IFEProject linearCantilever = new FEProject();
+            //linearCantilever.ReadInputFile();
+            //linearCantilever.CreateModel();
 
             IFEProject nLCantilever = new FEProject();
             nLCantilever.ChangeInputFile("Writelines2NLCantilever.txt.");
             nLCantilever.ReadInputFile();
             nLCantilever.CreateModel();
 
-            IFEProject linearTruss = new FEProject();
-            linearTruss.ChangeInputFile("LinearTruss.txt");
-            linearTruss.ReadInputFile();
-            linearTruss.CreateModel();
+            //IFEProject linearTruss = new FEProject();
+            //linearTruss.ChangeInputFile("LinearTruss.txt");
+            //linearTruss.ReadInputFile();
+            //linearTruss.CreateModel();
 
-            double[] initialU = { 0, 0 };
-            double[] initialDotU = { 0, 0 };
-            double[] initialDdotU = { 0, 10 };
-            double initialTime = 0;
-            double totalTime = 2.8;
-            int timeStepsNumber = 10;
-            double[,] Kmatrix = { { 6, -2 }, { -2, 4 } };
-            double[,] Mmatrix = { { 2, 0 }, { 0, 1 } };
-            double[] Fvector = { 0, 10 };
-            CentralDifferencesSolver dynamic = new CentralDifferencesSolver(initialTime, initialU, initialDotU, initialDdotU, totalTime, timeStepsNumber, Kmatrix, Mmatrix, Fvector);
-            dynamic.SolveExplicit();
-            Console.WriteLine();
-            dynamic.PrintExplicitSolution();
+            //double[] initialU = { 0, 0 };
+            //double[] initialDotU = { 0, 0 };
+            //double[] initialDdotU = { 0, 10 };
+            //double initialTime = 0;
+            //double totalTime = 2.8;
+            //int timeStepsNumber = 10;
+            //double[,] Kmatrix = { { 6, -2 }, { -2, 4 } };
+            //double[,] Mmatrix = { { 2, 0 }, { 0, 1 } };
+            //double[] Fvector = { 0, 10 };
+            //CentralDifferencesSolver dynamic = new CentralDifferencesSolver(initialTime, initialU, initialDotU, initialDdotU, totalTime, timeStepsNumber, Kmatrix, Mmatrix, Fvector);
+            //dynamic.SolveExplicit();
+            //Console.WriteLine();
+            //dynamic.PrintExplicitSolution();
 
-            ISolver dokimi = new StaticSolver();
+            //ISolver dokimi = new StaticSolver();
 
 
-            IFEProject nLContact = new FEProject();
-            nLContact.ChangeInputFile("Writelines2NLContact.txt.");
-            nLContact.ReadInputFile();
-            nLContact.CreateModel();
+            //IFEProject nLContact = new FEProject();
+            //nLContact.ChangeInputFile("Writelines2NLContact.txt.");
+            //nLContact.ReadInputFile();
+            //nLContact.CreateModel();
 
         }
     }
